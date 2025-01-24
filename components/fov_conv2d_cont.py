@@ -27,14 +27,14 @@ class FovConv2dCont(torch.nn.Module):
                  kernel_size=5,
                  dilation=1,
                  padding_mode='zeros',
-                 kernel_type="gaussian_modulated",
+                 kernel_type="LoG",
                  **kwargs):
         super(FovConv2dCont, self).__init__()
 
         # checking arguments
-        assert kernel_type in ["gaussian_modulated", "net_modulated", "net_generated"], \
+        assert kernel_type in ["LoG", "gaussian_modulated", "net_modulated", "net_generated"], \
             "Invalid kernel type: " + str(kernel_type) + \
-            " (it must be one of: gaussian_modulated, net_modulated, net_generated)"
+            " (it must be one of: LoG, gaussian_modulated, net_modulated, net_generated)"
 
         # main operations
         self.input_modulation = None
@@ -81,6 +81,13 @@ class FovConv2dCont(torch.nn.Module):
             self.convolution = Conv2d(in_channels, out_channels, int(kernel_size),
                                       padding=int((kernel_size-1)*dilation + 1) // 2, stride=1,
                                       dilation=dilation, groups=1, bias=True, padding_mode=padding_mode)
+            
+        elif kernel_type == "LoG":
+            self.input_modulation = LoGFOAConv2d(**kwargs)  # last is 'log_kernel_size', 'sigma_min', ...
+            self.convolution = Conv2d(in_channels, out_channels, int(kernel_size),
+                                        padding=int((kernel_size-1)*dilation + 1) // 2, stride=1,
+                                        dilation=dilation, groups=1, bias=True, padding_mode=padding_mode)
+        
 
         elif kernel_type == "net_modulated":
             assert len(kwargs) == 1 and 'kernel_net' in kwargs, "Too many arguments or missing argument kernel_net."
@@ -204,9 +211,6 @@ class BaseFOAConv2d:
                                                         mode=self.padding_mode)
             patches = torch.nn.functional.unfold(padded_input_data, kernel_size=kernel_size, dilation=self.dilation, stride=1)
 
-        
-
-
         # convolutions
         patches = patches.view(b, 1, c, kernel_size ** 2, -1)  # b x 1 x c x kk x wh
 
@@ -238,11 +242,246 @@ class BaseFOAConv2d:
     def build_custom_internal_cache(self, input_data):
         raise NotImplementedError("Implement this method in your son class!")
 
+class LoGFOAConv2d(BaseFOAConv2d):
+    """
+    A space-variant Laplacian-of-Gaussian (LoG) convolution that can handle any
+    number of input channels.  Each channel is filtered by the same LoG kernel,
+    and their outputs are merged according to `merge_mode`.
+    """
+    def __init__(self,
+                 log_kernel_size=5,
+                 sigma_min=0.01,
+                 sigma_max=1.0,
+                 sigma_function="linear",
+                 bias=False,
+                 sigma_map=None,
+                 merge_mode="none"):
+        """
+        Args:
+            log_kernel_size   (int): Size of the LoG kernel (must be odd).
+            sigma_min       (float): Minimum sigma in the foveal region.
+            sigma_max       (float): Maximum sigma in the periphery.
+            sigma_function   (str): "linear", "exponential", or "map".
+            bias            (bool): Unused here (placeholder).
+            sigma_map (torch.Tensor): [H,W] map of sigma values if sigma_function="map".
+            merge_mode      (str): How to merge per-channel LoG responses.
+                                   One of: 'none', 'sum', 'mean', 'max'.
+        """
+        super(LoGFOAConv2d, self).__init__(dilation=1)
+
+        # argument checks
+        assert log_kernel_size > 0, "Invalid LoG kernel size."
+        assert sigma_max > sigma_min > 0, "sigma_max must be > sigma_min > 0."
+        assert sigma_function in ["linear", "exponential", "map"], \
+            "sigma_function must be one of: linear, exponential, map."
+        assert merge_mode in ["none", "sum", "mean", "max"], \
+            "merge_mode must be one of: none, sum, mean, max."
+
+        self.log_kernel_size = int(log_kernel_size)
+        self.sigma_min = float(sigma_min)
+        self.sigma_max = float(sigma_max)
+        self.merge_mode = merge_mode
+
+        # Set up how sigma is derived
+        if sigma_function == "linear":
+            self.sigma_function = self.__sigma_function_linear
+        elif sigma_function == "exponential":
+            self.sigma_function = self.__sigma_function_exponential
+        else:  # "map"
+            assert sigma_map is not None, "Must provide sigma_map with sigma_function='map'."
+            self.sigma_function = self.__sigma_function_map
+
+        self.__kernel_sq_dists = None  # will store r^2 for kernel
+        self.sigma_map = None
+        if sigma_map is not None:
+            # store as a buffer so it moves to correct device
+            self.sigma_map = torch.tensor(sigma_map, dtype=torch.float32)
+
+    # -------------------------------------------------------------------------
+    #   Overriding forward to handle multi-channel and merging
+    # -------------------------------------------------------------------------
+    def forward(self, input_data, foa_xy, compute_region_indices=False):
+        """
+        Process multi-channel input_data with the same LoG filter for each channel,
+        then merge the results according to self.merge_mode.
+        
+        Args:
+            input_data: shape [B, C, H, W]
+            foa_xy:     shape [B, 2] or [1, 2], or ignored if sigma_function='map'
+            compute_region_indices (bool): not used here, but kept for API compatibility
+        Returns:
+            If merge_mode == 'none': shape [B, C, H, W]
+            Else: shape [B, 1, H, W]
+        """
+        b, c, h, w = input_data.shape
+
+        # We'll filter each channel separately by calling the parent's __call__
+        # with just one channel. Then we'll merge or stack.
+        channel_outputs = []
+        for ch in range(c):
+            # Extract a single channel => [B,1,H,W]
+            ch_data = input_data[:, ch : ch+1, :, :]
+            # Use the parent's __call__ (which uses generate_per_pixel_kernels)
+            # This yields shape [B,1,H,W] since out_channels=1 for spatial-only kernel
+            ch_out = super().__call__(ch_data, foa_xy)
+            channel_outputs.append(ch_out)  # each is [B,1,H,W]
+
+
+        # Combine them along channel dimension => [B, C, H, W]
+        stacked = torch.cat(channel_outputs, dim=1)
+
+        # Merge if requested
+        if self.merge_mode == "none":
+            # Keep shape [B, C, H, W]
+            return stacked
+        elif self.merge_mode == "sum":
+            # Sum => [B,1,H,W]
+            return stacked.sum(dim=1, keepdim=True)
+        elif self.merge_mode == "mean":
+            # Mean => [B,1,H,W]
+            return stacked.mean(dim=1, keepdim=True)
+        elif self.merge_mode == "max":
+            # Max => [B,1,H,W]
+            return stacked.max(dim=1, keepdim=True)[0]
+        else:
+            raise ValueError(f"Unknown merge_mode={self.merge_mode}")
+
+    # -------------------------------------------------------------------------
+    #   The required internal methods used by BaseFOAConv2d
+    # -------------------------------------------------------------------------
+    def build_custom_internal_cache(self, input_data):
+        """
+        Precompute:
+          - The squared distances for the LoG kernel (shape [kk]).
+          - A coordinate map for the entire image if not yet done.
+        """
+        b, c, H, W = input_data.shape
+        # If it's already built on the same device, skip
+        if self.__kernel_sq_dists is not None and \
+           self.__kernel_sq_dists.device == input_data.device and \
+           self.h == H and self.w == W:
+            return
+
+        self.h, self.w = H, W
+
+        # Create a grid for the kernel
+        radius = self.log_kernel_size // 2
+        xs = torch.arange(-radius, radius + 1, device=input_data.device)
+        yy, xx = torch.meshgrid(xs, xs, indexing='ij')
+        # Flatten => shape [kk]
+        self.__kernel_sq_dists = (xx**2 + yy**2).view(-1).float()
+
+        # Also build a coordinate map for the entire image
+        # (for computing distance from FOA if needed)
+        Y, X = torch.meshgrid(
+            torch.arange(H, device=input_data.device),
+            torch.arange(W, device=input_data.device),
+            indexing='ij'
+        )
+        # shape: [H*W, 2]
+        self.xx_yy = torch.stack([X.flatten(), Y.flatten()], dim=1).float()
+
+    def generate_per_pixel_kernels(self, foa_xy):
+        """
+        Build a LoG kernel for each pixel in the image, using
+        sigma = sigma_function(...) => shape [b, 1, 1, kk, hw].
+        (BaseFOAConv2d will handle the unfolding + multiply + fold steps.)
+        """
+        b = foa_xy.shape[0]
+        kk = self.log_kernel_size ** 2
+        hw = self.h * self.w
+
+        # 1) Sigma for each pixel => shape [b, hw]
+        sigmas = self.sigma_function(foa_xy)  # e.g. linear, exponential, or map
+
+        # 2) Vectorized LoG formula
+        #    LoG(r^2; sigma) = -(1/(pi*sigma^4)) * [1 - r^2/(2 sigma^2)] * exp(-r^2/(2 sigma^2))
+        r_sq = self.__kernel_sq_dists.view(1, kk, 1)  # shape [1, kk, 1]
+        sig = sigmas.view(b, 1, hw)                   # shape [b, 1, hw]
+
+        tmp = r_sq / (2.0 * sig * sig)                # [b, kk, hw]
+        factor = -1.0 / (math.pi * (sig**4))          # [b,1,hw]
+        bracket = 1.0 - (r_sq / (2.0 * sig * sig))    # [b,kk,hw]
+
+        per_pixel_kernels = factor * bracket * torch.exp(-tmp)  # [b, kk, hw]
+
+        scale_factor = math.pi * (sig)  # shape [b,1,hw]
+        per_pixel_kernels = per_pixel_kernels * scale_factor
+
+        # diff_xx_yy: b x hw x 2
+        diff_xx_yy = self.xx_yy.unsqueeze(0) - foa_xy.unsqueeze(1)  # shape (b, hw, 2)
+        # distances from FOA
+        dists = torch.sqrt(torch.sum(diff_xx_yy**2, dim=2))  # b x hw
+        # normalize to [0..1] by max
+
+        per_pixel_kernels *= dists  # shape still [b, kk, hw]
+
+
+        # (Optional) Some scaling or zero-mean steps can be added here:
+        # per_pixel_kernels -= per_pixel_kernels.mean(dim=1, keepdim=True)
+
+        # 3) Reshape to [b, out_channels=1, in_channels=1, kk, hw]
+        #    Because we treat each channel separately in forward()
+        return per_pixel_kernels.view(b, 1, 1, kk, hw)
+
+    # -------------------------------------------------------------------------
+    #   Sigma Functions
+    # -------------------------------------------------------------------------
+    def __sigma_function_linear(self, foa_xy):
+        """
+        distance = normalized distance from foa
+        sigma = (1-dist)*sigma_min + dist*sigma_max
+        """
+        # self.xx_yy: shape [hw,2]
+        diff = self.xx_yy.unsqueeze(0) - foa_xy.unsqueeze(1)  # shape [b,hw,2]
+        dists = torch.sqrt(torch.sum(diff**2, dim=2))         # [b,hw]
+
+        # Normalize by diagonal
+        diag = math.sqrt(self.h**2 + self.w**2)
+        dists_norm = dists / diag  # in [0..1 approx]
+
+        sigmas = (1.0 - dists_norm)*self.sigma_min + dists_norm*self.sigma_max
+        return sigmas
+
+    def __sigma_function_exponential(self, foa_xy):
+        """
+        A radial fade from sigma_min to sigma_max with an exponential factor.
+        """
+        diff = self.xx_yy.unsqueeze(0) - foa_xy.unsqueeze(1)  # [b,hw,2]
+        d_sq = torch.sum(diff**2, dim=2)                      # [b,hw]
+
+        # normalized by diagonal^2
+        diag_sq = float(self.h**2 + self.w**2)
+        alpha = 9.0
+        weights = torch.exp(-alpha * d_sq / diag_sq)          # in [0..1]
+
+        sigmas = weights*self.sigma_min + (1.0 - weights)*self.sigma_max
+        return sigmas
+
+    def __sigma_function_map(self, foa_xy):
+        """
+        If user provided a precomputed sigma_map [H,W], 
+        ignore FOA and just return that map for all batch items.
+        """
+        # Flatten => shape [hw]
+        flat_sigma_map = self.sigma_map.view(-1)  # [hw]
+        b = foa_xy.shape[0]
+        return flat_sigma_map.unsqueeze(0).expand(b, -1)
+
+    def __str__(self):
+        _s = "[" + self.__class__.__name__ + "]"
+        _s += f"\n- log_kernel_size: {self.log_kernel_size}"
+        _s += f"\n- sigma_min: {self.sigma_min}"
+        _s += f"\n- sigma_max: {self.sigma_max}"
+        _s += f"\n- merge_mode: {self.merge_mode}"
+        _s += f"\n- sigma_function: {self.sigma_function.__name__}"
+        return _s
+
 
 class GaussianFOAConv2d(BaseFOAConv2d):
     """Convolution with a Gaussian with a sigma that changes in function of the distance from FOA."""
 
-    def __init__(self, gaussian_kernel_size=5, sigma_min=0.01, sigma_max=1.0, sigma_function="linear", contrast_factor=1.0, bias=False):
+    def __init__(self, gaussian_kernel_size=5, sigma_min=0.01, sigma_max=1.0, sigma_function="linear", bias=False):
         super(GaussianFOAConv2d, self).__init__(dilation=1)
 
         # checking arguments
@@ -250,14 +489,13 @@ class GaussianFOAConv2d(BaseFOAConv2d):
         assert sigma_max > sigma_min > 0 and sigma_max > 0, \
             "Invalid sigmas: " + str(sigma_min) + ", " + str(sigma_max) + \
             " (they must be > 0 and in ascending order)."
-        assert sigma_function in ["linear", "exponential"], \
-            "Unknown sigma function: " + str(sigma_function) + " (it must be one of: linear, exponential)."
+        assert sigma_function in ["linear", "exponential", "map"], \
+            "Unknown sigma function: " + str(sigma_function) + " (it must be one of: linear, exponential, map)."
 
         # saving arguments
         self.gaussian_kernel_size = int(gaussian_kernel_size)
         self.sigma_min = float(sigma_min)
         self.sigma_max = float(sigma_max)
-        self.contrast_factor = contrast_factor  # Add contrast adjustment factor
         if sigma_function == "linear":
             self.sigma_function = self.__sigma_function_linear
         elif sigma_function == "exponential":
@@ -288,11 +526,7 @@ class GaussianFOAConv2d(BaseFOAConv2d):
         dists = torch.sqrt(torch.sum(diff_xx_yy ** 2., dim=2))  # b x hw
         dists_normalized = dists / dists.max()  # Normalize distances (0 to 1)
 
-        # Define a contrast scaling function (e.g., linear or exponential)
-        contrast_scale = 1.0 + (self.contrast_factor - 1.0) * dists_normalized  # Higher in periphery
-
-        # Apply the distance-based contrast scaling to the kernels
-        per_pixel_kernels *= contrast_scale.unsqueeze(1) # Scale by contrast
+        per_pixel_kernels *= dists_normalized.unsqueeze(1) 
 
         return per_pixel_kernels.view(b, 1, 1, kk, hw)
 
