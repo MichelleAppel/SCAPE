@@ -4,7 +4,7 @@ This repository focuses on **building a spatial map of the maximum resolvable fr
 
 ## Max Frequency Mapping
 
-At the heart of this approach is a **2D map** that defines the local maximum spatial frequency \(F_{\mathrm{max}}(x,y)\) for every pixel, often tied to cortical magnification or prosthetic “phosphene density.” The idea is that the center of vision—or the “highest resolution” region—can handle much finer spatial detail than the periphery, which only supports lower frequencies.
+At the heart of this approach is a **2D map** that defines the local maximum spatial frequency $F_{\mathrm{max}}(x,y)$ for every pixel, often tied to cortical magnification or prosthetic “phosphene density.” The idea is that the center of vision—or the “highest resolution” region—can handle much finer spatial detail than the periphery, which only supports lower frequencies.
 
 This frequency map can be used in **many** ways:
 - **Foveated Filters**: Different parts of the image can be convolved with filters at different scales.
@@ -15,9 +15,9 @@ Essentially, **the max frequency map is a flexible core tool** for any scenario 
 
 ## Foveated LoG (LoGFOAConv2d)
 
-In this repository, we provide one concrete demonstration: a **space‐variant Laplacian‐of‐Gaussian** filter that respects the max frequency map by converting \(F_{\mathrm{max}}(x,y)\) into a local Gaussian width \(\sigma(x,y)\). This yields a **foveated LoG** that:
-- Uses **small \(\sigma\)** (high‐frequency) near the most resolvable region.
-- Uses **large \(\sigma\)** (low‐frequency) in peripheral or low‐acuity regions.
+In this repository, we provide one concrete demonstration: a **space‐variant Laplacian‐of‐Gaussian** filter that respects the max frequency map by converting $F_{\mathrm{max}}(x,y)$ into a local Gaussian width $\sigma(x,y)$. This yields a **foveated LoG** that:
+- Uses **small $\sigma\$** (high‐frequency) near the most resolvable region.
+- Uses **large $\sigma\$** (low‐frequency) in peripheral or low‐acuity regions.
 
 That way, edges in the center are captured at high detail, whereas the periphery is blurrier—analogous to cortical magnification in V1.
 
