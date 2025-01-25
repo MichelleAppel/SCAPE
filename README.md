@@ -1,35 +1,36 @@
-# README: Max Frequency Mapping & Foveated LoG Demonstration
+# Cortical Frequency Mapping & Spatially Adaptive LoG for Prosthetic Vision
 
-This repository focuses on **building a spatial map of the maximum resolvable frequency** at each pixel and using that information to process images in a way that reflects non‐uniform visual acuity.
+This repository demonstrates how to compute and utilize a **maximum resolvable frequency map** rooted in cortical implant constraints—such as phosphene density—in order to perform non‐uniform, spatially adaptive image filtering. The core concept is that each pixel in the visual field can only resolve up to a certain frequency, reflecting the distribution of phosphenes or other cortical implant limitations.
 
-## Max Frequency Mapping
+## Maximum Frequency Mapping
 
-At the heart of this approach is a **2D map** that defines the local maximum spatial frequency $F_{\mathrm{max}}(x,y)$ for every pixel, often tied to cortical magnification or prosthetic “phosphene density.” The idea is that the center of vision—or the “highest resolution” region—can handle much finer spatial detail than the periphery, which only supports lower frequencies.
+We first build a **2D map** of local maximum frequency, \(F_{\mathrm{max}}(x,y)\), which captures how implant‐driven vision might vary across the field. Denser phosphene regions can support higher frequencies (more detail), whereas sparser regions are limited to lower frequencies. 
 
-This frequency map can be used in **many** ways:
-- **Foveated Filters**: Different parts of the image can be convolved with filters at different scales.
-- **Adaptive Rendering**: Graphics can be rendered more coarsely in the periphery to save computation.
-- **Phosphene Simulations**: Where fewer phosphenes are available in the periphery, we define lower max frequency.
+This map is versatile and can be used for:
+- **Adaptive Filtering**: Convolve the image differently depending on local resolution limits.
+- **Rendering Optimization**: Coarse rendering in areas that cannot resolve fine detail.
+- **Biologically Inspired Models**: Simulating how cortical implants impose non‐uniform “vision.”
 
-Essentially, **the max frequency map is a flexible core tool** for any scenario that must account for non‐uniform resolution or sampling in the visual field.
+In short, the max frequency map is a **general‐purpose foundation** for any scenario that needs to respect a non‐uniform sampling density or cortical layout.
 
-## Foveated LoG (LoGFOAConv2d)
+## Spatially Adaptive LoG (LoGFOAConv2d)
 
-In this repository, we provide one concrete demonstration: a **space‐variant Laplacian‐of‐Gaussian** filter that respects the max frequency map by converting $F_{\mathrm{max}}(x,y)$ into a local Gaussian width $\sigma(x,y)$. This yields a **foveated LoG** that:
-- Uses **small $\sigma\$** (high‐frequency) near the most resolvable region.
-- Uses **large $\sigma\$** (low‐frequency) in peripheral or low‐acuity regions.
+To illustrate a practical use, we apply a **space‐variant Laplacian‐of‐Gaussian** filter. By converting \(F_{\mathrm{max}}(x,y)\) into a local Gaussian width \(\sigma(x,y)\), the filter:
+- **Uses small \(\sigma\)** where finer details can be resolved (denser phosphene regions).
+- **Uses large \(\sigma\)** in sparser implant areas, enforcing a lower‐frequency limit.
 
-That way, edges in the center are captured at high detail, whereas the periphery is blurrier—analogous to cortical magnification in V1.
+Hence, this “cortically guided” LoG captures edges more sharply where the implant can provide finer detail and more diffusely where resolution is inherently limited.
 
-## Gaze Following (Optional)
+## Optional Gaze Following
 
-We also include a **simple gaze‐based** mechanism where the highest max frequency region can dynamically shift according to an estimated gaze position. This is secondary to our main emphasis on the **max frequency map** itself, but it demonstrates how the foveation could be re‐centered in real time based on where a user is looking.
+We also include a gaze mechanism for re‐centering the higher‐frequency region around the user’s current focus of attention. While secondary to the main frequency‐mapping concept, it shows how dynamic control over the resolvable “sweet spot” might further personalize prosthetic vision feedback.
 
 ---
 
-**In summary**, this repository highlights:
-1. **A robust max frequency map** approach, general enough for multiple foveation or retinotopic tasks.
-2. **A LoG demonstration (LoGFOAConv2d)** that uses that map to produce a biologically plausible, space‐variant edge filter.
-3. An **optional** gaze‐based extension that moves the fovea to the point of user attention.
+**In summary**, our work emphasizes:
+1. **Mapping local maximum frequency** to reflect cortical implant geometry and phosphene density.
+2. **Using that map** in a spatially adaptive LoG filter that matches each pixel’s resolvable detail.
+3. **Optionally** shifting the high‐resolution zone to the user’s gaze to emulate real‐time attention shifts.
 
-This code can serve as a foundation for **any** project that requires non‐uniform resolution or frequency constraints in visual processing—especially for prosthetic or foveated vision research.
+This provides a **powerful abstraction** for simulating prosthetic or implant‐based vision, where the visual field is inherently non‐uniform and must be processed accordingly.
+
