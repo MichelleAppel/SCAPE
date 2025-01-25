@@ -21,16 +21,16 @@ To illustrate a practical use, we apply a **space‐variant Laplacian‐of‐Gau
 
 Hence, this “cortically guided” LoG captures edges more sharply where the implant can provide finer detail and more diffusely where resolution is inherently limited.
 
-## Optional Gaze Following
+## Gaze
 
-We also include a gaze mechanism for re‐centering the higher‐frequency region around the user’s current focus of attention. While secondary to the main frequency‐mapping concept, it shows how dynamic control over the resolvable “sweet spot” might further personalize prosthetic vision feedback.
+Gaze is an essential part of cortical visual implants, as it determines where users can direct their highest available resolution. We showcase in the **`example_videos`** folder how cortical frequency mapping is applied while incorporating gaze, demonstrating how the resolvable “sweet spot” follows the user's focus of attention in real time.
 
 ---
 
 **In summary**, our work emphasizes:
 1. **Mapping local maximum frequency** to reflect cortical implant geometry and phosphene density.
-2. **Using that map** in a spatially adaptive LoG filter that matches each pixel’s resolvable detail.
-3. **Optionally** shifting the high‐resolution zone to the user’s gaze to emulate real‐time attention shifts.
+2. **Using that map** in a spatially adaptive LoG filter to match each pixel’s resolvable detail.
+3. **Integrating gaze** so the maximum resolvable region shifts with the user’s focus, as shown in the example videos.
 
 This provides a **powerful abstraction** for simulating prosthetic or implant‐based vision, where the visual field is inherently non‐uniform and must be processed accordingly.
 
