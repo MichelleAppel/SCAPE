@@ -4,7 +4,7 @@ This repository demonstrates how to compute and utilize a **maximum resolvable f
 
 ## Maximum Frequency Mapping
 
-We first build a **2D map** of local maximum frequency, \(F_{\mathrm{max}}(x,y)\), which captures how implant‐driven vision might vary across the field. Denser phosphene regions can support higher frequencies (more detail), whereas sparser regions are limited to lower frequencies. 
+We first build a **2D map** of local maximum frequency, $F_{\mathrm{max}}(x,y)$, which captures how implant‐driven vision might vary across the field. Denser phosphene regions can support higher frequencies (more detail), whereas sparser regions are limited to lower frequencies. 
 
 This map is versatile and can be used for:
 - **Adaptive Filtering**: Convolve the image differently depending on local resolution limits.
@@ -15,9 +15,9 @@ In short, the max frequency map is a **general‐purpose foundation** for any sc
 
 ## Spatially Adaptive LoG (LoGFOAConv2d)
 
-To illustrate a practical use, we apply a **space‐variant Laplacian‐of‐Gaussian** filter. By converting \(F_{\mathrm{max}}(x,y)\) into a local Gaussian width \(\sigma(x,y)\), the filter:
-- **Uses small \(\sigma\)** where finer details can be resolved (denser phosphene regions).
-- **Uses large \(\sigma\)** in sparser implant areas, enforcing a lower‐frequency limit.
+To illustrate a practical use, we apply a **space‐variant Laplacian‐of‐Gaussian** filter. By converting $F_{\mathrm{max}}(x,y)$ into a local Gaussian width $\sigma(x,y)$, the filter:
+- **Uses small $\sigma$** where finer details can be resolved (denser phosphene regions).
+- **Uses large $\sigma$** in sparser implant areas, enforcing a lower‐frequency limit.
 
 Hence, this “cortically guided” LoG captures edges more sharply where the implant can provide finer detail and more diffusely where resolution is inherently limited.
 
