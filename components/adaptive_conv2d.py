@@ -46,7 +46,7 @@ class AdaptiveConv2d(torch.nn.Module):
 
     def __init__(self,
                  in_channels=3,
-                 out_channels=16,
+                 out_channels=1,
                  kernel_size=5,
                  dilation=1,
                  padding_mode='reflect',
@@ -112,13 +112,8 @@ class AdaptiveConv2d(torch.nn.Module):
 
         # Depending on kernel_type, we set up the 'input_modulation' and the final 'convolution'
         if kernel_type == "gaussian_modulated":
-            # Build a class that modulates input by a Gaussian function, then do a standard Conv2d
-            self.input_modulation = GaussianCoordConv2d(**kwargs)
-            self.convolution = Conv2dWrapper(
-                in_channels, out_channels, kernel_size,
-                padding=int((kernel_size-1)*dilation + 1)//2,
-                stride=1, dilation=dilation, groups=1,
-                bias=True, padding_mode=padding_mode
+            # A Gaussian approach for per-pixel kernels
+            raise NotImplementedError("Gaussian modulated not implemented yet"
             )
 
         elif kernel_type == "LoG":
@@ -134,30 +129,13 @@ class AdaptiveConv2d(torch.nn.Module):
         elif kernel_type == "net_modulated":
             # A neural net modifies the *input*, then a standard conv
             # We expect 'kernel_net' in kwargs
-            assert 'kernel_net' in kwargs, "net_modulated requires kernel_net in kwargs"
-            self.__kernel_net = kwargs['kernel_net']
-            # The net basically outputs a 'modulating' function
-            self.input_modulation = NeuralCoordConv2d(
-                in_channels=1, out_channels=1, dilation=1, **kwargs
-            )
-            self.convolution = Conv2dWrapper(
-                in_channels, out_channels, kernel_size,
-                padding=int((kernel_size-1)*dilation + 1)//2,
-                stride=1, dilation=dilation, groups=1,
-                bias=True, padding_mode=padding_mode
-            )
+            raise NotImplementedError("net_generated not implemented yet")
 
         elif kernel_type == "net_generated":
             # A neural net directly generates the convolution kernel.
             # So the 'input_modulation' is effectively Identity, and the 'convolution'
             # is the neural approach.
-            assert 'kernel_net' in kwargs, "net_generated requires kernel_net in kwargs"
-            self.__kernel_net = kwargs['kernel_net']
-            self.input_modulation = IdentityModule()
-            self.convolution = NeuralCoordConv2d(
-                in_channels, out_channels, dilation=dilation,
-                padding_mode=padding_mode, **kwargs
-            )
+            raise NotImplementedError("net_generated not implemented yet")
 
     def forward(self, input_data, foa_xy, compute_region_indices=False):
         """
@@ -325,7 +303,7 @@ class LoGCoordConv2d(BaseCoordConv2d):
 
     def __init__(
         self,
-        log_kernel_size=5,
+        log_kernel_size=99,
         sigma_min=0.01,
         sigma_max=1.0,
         sigma_function="linear",
@@ -368,9 +346,9 @@ class LoGCoordConv2d(BaseCoordConv2d):
         """
         Build Laplacian-of-Gaussian kernels for each pixel. shape => [B, out_ch=1, in_ch=1, kernel_area, HW].
         """
-        B = foa_xy.shape[0]
-        kk = self.log_kernel_size**2
-        HW = self.h*self.w
+        B = foa_xy.shape[0] # batch size
+        kk = self.log_kernel_size**2 # kernel_area
+        HW = self.h*self.w # spatial size
 
         # 1) compute sigma per pixel => shape [B,HW]
         sigmas = self._get_sigma(foa_xy)  # shape [B,HW]
@@ -386,7 +364,7 @@ class LoGCoordConv2d(BaseCoordConv2d):
 
         # optional: multiply or scale to your liking
         # e.g. the old scale_factor approach:
-        scale_factor = math.pi*(sigma)
+        scale_factor = math.pi*(sigma) 
         per_pixel_kernels = per_pixel_kernels*scale_factor
 
         # if you do additional distance-based weighting:
@@ -436,46 +414,3 @@ class LoGCoordConv2d(BaseCoordConv2d):
         s += f"\n- sigma_function_type: {self.sigma_function_type}"
         return s
 
-
-# --------------------------------------------------------------------------
-# GaussianCoordConv2d, NeuralCoordConv2d, etc. can follow a similar pattern
-# They do "generate_per_pixel_kernels" differently.
-# --------------------------------------------------------------------------
-
-class GaussianCoordConv2d(BaseCoordConv2d):
-    """
-    A simpler Gaussian-based per-pixel kernel. The main difference from LoG is 
-    that we compute a 2D Gaussian for each pixel, typically used for 'gaussian_modulated' 
-    input or mild blur.
-
-    We can also allow map-based sigma or distance-based sigma, as done in LoGCoordConv2d, 
-    but the kernel formula differs (pure Gaussian, no Laplacian).
-    """
-    # Similar structure: store kernel size, sigma_min, sigma_max, etc.
-    # implement generate_per_pixel_kernels(...) using a 2D Gaussian formula
-    # normalized or not, etc.
-    pass
-
-class NeuralCoordConv2d(BaseCoordConv2d):
-    """
-    A class that uses a neural network to generate the per-pixel kernel directly
-    or modulate input. It receives:
-       kernel_net: a network that, given coordinates, returns a kernel
-    and so on.
-    """
-    def __init__(self, in_channels, out_channels, dilation=1,
-                 padding_mode='zeros', kernel_net=None):
-        super().__init__(dilation=dilation, padding_mode=padding_mode)
-        assert kernel_net is not None, "Must provide 'kernel_net'."
-        self.in_channels = in_channels
-        self.out_channels = out_channels
-        self.kernel_net = kernel_net
-
-    def generate_per_pixel_kernels(self, foa_xy):
-        # call self.kernel_net(...) with (b*hw,2) coords
-        # reshape => [b, out_channels, in_channels, kernel_area, hw]
-        # etc.
-        raise NotImplementedError("Implement neural approach here.")
-
-    def __str__(self):
-        return f"[NeuralCoordConv2d with net={self.kernel_net}]"

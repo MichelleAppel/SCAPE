@@ -188,7 +188,7 @@ class VisualFieldMapper:
         Given a density_map in visual-field space, compute the LoG sigma map,
         either in 'fov' degrees or convert to 'pixel' space.
 
-        sigma_fov = 1/(pi * sqrt(density_map))  # from your formula
+        sigma_fov = 1/(pi * sqrt(density_map)) 
         If space=='pixel', multiply sigma_fov by (n_phosphenes/view_angle).
 
         Returns an np.ndarray of the same shape as density_map.
