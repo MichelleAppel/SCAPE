@@ -26,7 +26,7 @@ class FovConv2dCont(torch.nn.Module):
                  out_channels=16,
                  kernel_size=5,
                  dilation=1,
-                 padding_mode='zeros',
+                 padding_mode='reflect',
                  kernel_type="LoG",
                  **kwargs):
         super(FovConv2dCont, self).__init__()
@@ -295,7 +295,7 @@ class LoGFOAConv2d(BaseFOAConv2d):
         self.sigma_map = None
         if sigma_map is not None:
             # store as a buffer so it moves to correct device
-            self.sigma_map = torch.tensor(sigma_map, dtype=torch.float32)
+            self.sigma_map = sigma_map.clone().detach().float()
 
     # -------------------------------------------------------------------------
     #   Overriding forward to handle multi-channel and merging
