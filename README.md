@@ -32,10 +32,6 @@ Where:
 - $\sigma$ determines the **spatial extent of filtering** (e.g., the standard deviation in a Laplacian of Gaussian filter).
 - **density** is the **local phosphene density**, guiding spatial frequency adjustments.
 
-In pixel space, this transformation is refined by the factor:
-```math
-\sigma_{\text{px}} = \sigma_{\text{fov}} \times \left( \frac{\sum \text{density} \times (\text{view_angle} / \text{image_size})^2}{\text{view_angle}} \right)
-```
 This framework ensures that **spatial filtering is modulated adaptively** based on the underlying phosphene map, providing a biologically relevant transformation of visual information.
 
 ---
