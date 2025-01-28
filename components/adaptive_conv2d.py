@@ -363,7 +363,7 @@ class LoGCoordConv2d(BaseCoordConv2d):
         per_pixel_kernels = factor*bracket*torch.exp(-tmp)  # [B,kk,HW]
 
         # optional: multiply or scale to your liking
-        scale_factor = sigma**0.5
+        scale_factor = sigma**(2/3)
         per_pixel_kernels = per_pixel_kernels*scale_factor
 
         # if you do additional distance-based weighting:
