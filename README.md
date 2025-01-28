@@ -68,7 +68,7 @@ net = AdaptiveConv2d(
 
 foa_xy = torch.tensor([img.shape[3] // 2, img.shape[2] // ]).float().cuda().unsqueeze(0).detach()
 
-filtered_img = net(image_tensor, foa_xy)
+filtered_img = net(img, foa_xy)
 ```
 
 **AdaptiveConv2d** facilitates **spatially aware processing** by tailoring filtering operations to the visual characteristics defined by phosphene density maps.
