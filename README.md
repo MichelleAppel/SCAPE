@@ -24,7 +24,7 @@ The human visual system inherently adapts spatial frequency processing according
 ---
 
 ## **Mathematical Framework**  
-Central to this method is the relationship between **phosphene density** and the **scale of spatial filtering**. We define the sigma (\(\sigma\)) of spatial frequency modulation using the formula:
+Central to this method is the relationship between **phosphene density** and the **scale of spatial filtering**. We define the sigma ($\sigma$) of spatial frequency modulation using the formula:
 
 $$\sigma = \frac{1}{\pi \sqrt{\text{density}}}$$
 
