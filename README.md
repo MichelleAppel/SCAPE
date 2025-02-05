@@ -83,12 +83,4 @@ In this example, the module uses the sigma map to generate spatially adaptive Lo
 
 ---
 
-## Future Directions
-
-- **Neural Adaptive Filtering:** Integrate learnable components for dynamic, task-specific modulation.
-- **Real-Time Prosthetic Simulation:** Optimize the pipeline for real-time visual prosthesis applications.
-- **User-Centric Evaluations:** Validate adaptive filtering with perceptual studies to further refine the model.
-
----
-
 This repository lays the foundation for biologically informed image processing in prosthetic vision—improving the translation of visual scenes into effective, adaptive stimuli for prosthetic devices.
