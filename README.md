@@ -1,7 +1,3 @@
-Below is a revised README that incorporates an overview, motivation & context, biological inspiration, mathematical framework, and a description of the architecture. A concise usage snippet is provided at the end.
-
----
-
 # Phosphene-Aware Adaptive Filtering for Prosthetic Vision
 
 This repository implements an adaptive spatial frequency filtering framework designed specifically for prosthetic vision. Our method adapts visual filtering based on the non-uniform distribution of phosphenes (or cortical density) to better reflect the visual information available to prosthetic devices.
