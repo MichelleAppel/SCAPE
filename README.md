@@ -61,7 +61,6 @@ These analytic modes can be extended or replaced by neural alternatives (such as
 Below is a minimal example demonstrating how to use the UnifiedInputModulation module in LoG mode with a precomputed sigma map:
 
 ```python
-import torch
 from modulation_module import UnifiedInputModulation
 
 # Assume sigma_cortical_pix is a precomputed phosphene (cortical) density map in pixel units.
