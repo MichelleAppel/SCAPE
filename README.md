@@ -31,7 +31,7 @@ The human visual system naturally prioritizes central vision, where acuity is hi
 Our adaptive filtering relies on relating local phosphene density to the scale of filtering. For example, in the Laplacian-of-Gaussian (LoG) case, the kernel is computed as:
 
 
-$$\text{LoG}(r,\sigma) = -\frac{1}{\pi\sigma^4}\left(1 - \frac{r^2}{2\sigma^2}\right) \exp\!\left(-\frac{r^2}{2\sigma^2}\right)$$
+$$\text{LoG}(r,\sigma) = -\frac{1}{\pi\sigma^4}\left(1 - \frac{r^2}{2\sigma^2}\right) \exp(-\frac{r^2}{2\sigma^2})$$
 
 Here:
 - $\sigma$ represents the effective spatial scale (derived from the phosphene density or a cortical map).
@@ -46,7 +46,7 @@ This framework ensures that the filter adapts its spatial extent in a biological
 At the core of our framework is the **UnifiedInputModulation** module, which implements adaptive filtering in two analytic modes:
 - **Gaussian Modulation:** Computes a standard Gaussian kernel:
   
-  $$G(r,\sigma) = \exp\!\left(-\frac{r^2}{2\sigma^2}\right)$$
+  $$G(r,\sigma) = \exp(-\frac{r^2}{2\sigma^2})$$
   
   and normalizes it for uniform blurring.
   
@@ -62,7 +62,7 @@ Below is a minimal example demonstrating how to use the UnifiedInputModulation m
 
 ```python
 import torch
-from modulation_module import UnifiedInputModulation  # adjust import as needed
+from modulation_module import UnifiedInputModulation
 
 # Assume sigma_cortical_pix is a precomputed phosphene (cortical) density map in pixel units.
 sigma_map_tensor = torch.tensor(sigma_cortical_pix).float().cuda().detach()
