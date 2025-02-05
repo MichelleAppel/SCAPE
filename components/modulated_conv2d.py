@@ -432,12 +432,12 @@ class ModulatedConv2d(torch.nn.Module):
                  kernel_net=None):
         super(ModulatedConv2d, self).__init__()
         kernel_type = kernel_type.lower()
-        valid_types = ["gaussian_modulated", "log", "net_modulated", "net_generated"]
+        valid_types = ["gaussian_modulated", "gaussian", "laplacian", "log", "net_modulated", "net_generated"]
         if kernel_type not in valid_types:
             raise ValueError(f"Invalid kernel_type: {kernel_type}. Must be one of {valid_types}.")
         self.kernel_type = kernel_type
 
-        if kernel_type in ["gaussian_modulated", "log"]:
+        if kernel_type in ["gaussian_modulated", "log", "gaussian", "laplacian"]:
             self.input_modulation = UnifiedInputModulation(
                 kernel_size=kernel_size,
                 kernel_type=kernel_type,
