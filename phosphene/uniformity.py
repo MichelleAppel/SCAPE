@@ -1,34 +1,13 @@
-import numpy as np
 import torch
+import torch.nn.functional as F
 
 class DynamicAmplitudeNormalizer:
     """
     Iteratively adjusts electrode amplitudes so that each phosphene 
     has a similar perceived brightness in the simulated percept.
-
-    This version only needs the simulator object, and extracts:
-      - electrode coordinates (phos_x, phos_y) in degrees
-      - bounding region (x_min..x_max, y_min..y_max)
-    from the simulator. Then it calls simulator(stim) each iteration 
-    to measure brightness around each electrode in the resulting image.
     
-    Example usage:
-    -------------
-    normalizer = DynamicAmplitudeNormalizer(
-        simulator=simulator,
-        base_size=1,
-        scale=0.5,
-        A_min=1e-7,
-        A_max=1e-3,
-        learning_rate=0.05,
-        steps=50,
-        target=None
-    )
-    # Start with uniform amplitudes:
-    stim_init = amplitude * torch.ones(simulator.num_phosphenes).cuda()
-    stim_final = normalizer.run(stim_init)
+    (See documentation above.)
     """
-
     def __init__(
         self,
         simulator,
@@ -41,40 +20,15 @@ class DynamicAmplitudeNormalizer:
         target=None,
         center=(0,0)
     ):
-        """
-        Parameters
-        ----------
-        simulator : object
-            Your simulator instance, e.g. PhospheneSimulator, which must provide:
-              - .phos_x, .phos_y : arrays (or lists) of electrode coords in degrees
-              - .params['run']['view_angle'] : field of view in degrees
-              - .reset() and .__call__(stim_vector) -> 2D image (torch Tensor)
-        base_size : int
-            Minimal half-size of the patch for measuring brightness.
-        scale : float
-            Factor controlling how patch size grows with radial distance from 'center'.
-        A_min, A_max : float
-            Clamping range for amplitudes.
-        learning_rate : float
-            Partial update factor for amplitude correction.
-        steps : int
-            Number of iterations for the uniformization procedure.
-        target : float or None
-            If not None, all electrodes aim for this brightness. 
-            If None, we compute an average from the nonzero brightness each iteration.
-        center : tuple
-            (cx, cy), the reference center for measuring radial distance. 
-            Often (0,0) for visual field center.
-        """
         self.simulator = simulator
-        self.phos_x = np.array(simulator.coordinates._x)  # or however you store them
-        self.phos_y = np.array(simulator.coordinates._y)
+        # Store electrode coordinates as torch tensors on CPU (they will be moved later as needed)
+        self.phos_x = torch.tensor(simulator.coordinates._x, dtype=torch.float32)
+        self.phos_y = torch.tensor(simulator.coordinates._y, dtype=torch.float32)
         self.n_phos = len(self.phos_x)
 
-        # Read bounding coords from simulator params (assuming e.g. ±(FoV/2))
+        # Read bounding coordinates from simulator parameters (assuming symmetric FoV about 0)
         fov = simulator.params['run']['view_angle']
         half_fov = fov / 2.0
-        # We'll assume the center is (0,0) => so x_min..x_max = -half_fov..+half_fov
         self.x_min = -half_fov
         self.x_max = +half_fov
         self.y_min = -half_fov
@@ -90,98 +44,131 @@ class DynamicAmplitudeNormalizer:
         self.target = target
 
         self.weights = torch.ones(self.n_phos, dtype=torch.float32)
+        self.loss_history = None
 
-    def run(self, stim_init: torch.Tensor) -> torch.Tensor:
-        """
-        Runs the iterative procedure for 'steps' iterations.
-        
-        Args:
-          stim_init : torch.Tensor of shape (n_phos,) 
-              The initial electrode amplitudes (e.g. all equal to some amplitude).
-        
-        Returns:
-          stim_final : torch.Tensor of shape (n_phos,) 
-              The updated amplitude vector that yields a more uniform brightness.
-        """
+    def run(self, stim_init: torch.Tensor, verbose=False) -> torch.Tensor:
         stim = stim_init.clone()
+        self.loss_history = []  # To store loss values for each iteration
 
-        for step_idx in range(self.steps):
-            # Generate the current phosphene image
+        # Optionally use tqdm for iteration progress
+        iterator = range(self.steps)
+        if verbose:
+            from tqdm import tqdm
+            iterator = tqdm(iterator, desc="Iterations", unit="iter")
+
+        for step_idx in iterator:
             self.simulator.reset()
-            phos_image = self.simulator(stim)  # shape [H,W], a torch Tensor
+            phos_image = self.simulator(stim)  # shape: [H, W], a torch.Tensor
 
-            # measure brightness
+            # Use the vectorized brightness measurement (see _measure_brightness_vectorized below)
             brightness = self._measure_brightness(phos_image)
-
-            # choose target T
+            
+            # Choose target T
             if self.target is None:
                 nonzero = brightness[brightness > 1e-12]
-                T = np.mean(nonzero) if len(nonzero) > 0 else 1.0
+                T = torch.mean(nonzero) if len(nonzero) > 0 else 1.0
             else:
                 T = self.target
 
-            # partial update
-            new_stim = []
-            for i in range(self.n_phos):
-                oldA = stim[i].item()
-                meas = brightness[i]
-                if meas < 1e-12:
-                    # small => boost
-                    updated = oldA * 1.1
-                else:
-                    ratio = T / meas
-                    updated = oldA * (1.0 + self.learning_rate * (ratio - 1.0))
+            loss = torch.mean((brightness - T)**2)
+            self.loss_history.append(loss.item())
+            if verbose:
+                iterator.set_description(f"Loss = {loss.item():.4f}")
 
-                # clamp
-                updated = max(self.A_min, min(self.A_max, updated))
-                new_stim.append(updated)
-
-            stim = torch.tensor(new_stim, device=stim.device, dtype=stim.dtype)
+            # Vectorize the electrode update as well
+            # Avoid division by zero by adding a small epsilon.
+            epsilon = 1e-12
+            ratio = T / (brightness + epsilon)
+            stim = stim * (1.0 + self.learning_rate * (ratio - 1.0))
+            stim = torch.clamp(stim, self.A_min, self.A_max)
 
         self.weights = stim / self.A_max
-
         return stim
 
-    def _measure_brightness(self, phos_image: torch.Tensor) -> np.ndarray:
+    def _measure_brightness(self, phos_image: torch.Tensor) -> torch.Tensor:
         """
-        For each electrode, measure brightness in phos_image around 
-        a patch whose size depends on radial distance from self.center.
+        Fully vectorized brightness measurement.
+        For each electrode, extract a patch from the phosphene image around the electrode's
+        pixel location. The patch size is determined by:
         
-        Returns a NumPy array shape [n_phos].
+            half_n = round(base_size + scale * r)
+        
+        where r is the radial distance (in degrees) from self.center.
+        
+        This implementation uses torch.nn.functional.grid_sample to extract patches in parallel.
+        
+        Returns:
+        brightness_tensor : torch.Tensor of shape [n_phos]
+            The brightness value for each electrode.
         """
-        # Convert to numpy
-        if isinstance(phos_image, torch.Tensor):
-            phos_image = phos_image.cpu().numpy()
+        # Ensure phos_image is 2D [H, W]
+        assert phos_image.dim() == 2, "phos_image must be a 2D tensor"
+        
+        # Add batch and channel dimensions: shape (1, 1, H, W)
+        phos_image = phos_image.unsqueeze(0).unsqueeze(0)  # (1, 1, H, W)
+        H, W = phos_image.shape[-2:]
+        device = phos_image.device
 
-        H, W = phos_image.shape
-        brightness = np.zeros(self.n_phos, dtype=float)
+        # Move electrode coordinates to the proper device and type
+        phos_x = self.phos_x.to(device=device, dtype=torch.float32)  # shape: (N,)
+        phos_y = self.phos_y.to(device=device, dtype=torch.float32)  # shape: (N,)
+        N = self.n_phos
 
+        # Add a small epsilon to avoid division by zero in case the FoV is zero or very small.
+        eps = 1e-6
+
+        # Convert electrode coordinates (in degrees) to pixel coordinates.
+        # (x_deg - x_min) / (x_max - x_min) * (W - 1)
+        px = (phos_x - self.x_min) / ((self.x_max - self.x_min) + eps) * (W - 1)
+        py = (phos_y - self.y_min) / ((self.y_max - self.y_min) + eps) * (H - 1)
+
+        # Compute radial distance for each electrode (in degrees)
         cx, cy = self.center
+        rx = phos_x - cx
+        ry = phos_y - cy
+        r = torch.sqrt(rx**2 + ry**2)  # shape: (N,)
 
-        def to_pixel_coords(x_deg, y_deg):
-            px = (x_deg - self.x_min) / (self.x_max - self.x_min) * (W - 1)
-            py = (y_deg - self.y_min) / (self.y_max - self.y_min) * (H - 1)
-            return int(round(px)), int(round(py))
+        # Compute half patch size for each electrode: half_n = round(base_size + scale * r)
+        half_n = torch.round(self.base_size + self.scale * r).to(torch.int64)
+        half_n = torch.clamp(half_n, min=1)
+        
+        # Use the maximum half-size among electrodes to define a uniform patch size.
+        H_max = int(half_n.max().item())
+        K = 2 * H_max + 1  # Patch size for all electrodes
 
-        for i in range(self.n_phos):
-            # radial distance
-            rx = self.phos_x[i] - cx
-            ry = self.phos_y[i] - cy
-            r_i = np.sqrt(rx**2 + ry**2)
+        # Create a base grid of offsets of shape (K, K) ranging from -H_max to H_max
+        linspace = torch.linspace(-H_max, H_max, steps=K, device=device)
+        y_offsets, x_offsets = torch.meshgrid(linspace, linspace, indexing='ij')  # Both shape: (K, K)
 
-            half_n = int(round(self.base_size + self.scale * r_i))
-            half_n = max(half_n, 1)
+        # Expand the base grid to each electrode: for each electrode, the grid is centered at (px,py)
+        px_exp = px.view(N, 1, 1)  # (N,1,1)
+        py_exp = py.view(N, 1, 1)  # (N,1,1)
+        grid_x = px_exp + x_offsets  # (N, K, K)
+        grid_y = py_exp + y_offsets  # (N, K, K)
+        grid = torch.stack((grid_x, grid_y), dim=-1)  # (N, K, K, 2)
 
-            px, py = to_pixel_coords(self.phos_x[i], self.phos_y[i])
+        # Convert grid from pixel coordinates to normalized coordinates in [-1, 1]
+        grid[..., 0] = grid[..., 0] / (W - 1) * 2 - 1
+        grid[..., 1] = grid[..., 1] / (H - 1) * 2 - 1
 
-            vals = []
-            for dx in range(-half_n, half_n+1):
-                for dy in range(-half_n, half_n+1):
-                    qx = px + dx
-                    qy = py + dy
-                    if 0 <= qx < W and 0 <= qy < H:
-                        vals.append(phos_image[qy, qx])
+        # Expand phos_image along the batch dimension so that we have one copy per electrode.
+        phos_image_exp = phos_image.expand(N, -1, -1, -1)  # (N, 1, H, W)
 
-            brightness[i] = np.mean(vals) if vals else 0.0
+        # Use grid_sample to extract patches.
+        # Set padding_mode='zeros' to avoid NaNs for out-of-bound coordinates.
+        patches = F.grid_sample(phos_image_exp, grid, mode='bilinear', align_corners=True, padding_mode='zeros')
+        patches = patches.squeeze(1)  # (N, K, K)
 
-        return brightness
+        # Create a binary mask for valid pixels for each electrode.
+        # For electrode i, valid if |offset| <= half_n[i] for both x and y.
+        abs_x = x_offsets.unsqueeze(0).expand(N, -1, -1)  # (N, K, K)
+        abs_y = y_offsets.unsqueeze(0).expand(N, -1, -1)  # (N, K, K)
+        half_n_exp = half_n.view(N, 1, 1).float()  # (N,1,1)
+        mask = ((abs_x <= half_n_exp) & (abs_y <= half_n_exp)).float()  # (N, K, K)
+
+        # Compute the masked average brightness per electrode.
+        weighted_sum = (patches * mask).view(N, -1).sum(dim=1)
+        valid_counts = mask.view(N, -1).sum(dim=1)
+        brightness_tensor = weighted_sum / (valid_counts + 1e-12)  # (N,)
+
+        return brightness_tensor

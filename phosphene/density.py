@@ -197,8 +197,7 @@ class VisualFieldMapper:
         density_map_clamped = np.copy(density_map)
         density_map_clamped[density_map_clamped < 1e-16] = 1e-16
 
-
-        sigma_fov = 1.0 / (np.pi * np.sqrt(density_map_clamped))
+        sigma_fov = np.sqrt(np.log(2)) / (np.pi * np.sqrt(density_map_clamped))
 
         if space == "fov":
             return sigma_fov
