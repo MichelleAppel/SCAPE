@@ -1,0 +1,24 @@
+Description:
+    model_name: 256x256_LaPa
+
+general:
+    batch_size: 1
+    device: 'cuda:0' 
+    gpu : 0
+    save_path : ./out/256x256_LaPa/
+    project_name: 'viseon_exp1'
+    run_name: '256x256_LaPa'
+    entity: 'michelleappel'
+    model_log_freq: 16
+    save_output: [input, target, dilated_target, stimulation, stimulation_square, target_stimulus, target_stimulus_square, target_phosphenes, phosphenes, reconstruction]
+
+dataset:
+    dataset: LaPa
+    target: ['boundary'] # choose from 'semantic', 'boundary'
+    data_directory : ../../data/face/LaPa
+    debug_subset: False
+    grayscale: False
+    circular_mask: False
+    imsize: [256, 256]
+    retinal_compression: False
+    fov: 16

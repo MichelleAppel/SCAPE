@@ -422,6 +422,7 @@ class ModulatedConv2d(torch.nn.Module):
                  in_channels,
                  out_channels,
                  kernel_size,
+                 modulation_kernel_size,
                  dilation=1,
                  padding_mode='reflect',
                  kernel_type="gaussian_modulated",
@@ -439,7 +440,7 @@ class ModulatedConv2d(torch.nn.Module):
 
         if kernel_type in ["gaussian_modulated", "log", "gaussian", "laplacian"]:
             self.input_modulation = UnifiedInputModulation(
-                kernel_size=kernel_size,
+                kernel_size=modulation_kernel_size,
                 kernel_type=kernel_type,
                 dilation=dilation,
                 padding_mode=padding_mode,
