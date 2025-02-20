@@ -22,7 +22,7 @@ display:
 
 # for sampling from images/video
 sampling:
-  sampling_method: receptive_fields #receptive_fields or center
+  sampling_method: center #receptive_fields or center
   RF_size: 0.5 # millimeters of cortical surface (when sampling receptive fields)
   stimulus_scale: 300.e-6 # Only used when the sample_stimulus method is called with 'rescale=True'. The default behaviour
                        # is no scaling (i.e., the stim amplitude equals the intensity of the sampled image).
