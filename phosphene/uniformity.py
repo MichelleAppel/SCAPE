@@ -59,6 +59,10 @@ class DynamicAmplitudeNormalizer:
         for step_idx in iterator:
             self.simulator.reset()
             phos_image = self.simulator(stim)  # shape: [H, W], a torch.Tensor
+            # Ensure phos_image is 2D [H, W]
+            if phos_image.ndim == 3:
+                phos_image = phos_image[0]
+                
 
             # Use the vectorized brightness measurement (see _measure_brightness_vectorized below)
             brightness = self._measure_brightness(phos_image)
@@ -102,8 +106,9 @@ class DynamicAmplitudeNormalizer:
             The brightness value for each electrode.
         """
         # Ensure phos_image is 2D [H, W]
-        assert phos_image.dim() == 2, "phos_image must be a 2D tensor"
-        
+        if phos_image.ndim == 3:
+            phos_image = phos_image[0]
+
         # Add batch and channel dimensions: shape (1, 1, H, W)
         phos_image = phos_image.unsqueeze(0).unsqueeze(0)  # (1, 1, H, W)
         H, W = phos_image.shape[-2:]

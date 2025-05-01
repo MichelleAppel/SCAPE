@@ -3,3 +3,5 @@ out/
 __pycache__/
 *.pyc
 example_images/images/
+summaries/
+wandb/
