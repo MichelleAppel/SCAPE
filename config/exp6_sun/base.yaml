@@ -160,3 +160,23 @@ loss:
   pseudo_huber:
     delta: 1.0
     reduction: mean
+
+evaluate:
+  split: test
+  model_ckpt: out/LoG_sun/decoder_epoch01.pt       # path to the .pt you want
+  metrics:
+    - mse
+    - ssim
+    - vgg_perceptual
+    - lpips
+  batch_size: 1
+  num_workers: 0
+  num_images_eval: 5000 # number of images to evaluate
+  num_images_plot: 50 # number of images to plot
+  timing:
+    measure_inference: true
+  output:
+    out_dir: results/
+    results_dir: "${evaluate.output.out_dir}/${general.run_name}/"                              # where CSV + plots live
+    per_image_csv: per_image_metrics.csv                    # raw scores
+    summary_csv: summary_metrics.csv                        # mean ± std

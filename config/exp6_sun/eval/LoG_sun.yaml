@@ -1,0 +1,15 @@
+general:
+  run_name: 'LoG_sun'
+  out_dir: './out'
+  save_path: "${general.out_dir}/${general.run_name}/"
+  base_path: "config/exp6_sun/base.yaml"
+
+dataset:
+  # Choose one of the following processing methods:
+  # processing: 'grayscale'
+  # processing: 'canny'
+  processing: 'LoG'
+  # processing: 'random'
+
+evaluate:
+  model_ckpt: out/LoG_sun/decoder_epoch01.pt       # path to the .pt you want
