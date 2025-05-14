@@ -1,0 +1,9 @@
+general:
+  run_name: 'grayscale_sun'
+  out_dir: './out'
+  save_path: "${general.out_dir}/${general.run_name}/"
+  base_path: "config/exp6_sun/base.yaml"
+
+# ─── DATASET SELECTION ──────────────────────────────────────
+dataset:
+  processing: 'grayscale'

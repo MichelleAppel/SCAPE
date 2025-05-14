@@ -1,0 +1,10 @@
+general:
+  run_name: 'canny_sun'
+  out_dir: './out'
+  save_path: "${general.out_dir}/${general.run_name}/"
+  base_path: "config/exp6_sun/base.yaml"
+
+# ─── DATASET SELECTION ──────────────────────────────────────
+dataset:  
+  processing: 'canny'
+

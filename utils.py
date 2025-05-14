@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 import cv2
 import numpy as np
 
+from perlin_numpy import generate_perlin_noise_2d
+
 
 def robust_percentile_normalization(electrode: torch.Tensor,
                                    amplitude: float,
@@ -64,15 +66,47 @@ def generate_phosphenes(batch: dict,
         pre = (log - log.min()) / (log.max() - log.min() + 1e-8)
     elif method == 'canny':
         edges = []
+        # simple 3×3 square structuring element
+        kernel = np.ones((2, 2), np.uint8)
+
         for img in images.cpu().numpy():
-            c = cv2.Canny((img*255).transpose(1,2,0).astype(np.uint8),
-                          100, 200)
-            c = torch.tensor(c, device=device).unsqueeze(0).unsqueeze(0)
-            edges.append(c)
+            # 1) Canny edge detection
+            c = cv2.Canny(
+                (img * 255).transpose(1, 2, 0).astype(np.uint8),
+                100, 200
+            )
+            # 2) Dilate the binary edge map in OpenCV
+            c = cv2.dilate(c, kernel, iterations=1)
+
+            # 3) Convert to float32 so CUDA max_pool2d works
+            t = torch.tensor(c, device=device, dtype=torch.float32)
+            # 4) Binarize and add batch/channel dimensions
+            t = (t > 0).float().unsqueeze(0).unsqueeze(0)
+
+            edges.append(t)
+
+        # 5) Concatenate back into (B,1,H,W)
         pre = torch.cat(edges, dim=0)
+        # 6) Further dilate by one pixel via 3×3 max‐pool
+        pre = F.max_pool2d(pre, kernel_size=3, stride=1, padding=1)
+
     elif method == 'random':
-        rand = np.random.rand(H, W).astype(np.float32)
-        pre = torch.tensor(rand, device=device).unsqueeze(0).unsqueeze(0).repeat(B,1,1,1)
+        # H, W, B, device are already in scope
+        # Choose how many Perlin “tiles” you want:
+        tiles_x, tiles_y = 8, 8
+
+        # one line to get an H×W array of float64 in [0,1]
+        perlin = generate_perlin_noise_2d((H, W), (tiles_x, tiles_y))
+
+        # cast, move to GPU, add batch/channel dims exactly like before
+        pre = (
+            torch
+            .from_numpy(perlin.astype('float32'))
+            .to(device)
+            .unsqueeze(0)   # → (1, H, W)
+            .unsqueeze(0)   # → (1, 1, H, W)
+            .repeat(B,1,1,1)
+        )
     else:
         raise ValueError(f"Unknown processing method: {method}")
 
@@ -90,7 +124,7 @@ def generate_phosphenes(batch: dict,
     phos = simulator(stim)
     phos = phos.unsqueeze(1)
 
-    return pre, phos
+    return pre.detach(), phos.detach()
 
 
 def visualize_training_sample(batch: dict,

@@ -1,0 +1,18 @@
+general:
+  run_name: 'LoG_sun'
+  out_dir: './out'
+  save_path: "${general.out_dir}/${general.run_name}/"
+  base_path: "config/exp6_sun/base.yaml"
+
+# ─── DATASET SELECTION ──────────────────────────────────────
+dataset:
+  processing: 'LoG'
+  LoG: # LOG options
+    method: 'cortical'
+    kernel_size: 123
+    kernel_type: 'log'
+    dilation: 1
+    padding_mode: 'reflect'
+    kde_k: 16
+    kde_alpha: 1.0
+    beta: 0.55

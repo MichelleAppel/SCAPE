@@ -1,171 +1,126 @@
 import os
 from glob import glob
 
-import numpy as np
 import torch
+from torch.utils.data import Dataset
 import torchvision.transforms as T
 import torchvision.transforms.functional as F
-from PIL import Image, ImageFilter
-from torch.utils.data import Dataset
+from PIL import Image
+
+
+def get_dataset(cfg, split='train'):
+    """
+    Dispatch to the appropriate dataset loader based on cfg['dataset']['dataset'] (lowercase).
+    Returns (train_ds, val_ds) for 'train', or test_ds for 'test'.
+    """
+    ds_name = cfg['dataset']['dataset'].lower()
+    if ds_name == 'lapa':
+        return get_lapa_dataset(cfg, split)
+    elif ds_name in ('sun', 'sun397'):
+        return get_sun_dataset(cfg, split)
+    else:
+        raise ValueError(f"Unsupported dataset '{ds_name}'. Use 'lapa' or 'sun'.")
+
+
+class _ImageDirDataset(Dataset):
+    """
+    Simple image folder loader: assumes a directory with all images in one folder.
+    Returns dict with 'image' tensor on the configured device.
+    """
+    def __init__(self, image_dir, transform, device):
+        self.paths = sorted(glob(os.path.join(image_dir, '*.jpg')))
+        self.transform = transform
+        self.device = device
+
+    def __len__(self):
+        return len(self.paths)
+
+    def __getitem__(self, idx):
+        img = Image.open(self.paths[idx]).convert('RGB')
+        tensor = self.transform(img)
+        return {'image': tensor.to(self.device)}
+
+
+class _RecursiveImageDirDataset(Dataset):
+    """
+    Recursive image loader: finds all images under a directory tree.
+    """
+    def __init__(self, root_dir, transform, device):
+        pattern = os.path.join(root_dir, '**', '*.jpg')
+        self.paths = sorted(glob(pattern, recursive=True))
+        self.transform = transform
+        self.device = device
+
+    def __len__(self):
+        return len(self.paths)
+
+    def __getitem__(self, idx):
+        img = Image.open(self.paths[idx]).convert('RGB')
+        tensor = self.transform(img)
+        return {'image': tensor.to(self.device)}
 
 
 def get_lapa_dataset(cfg, split='train'):
+    """
+    Load LaPa images only (no labels) from <data_directory>/{split}/images/.
+    Simplifies original LaPaDataset to just image tensors.
+    """
+    ds_cfg = cfg['dataset']['lapa']
+    root = ds_cfg['data_directory']
+    device = cfg['general']['device']
+    imsize = cfg['dataset']['imsize']
+
+    transform = T.Compose([
+        T.Lambda(lambda img: F.center_crop(img, min(img.size))),
+        T.Resize(imsize),
+        T.ToTensor(),
+    ])
+
     if split == 'train':
-        trainset = LaPaDataset(cfg, mode='train')
-        valset = LaPaDataset(cfg, mode='val')
-        return trainset, valset
+        train_dir = os.path.join(root, 'train', 'images')
+        val_dir   = os.path.join(root, 'val',   'images')
+        train_ds = _ImageDirDataset(train_dir, transform, device)
+        val_ds   = _ImageDirDataset(val_dir,   transform, device)
+        return train_ds, val_ds
     elif split == 'test':
-        testset = LaPaDataset(cfg, mode='test')
-        return testset
+        test_dir = os.path.join(root, 'test', 'images')
+        return _ImageDirDataset(test_dir, transform, device)
     else:
-        raise ValueError(f"Invalid dataset split: {split}. Supported values are 'train', 'val', and 'test'.")
+        raise ValueError(f"Invalid split: {split}. Use 'train', 'val', or 'test'.")
 
-def create_circular_mask(h, w, center=None, radius=None):
 
-    if center is None:  # use the middle of the image
-        center = (int(w/2), int(h/2))
-    if radius is None:  # use the smallest distance between the center and image walls
-        radius = min(center[0], center[1], w-center[0], h-center[1])
+def get_sun_dataset(cfg, split='train'):
+    """
+    Load the SUN397 dataset images recursively from <data_directory>/SUN397/.
+    Since SUN397 has no official train/val split, returns the full set for any split.
+    """
+    ds_cfg = cfg['dataset']['sun']
+    root = ds_cfg['data_directory']
+    device = cfg['general']['device']
+    imsize = cfg['dataset']['imsize']
 
-    x = torch.arange(h)
-    Y, X = torch.meshgrid(x, x, indexing='ij')
-    dist_from_center = torch.sqrt((X - center[0])**2 + (Y-center[1])**2)
+    transform = T.Compose([
+        T.Lambda(lambda img: F.center_crop(img, min(img.size))),
+        T.Resize(imsize),
+        T.ToTensor(),
+    ])
 
-    mask = dist_from_center <= radius
-    return mask
+    dataset = _RecursiveImageDirDataset(root, transform, device)
+    seed = 0
+    torch.manual_seed(seed)
+    indices = torch.randperm(len(dataset), generator=torch.Generator().manual_seed(seed))
+    split_idx = int(0.8 * len(dataset))
+    train_indices = indices[:split_idx]
+    val_indices = indices[split_idx:split_idx + int(0.1 * len(dataset))]
+    test_indices = indices[split_idx + int(0.1 * len(dataset)):]
 
-class LaPaDataset(Dataset):
-    def __init__(self, cfg, mode='train'):
-        self.directory = cfg['dataset']['data_directory']
-        self.device = cfg['general']['device']
-        self.imsize = cfg['dataset']['imsize']
-        self.contour_size = cfg['dataset']['imsize']
-        self.grayscale = cfg['dataset']['grayscale']
-        self.semantic_labels = 'semantic' in cfg['dataset']['target']
-        self.contour_labels = 'boundary' in cfg['dataset']['target']
-        self.mode = mode
-        self.debug_subset = cfg['dataset']['debug_subset']
-        self.retinal_compression = cfg['dataset']['retinal_compression']
-        self.circular_mask = cfg['dataset']['circular_mask']
-        self.fov = cfg['dataset']['fov']
+    if split == 'train' or split == 'val':
+        train_ds = torch.utils.data.Subset(dataset, train_indices)
+        val_ds = torch.utils.data.Subset(dataset, val_indices)
+        return train_ds, val_ds
+    elif split == 'test':
+        dataset = torch.utils.data.Subset(dataset, test_indices)
+        return dataset
+    else:
+        raise ValueError(f"Invalid split: {split}. Use 'train', 'val', or 'test'.")
 
-        # Define paths to images and labels
-        self.image_paths, self.label_paths = self._get_paths()
-
-        if self.debug_subset:
-            self.image_paths = self.image_paths[:self.debug_subset]
-            self.label_paths = self.label_paths[:self.debug_subset]
-        
-        # Sort to ensure alignment of images and labels
-        self.image_paths.sort()
-        self.label_paths.sort()
-
-        self.img_transform = self._create_image_transform()
-        if self.semantic_labels:
-            self.semantic_transform = self._create_semantic_transform()
-        if self.contour_labels:
-            self.contour_transform = self._create_contour_transform()
-
-        if self.circular_mask:
-            self._mask = create_circular_mask(*self.imsize).view(1, *self.imsize)
-            self._labelmask = create_circular_mask(*self.contour_size).view(1, *self.contour_size)
-        else:
-            self._mask = None
-
-    def _get_paths(self):
-        if self.mode == 'train':
-            image_folder = 'train'
-            label_folder = 'train'
-        elif self.mode == 'val':
-            image_folder = 'val'
-            label_folder = 'val'
-        elif self.mode == 'test':
-            image_folder = 'test'
-            label_folder = 'test'
-        else:
-            raise ValueError(f"Invalid mode: {self.mode}. Supported values are 'train', 'val', and 'test'.")
-
-        image_paths = glob(os.path.join(self.directory, image_folder, 'images', '*.jpg'))
-        label_paths = glob(os.path.join(self.directory, label_folder, 'labels', '*.png')) if label_folder else [None] * len(image_paths)
-
-        return image_paths, label_paths
-
-    def _create_image_transform(self):
-        if self.retinal_compression:
-            from components.RetinalCompression import RetinalCompression
-            retinal_compression = RetinalCompression()
-
-            return T.Compose([
-                T.Lambda(lambda img: F.center_crop(img, min(img.size))),
-                T.Resize((256, 256), interpolation=T.InterpolationMode.NEAREST),
-                T.Lambda(lambda img: retinal_compression.single(
-                    image=np.array(img),
-                    fov=self.fov,
-                    out_size=self.imsize[0],
-                    inv=0,
-                    type=0,
-                    show=0,
-                    masking=1,
-                    series=1,
-                    masktype=0
-                )),
-                T.ToTensor()
-            ])
-        else:
-            return T.Compose([
-                T.Lambda(lambda img: F.center_crop(img, min(img.size))),
-                T.Resize(self.imsize),
-                T.ToTensor()
-            ])
-
-    def _create_semantic_transform(self):
-        return T.Compose([
-            T.Lambda(lambda img: F.center_crop(img, min(img.size))),
-            T.Resize(self.contour_size, interpolation=T.InterpolationMode.NEAREST),
-            T.Lambda(lambda img: torch.from_numpy(np.array(img)).long())
-        ])
-
-    def _create_contour_transform(self):
-        contour = lambda im: im.filter(ImageFilter.FIND_EDGES).point(lambda p: p > 1 and 255)
-        return T.Compose([
-            T.Lambda(lambda img: F.center_crop(img, min(img.size))),
-            T.Resize(self.contour_size, interpolation=T.InterpolationMode.NEAREST),
-            T.Lambda(contour),
-            T.ToTensor()
-        ])
-
-    def __len__(self):
-        return len(self.image_paths)
-
-    def __getitem__(self, idx):
-        # Load image and label
-        image = Image.open(self.image_paths[idx]).convert('RGB')
-        label = Image.open(self.label_paths[idx]).convert('L') if self.label_paths[idx] is not None else None
-
-        # Apply transformations
-        image = self.img_transform(image)
-        if self.semantic_labels and label is not None:
-            semantic = self.semantic_transform(label)
-        else:
-            semantic = None
-
-        if self.contour_labels and label is not None:
-            contour = self.contour_transform(label)
-        else:
-            contour = None
-
-        if self._mask is not None:
-            image = image * self._mask
-            if semantic is not None:
-                semantic = semantic * self._mask
-            if contour is not None:
-                contour = contour * self._labelmask
-
-        # Dictionary containing image, label and contours
-        batch = {'image': image.to(self.device)}
-        if self.semantic_labels and semantic is not None:
-            batch['segmentation_maps'] = semantic.to(self.device)
-        if self.contour_labels and contour is not None:
-            batch['contour'] = contour.to(self.device)
-
-        return batch

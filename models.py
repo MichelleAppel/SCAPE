@@ -141,6 +141,7 @@ def get_decoder(cfg):
     """
     Returns a Decoder instance based on config:
     cfg['model']['in_channels'], cfg['model']['out_channels']
+    
     """
     in_ch = cfg.get('model', {}).get('in_channels', 1)
     out_ch = cfg.get('model', {}).get('out_channels', 1)
@@ -161,7 +162,7 @@ def build_modulation_layer(cfg, simulator):
     # Instantiate mapper
     mapper = VisualFieldMapper(simulator=simulator)
     total_phos = cfg['general']['n_phosphenes']
-    method = cfg['modulation'].get('method', 'cortical')  # 'cortical' or 'kde'
+    method = cfg['dataset']['LoG'].get('method', 'cortical')  # 'cortical' or 'kde'
 
     # Build density map
     if method == 'cortical':
@@ -177,7 +178,7 @@ def build_modulation_layer(cfg, simulator):
     sigma_tensor = torch.tensor(sigma_map, device=device, dtype=torch.float32)
 
     # Create modulation layer
-    mod_cfg = cfg['modulation']
+    mod_cfg = cfg['dataset']['LoG']
     layer = UnifiedInputModulation(
         kernel_size=mod_cfg['kernel_size'],
         kernel_type=mod_cfg.get('kernel_type', 'log'),

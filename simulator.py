@@ -1,4 +1,6 @@
 import torch
+import numpy as np
+
 from dynaphos import utils, cortex_models
 from dynaphos.simulator import GaussianSimulator as PhospheneSimulator
 from phosphene.uniformity import DynamicAmplitudeNormalizer
@@ -17,9 +19,19 @@ def build_simulator(cfg):
     """
     # Load simulator parameters
     params = utils.load_params(cfg['general']['params'])
+    # set batch size 
+    params['run']['batch_size'] = cfg['train']['batch_size']
+    # set resolution if overwrite is set
+    if cfg['dataset'].get('overwrite_simulator_res', True):
+        print(f"Overwriting simulator resolution to {cfg['dataset']['imsize']}")
+        params['run']['resolution'] = cfg['dataset']['imsize']
     # Sample phosphene coordinates
     n_phos = cfg['general']['n_phosphenes']
-    coords = cortex_models.get_visual_field_coordinates_probabilistically(params, n_phos)
+
+    seed = cfg['general'].get('seed', None)
+    rng = np.random.default_rng(seed) if seed is not None else None
+
+    coords = cortex_models.get_visual_field_coordinates_probabilistically(params, n_phos, rng=rng)
     # Instantiate simulator
     sim = PhospheneSimulator(params, coords)
     return sim
@@ -46,7 +58,7 @@ def compute_stim_weights(simulator, cfg):
     """
     if not cfg['simulator'].get('use_normalization', False):
         # If normalization disabled, return uniform weights
-        return torch.ones(1, simulator.num_phosphenes, device=cfg['general']['device'])
+        return torch.ones(simulator.num_phosphenes, device=cfg['general']['device'])
 
     # Retrieve amplitude and thresholds
     amplitude = simulator.params['sampling']['stimulus_scale']
@@ -68,4 +80,4 @@ def compute_stim_weights(simulator, cfg):
     # Run normalization to adjust amplitudes
     normalizer.run(stim_init, verbose=True)
     # Return final weights
-    return normalizer.weights.unsqueeze(0).to(cfg['general']['device'])
+    return normalizer.weights.unsqueeze(1).to(cfg['general']['device'])

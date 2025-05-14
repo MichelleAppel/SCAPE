@@ -1,0 +1,10 @@
+general:
+  run_name: 'canny_LaPa'
+  out_dir: './out'
+  save_path: "${general.out_dir}/${general.run_name}/"
+  base_path: "config/exp5_lapa/base.yaml"
+
+# ─── DATASET SELECTION ──────────────────────────────────────
+dataset:  
+  processing: 'canny'
+
