@@ -4,7 +4,7 @@ run:
   view_angle: 16 #in degrees, horizontal view angle
   origin: [0,0]
   min_angle: 0.001 #in degrees, minimal eccentricity
-  fps: 30
+  fps: 24
   gpu: 0 #if using cuda, enter gpu nr here (e.g. 0)
   print_stats: False #print simulator values for sanity check
   seed: 42
