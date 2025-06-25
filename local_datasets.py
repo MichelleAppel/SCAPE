@@ -7,6 +7,15 @@ import torchvision.transforms as T
 import torchvision.transforms.functional as F
 from PIL import Image
 
+class ToWeightedGrayscale:
+    def __init__(self):
+        self.rgb_weights = torch.tensor([0.2126, 0.7152, 0.0722]).view(3, 1, 1)
+
+    def __call__(self, tensor):
+        if tensor.size(0) != 3:
+            raise ValueError("Expected RGB image (3 channels), got shape: {}".format(tensor.shape))
+        return (tensor * self.rgb_weights).sum(dim=0, keepdim=True)
+
 
 def get_dataset(cfg, split='train'):
     """
@@ -76,6 +85,14 @@ def get_lapa_dataset(cfg, split='train'):
         T.ToTensor(),
     ])
 
+    grayscale = cfg['dataset'].get('grayscale', True)
+
+    if grayscale:
+        transform = T.Compose([
+            transform,
+            ToWeightedGrayscale(),
+        ])
+
     if split == 'train':
         train_dir = os.path.join(root, 'train', 'images')
         val_dir   = os.path.join(root, 'val',   'images')
@@ -104,6 +121,14 @@ def get_sun_dataset(cfg, split='train'):
         T.Resize(imsize),
         T.ToTensor(),
     ])
+
+    grayscale = cfg['dataset'].get('grayscale', True)
+
+    if grayscale:
+        transform = T.Compose([
+            transform,
+            ToWeightedGrayscale(),
+        ])
 
     dataset = _RecursiveImageDirDataset(root, transform, device)
     seed = 0

@@ -1,8 +1,8 @@
 general:
-  run_name: 'random_sun'
+  run_name: 'random_LaPa'
   out_dir: './out'
   save_path: "${general.out_dir}/${general.run_name}/"
-  base_path: "config/exp6_sun/base.yaml"
+  base_path: "config/exp5_lapa/base.yaml"
 
 # ─── DATASET SELECTION ──────────────────────────────────────
 dataset:

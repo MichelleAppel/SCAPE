@@ -56,12 +56,11 @@ def generate_phosphenes(batch: dict,
 
     # Prepare stimulus based on method
     if method == 'grayscale':
-        pre = images.mean(dim=1, keepdim=True)
-    elif method == 'LoG':
-        gray = images.mean(dim=1, keepdim=True)
+        pre = images
+    elif method == 'DoG':
         if modulation_layer is None:
-            raise ValueError("Modulation layer is required for 'LoG' method.")
-        log = modulation_layer(gray)
+            raise ValueError("Modulation layer is required for 'DoG' method.")
+        log = modulation_layer(images)
         log = torch.clamp(log, 0.0, None)
         pre = (log - log.min()) / (log.max() - log.min() + 1e-8)
     elif method == 'canny':
@@ -73,7 +72,7 @@ def generate_phosphenes(batch: dict,
             # 1) Canny edge detection
             c = cv2.Canny(
                 (img * 255).transpose(1, 2, 0).astype(np.uint8),
-                100, 200
+                120, 200
             )
             # 2) Dilate the binary edge map in OpenCV
             c = cv2.dilate(c, kernel, iterations=1)
@@ -143,7 +142,7 @@ def visualize_training_sample(batch: dict,
       [4] Loss history (optional)
     """
     figs = plt.figure(figsize=(15, 5))
-    items = [batch['image'].mean(1, keepdim=True),
+    items = [batch['image'],
              stimulus, phosphene_inputs, reconstructions]
     titles = ['Input Image', 'Stimulus', 'Phosphenes', 'Reconstruction']
 

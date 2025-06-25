@@ -1,8 +1,8 @@
 general:
-  run_name: 'random_sun'
+  run_name: 'random_lapa'
   out_dir: './out'
   save_path: "${general.out_dir}/${general.run_name}/"
-  base_path: "config/exp6_sun/base.yaml"
+  base_path: "config/exp5_lapa/base.yaml"
 
 dataset:
   # Choose one of the following processing methods:
@@ -12,4 +12,4 @@ dataset:
   processing: 'random'
 
 evaluate:
-  model_ckpt: out/random_sun/decoder_epoch02.pt       # path to the .pt you want
+  model_ckpt: out/random_LaPa/decoder_epoch10.pt       # path to the .pt you want

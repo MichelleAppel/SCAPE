@@ -28,6 +28,7 @@ simulator:
 
 # ─── DATASET SELECTION ──────────────────────────────────────
 dataset:
+
   # ─── SELECT ONE ───────────────────────────────────────────
   # dataset: LaPa
   dataset: sun
@@ -35,19 +36,16 @@ dataset:
   # ─── BASE OPTIONS ───────────────────────────────────────────
   imsize: [256, 256]
   overwrite_simulator_res: True # If True, the simulator resolution will be set to the image size
+  grayscale: True # If True, the images will be converted to grayscale
 
   # Choose one of the following processing methods:
   # processing: 'grayscale'
   # processing: 'canny'
-  # processing: 'LoG'
+  # processing: 'DoG'
   # processing: 'random'
-  processing: 'LoG'
-  LoG: # LOG options
+  processing: 'Dog'
+  DoG: # LOG options
     method: 'cortical'
-    kernel_size: 123
-    kernel_type: 'log'
-    dilation: 1
-    padding_mode: 'reflect'
     kde_k: 16
     kde_alpha: 1.0
     beta: 0.55
@@ -69,7 +67,7 @@ model:
 
 train:
   epochs: 10
-  batch_size: 1
+  batch_size: 8
   lr: 5e-4
   weight_decay: 1e-5
   num_workers: 0
@@ -169,7 +167,7 @@ evaluate:
     - ssim
     - vgg_perceptual
     - lpips
-  batch_size: 1
+  batch_size: 8
   num_workers: 0
   num_images_eval: 5000 # number of images to evaluate
   num_images_plot: 50 # number of images to plot

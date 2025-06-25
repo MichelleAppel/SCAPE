@@ -3,7 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 from phosphene.density import VisualFieldMapper
-from components.modulated_conv2d import UnifiedInputModulation
+from components.SeparableModulated2d import SeparableModulatedConv2d
 
 # --- Helper blocks ---
 
@@ -162,7 +162,7 @@ def build_modulation_layer(cfg, simulator):
     # Instantiate mapper
     mapper = VisualFieldMapper(simulator=simulator)
     total_phos = cfg['general']['n_phosphenes']
-    method = cfg['dataset']['LoG'].get('method', 'cortical')  # 'cortical' or 'kde'
+    method = cfg['dataset']['DoG'].get('method', 'cortical')  # 'cortical' or 'kde'
 
     # Build density map
     if method == 'cortical':
@@ -178,13 +178,9 @@ def build_modulation_layer(cfg, simulator):
     sigma_tensor = torch.tensor(sigma_map, device=device, dtype=torch.float32)
 
     # Create modulation layer
-    mod_cfg = cfg['dataset']['LoG']
-    layer = UnifiedInputModulation(
-        kernel_size=mod_cfg['kernel_size'],
-        kernel_type=mod_cfg.get('kernel_type', 'log'),
-        sigma_map=sigma_tensor,
-        dilation=mod_cfg.get('dilation', 1),
-        padding_mode=mod_cfg.get('padding_mode', 'reflect')
+    layer = SeparableModulatedConv2d(
+        in_channels=1 if cfg['dataset']['grayscale'] else 3,
+        sigma_map=sigma_tensor
     )
     # Move to device and set eval
     layer = layer.to(device)

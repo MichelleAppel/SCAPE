@@ -86,7 +86,7 @@ def main():
     torch.use_deterministic_algorithms(False)
     stim_weights = compute_stim_weights(simulator, cfg)
     modulation_layer = (build_modulation_layer(cfg, simulator)
-                        if cfg['dataset']['processing'] == 'LoG' else None)
+                        if cfg['dataset']['processing'] == 'DoG' else None)
 
     # Metrics
     metric_names = cfg['evaluate']['metrics']

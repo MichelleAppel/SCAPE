@@ -75,8 +75,8 @@ def train(cfg):
     simulator = build_simulator(cfg)
     stim_weights = compute_stim_weights(simulator, cfg)
 
-    # 5. Optional modulation layer for LoG
-    if cfg['dataset']['processing'] == 'LoG':
+    # 5. Optional modulation layer for DoG
+    if cfg['dataset']['processing'] == 'DoG':
         modulation_layer = build_modulation_layer(cfg, simulator)
     else:
         modulation_layer = None
@@ -94,7 +94,7 @@ def train(cfg):
         epoch_loss = 0.0
         
         for batch_idx, batch in enumerate(dataloader, start=1):
-            images = batch['image'].to(device)
+            targets = batch['image'].to(device)
 
             # Generate phosphene inputs
             _, phos = generate_phosphenes(
@@ -104,7 +104,6 @@ def train(cfg):
 
             # Forward + loss
             outputs = decoder(phos)
-            targets = images.mean(dim=1, keepdim=True)
             loss = criterion(outputs, targets)
 
             optimizer.zero_grad()
