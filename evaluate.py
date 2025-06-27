@@ -37,10 +37,14 @@ def build_metric_modules(cfg, metric_names, device):
         'mse': 'MSE',
         'ssim': 'SSIMLoss',
         'lpips': 'LPIPSLoss',
-        'vgg_perceptual': 'VGGPerceptualLoss'
+        'vgg_perceptual': 'VGGPerceptualLoss',
+        'PieApp': 'PieAppLoss',
+        'FSIM': 'FSIMLoss',
+        'LPIPS': 'LPIPSLoss',
+        'DISTS': 'DISTS'
     }
     for m in metric_names:
-        loss_name = name_map.get(m, m)
+        loss_name = name_map.get(m, m) if isinstance(m, str) else m
         cfg_m = copy.deepcopy(cfg)
         cfg_m.setdefault('loss', {})
         cfg_m['loss']['loss_function'] = loss_name

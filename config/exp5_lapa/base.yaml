@@ -87,6 +87,9 @@ loss:
   # loss_function: DISTS
   # loss_function: PieAPP
   # loss_function: PseudoHuberLoss
+  # loss_function: MDSILoss
+  # loss_function: VSILoss
+  # loss_function: SRSIMLoss
   loss_function: HybridLoss
 
   # ─── FOR HYBRID ONLY ──────────────────────────────────────
@@ -157,11 +160,27 @@ loss:
     data_range: 1.0
     stride: 27
     enable_grad: true
+    abs: true
 
   # ─── PseudoHuberLoss ────────────────────────────────────
   pseudo_huber:
     delta: 1.0
     reduction: mean
+
+  # ─── MDSILoss ───────────────────────────────────────────
+  mdsi:
+    reduction: mean
+    data_range: 1.0
+
+  # ─── VSILoss ────────────────────────────────────────────
+  vsi:
+    reduction: mean
+    data_range: 1.0
+
+  # ─── SRSIMLoss ──────────────────────────────────────────
+  srsim:
+    reduction: mean
+    data_range: 1.0
 
 evaluate:
   split: test
@@ -171,10 +190,16 @@ evaluate:
     - ssim
     - vgg_perceptual
     - lpips
+    - fsim
+    - dists
+    - pieapp
+    - mdsi
+    - vsi
+    - srsim
   batch_size: 8
   num_workers: 0
-  num_images_eval: 5000 # number of images to evaluate
-  num_images_plot: 50 # number of images to plot
+  num_images_eval: 1000 # number of images to evaluate
+  num_images_plot: 20 # number of images to plot
   timing:
     measure_inference: true
   output:

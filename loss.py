@@ -24,43 +24,52 @@ def get_loss(cfg):
     Each individual loss may have its own nested config under cfg['loss'],
     e.g. cfg['loss']['ssim'] or cfg['loss']['lpips'], etc.
     """
-    name = cfg['loss']['loss_function']
-    if name == 'HybridLoss':
+    name = cfg['loss']['loss_function'].lower()
+    if name == 'HybridLoss'.lower():
         return HybridLoss(
             loss_names=cfg['loss']['losses'],
             weights=cfg['loss']['weights'],
             cfg=cfg
         )
-    elif name == 'InformationWeightedSSIMLoss':
+    elif name == 'InformationWeightedSSIMLoss'.lower():
         return InformationWeightedSSIMLoss(
             data_range=cfg['loss'].get('data_range', 1.0),
             reduction=cfg['loss'].get('reduction', 'mean')
         )
-    elif name == 'MSE':
+    elif name == 'MSE'.lower() or name == 'MSELoss'.lower():
         return MSE(
             reduction=cfg['loss'].get('reduction', 'mean')
         )
-    elif name in ('SSIM', 'SSIMLoss'):
+    elif name in ('SSIM'.lower(), 'SSIMLoss'.lower()):
         params = cfg['loss'].get('ssim', {})
         return SSIMLoss(**params)
-    elif name in ('LPIPS', 'LPIPSLoss'):
+    elif name in ('LPIPS'.lower(), 'LPIPSLoss'.lower()):
         params = cfg['loss'].get('lpips', {})
         return LPIPSLoss(**params)
-    elif name in ('VGGPerceptualLoss', 'ContentLoss'):
+    elif name in ('VGGPerceptualLoss'.lower(), 'ContentLoss'.lower()):
         params = cfg['loss'].get('vgg', {})
         return VGGPerceptualLoss(**params)
-    elif name in ('FSIM', 'FSIMLoss'):
+    elif name in ('FSIM'.lower(), 'FSIMLoss'.lower()):
         params = cfg['loss'].get('fsim', {})
         return FSIMLoss(**params)
-    elif name in ('DISTS', 'DISTSLoss'):
+    elif name in ('DISTS'.lower(), 'DISTSLoss'.lower()):
         params = cfg['loss'].get('dists', {})
         return DISTSLoss(**params)
-    elif name in ('PieAPP', 'PieAPPLoss'):
+    elif name in ('PieAPP'.lower(), 'PieAPPLoss'.lower()):
         params = cfg['loss'].get('pieapp', {})
         return PieAPPLoss(**params)
-    elif name in ('PseudoHuberLoss', 'PseudoHuber'):
+    elif name in ('PseudoHuberLoss'.lower(), 'PseudoHuber'.lower()):
         params = cfg['loss'].get('pseudo_huber', {})
         return PseudoHuberLoss(**params)
+    elif name in ('MDSI'.lower(), 'MDSILoss'.lower()):
+        params = cfg['loss'].get('mdsi', {})
+        return MDSILoss(**params)
+    elif name in ('VSI'.lower(), 'VSILoss'.lower()):
+        params = cfg['loss'].get('vsi', {})
+        return VSILoss(**params)
+    elif name in ('SRSIM'.lower(), 'SRSIMLoss'.lower()):
+        params = cfg['loss'].get('srsim', {})
+        return SRSIMLoss(**params)
     else:
         raise ValueError(f"Unknown loss function: {name}.")
 
@@ -271,7 +280,8 @@ class PieAPPLoss(torch.nn.Module):
                  reduction: str = 'mean',
                  data_range: float = 1.0,
                  stride: int = 27,
-                 enable_grad: bool = True):
+                 enable_grad: bool = True,
+                 abs: bool = False):
         super().__init__()
         self.loss_fn = piq.PieAPP(
             reduction=reduction,
@@ -279,9 +289,13 @@ class PieAPPLoss(torch.nn.Module):
             stride=stride,
             enable_grad=enable_grad
         )
+        self.abs = abs
 
     def forward(self, recon: torch.Tensor, target: torch.Tensor) -> torch.Tensor:
-        return self.loss_fn(recon, target)
+        if self.abs:
+            return torch.abs(self.loss_fn(recon, target))
+        else:
+            return self.loss_fn(recon, target)
 
 class PseudoHuberLoss(torch.nn.Module):
     """
@@ -310,3 +324,36 @@ class PseudoHuberLoss(torch.nn.Module):
             return loss.sum()
         else:  # 'none'
             return loss
+        
+class MDSILoss(torch.nn.Module):
+    """
+    Multi-Dimensional Similarity Index (MDSI) Loss.
+    """
+    def __init__(self, reduction: str = 'mean', data_range: float = 1.0):
+        super().__init__()
+        self.loss_fn = piq.MDSILoss(reduction=reduction, data_range=data_range)
+
+    def forward(self, recon: torch.Tensor, target: torch.Tensor) -> torch.Tensor:
+        return self.loss_fn(recon, target)
+    
+class VSILoss(torch.nn.Module):
+    """
+    Visual Saliency Index (VSI) Loss.
+    """
+    def __init__(self, reduction: str = 'mean', data_range: float = 1.0):
+        super().__init__()
+        self.loss_fn = piq.VSILoss(reduction=reduction, data_range=data_range)
+
+    def forward(self, recon: torch.Tensor, target: torch.Tensor) -> torch.Tensor:
+        return self.loss_fn(recon, target)
+    
+class SRSIMLoss(torch.nn.Module):
+    """
+    Spatially Resolved Structural Similarity Index (SRSIM) Loss.
+    """
+    def __init__(self, reduction: str = 'mean', data_range: float = 1.0):
+        super().__init__()
+        self.loss_fn = piq.SRSIMLoss(reduction=reduction, data_range=data_range)
+
+    def forward(self, recon: torch.Tensor, target: torch.Tensor) -> torch.Tensor:
+        return self.loss_fn(recon, target)
