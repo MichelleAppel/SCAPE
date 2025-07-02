@@ -58,7 +58,7 @@ class DynamicAmplitudeNormalizer:
 
         for step_idx in iterator:
             self.simulator.reset()
-            phos_image = self.simulator(stim)  # shape: [H, W], a torch.Tensor
+            phos_image = self.simulator(stim.cuda())  # shape: [H, W], a torch.Tensor
             # Ensure phos_image is 2D [H, W]
             if phos_image.ndim == 3:
                 phos_image = phos_image[0]
@@ -177,3 +177,4 @@ class DynamicAmplitudeNormalizer:
         brightness_tensor = weighted_sum / (valid_counts + 1e-12)  # (N,)
 
         return brightness_tensor
+

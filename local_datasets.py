@@ -2,39 +2,111 @@ import os
 from glob import glob
 
 import torch
-from torch.utils.data import Dataset
+from torch.utils.data import Dataset, Subset
 import torchvision.transforms as T
 import torchvision.transforms.functional as F
 from PIL import Image
 
+
 class ToWeightedGrayscale:
+    """
+    Convert an RGB tensor [3,H,W] to weighted grayscale [1,H,W].
+    """
     def __init__(self):
         self.rgb_weights = torch.tensor([0.2126, 0.7152, 0.0722]).view(3, 1, 1)
 
     def __call__(self, tensor):
-        if tensor.size(0) != 3:
-            raise ValueError("Expected RGB image (3 channels), got shape: {}".format(tensor.shape))
-        return (tensor * self.rgb_weights).sum(dim=0, keepdim=True)
+        if tensor.dim() != 3 or tensor.size(0) != 3:
+            raise ValueError(f"Expected RGB image tensor of shape [3,H,W], got {tensor.shape}")
+        gray = (tensor * self.rgb_weights).sum(dim=0, keepdim=True)
+        return gray
 
 
 def get_dataset(cfg, split='train'):
     """
-    Dispatch to the appropriate dataset loader based on cfg['dataset']['dataset'] (lowercase).
-    Returns (train_ds, val_ds) for 'train', or test_ds for 'test'.
+    Load train/val/test datasets based on cfg['dataset']['dataset'].
+    Returns (train_ds, val_ds) for 'train', or a single dataset for 'val'/'test'.
     """
-    ds_name = cfg['dataset']['dataset'].lower()
-    if ds_name == 'lapa':
+    name = cfg['dataset']['dataset'].lower()
+    if name == 'lapa':
         return get_lapa_dataset(cfg, split)
-    elif ds_name in ('sun', 'sun397'):
+    elif name in ('sun', 'sun397'):
         return get_sun_dataset(cfg, split)
+    elif name == 'coco':
+        return get_coco_dataset(cfg, split)
     else:
-        raise ValueError(f"Unsupported dataset '{ds_name}'. Use 'lapa' or 'sun'.")
+        raise ValueError(f"Unsupported dataset '{name}'. Use 'lapa', 'sun', or 'coco'.")
+
+
+class _CocoImageDataset(Dataset):
+    """
+    Wrap a torchvision.datasets.CocoDetection to return only image tensors in a dict.
+    """
+    def __init__(self, coco_ds):
+        self.coco_ds = coco_ds
+
+    def __len__(self):
+        return len(self.coco_ds)
+
+    def __getitem__(self, idx):
+        img, _ = self.coco_ds[idx]
+        return {'image': img}
+
+
+def get_coco_dataset(cfg, split='train'):
+    """
+    Load COCO Detection dataset. Returns (train_ds, val_ds) for 'train', else single dataset.
+    Wraps outputs so each sample is a dict with only 'image'.
+    Expects cfg['dataset']['coco'] keys:
+      - data_directory: path to COCO base folder
+      - image_dir_<split>: subfolder for images (default <split>2017)
+      - ann_file_<split>: annotation JSON (default annotations/instances_<split>2017.json)
+      - grayscale: bool
+      - imsize: resize size
+    """
+    from torchvision.datasets import CocoDetection
+
+    coco_cfg = cfg['dataset']['coco']
+    base = coco_cfg['data_directory'].rstrip('/')
+    imsize = cfg['dataset']['imsize']
+    grayscale = coco_cfg.get('grayscale', True)
+
+    # build transforms for image
+    transforms_list = [
+        T.Lambda(lambda img: F.center_crop(img, min(img.size))),
+        T.Resize(imsize),
+        T.ToTensor(),
+    ]
+    if grayscale:
+        transforms_list.append(ToWeightedGrayscale())
+    transform = T.Compose(transforms_list)
+
+    def make_base_ds(split_key):
+        img_dir_name = coco_cfg.get(f'image_dir_{split_key}', f'{split_key}2017')
+        ann_file_name = coco_cfg.get(
+            f'ann_file_{split_key}', f'annotations/instances_{split_key}2017.json'
+        )
+        img_dir = os.path.join(base, img_dir_name)
+        ann_fp = os.path.join(base, ann_file_name)
+        return CocoDetection(root=img_dir, annFile=ann_fp, transform=transform)
+
+    if split == 'train':
+        base_train = make_base_ds('train')
+        base_val = make_base_ds('val')
+        return _CocoImageDataset(base_train), _CocoImageDataset(base_val)
+    elif split == 'val':
+        base_val = make_base_ds('val')
+        return _CocoImageDataset(base_val)
+    elif split == 'test':
+        base_test = make_base_ds('test')
+        return _CocoImageDataset(base_test)
+    else:
+        raise ValueError(f"Invalid split '{split}'. Use 'train', 'val', or 'test'.")
 
 
 class _ImageDirDataset(Dataset):
     """
-    Simple image folder loader: assumes a directory with all images in one folder.
-    Returns dict with 'image' tensor on the configured device.
+    Load all JPGs in a flat directory, returning {'image': tensor}.
     """
     def __init__(self, image_dir, transform, device):
         self.paths = sorted(glob(os.path.join(image_dir, '*.jpg')))
@@ -52,7 +124,7 @@ class _ImageDirDataset(Dataset):
 
 class _RecursiveImageDirDataset(Dataset):
     """
-    Recursive image loader: finds all images under a directory tree.
+    Recursively load all JPGs under root_dir, returning {'image': tensor}.
     """
     def __init__(self, root_dir, transform, device):
         pattern = os.path.join(root_dir, '**', '*.jpg')
@@ -70,82 +142,65 @@ class _RecursiveImageDirDataset(Dataset):
 
 
 def get_lapa_dataset(cfg, split='train'):
-    """
-    Load LaPa images only (no labels) from <data_directory>/{split}/images/.
-    Simplifies original LaPaDataset to just image tensors.
-    """
     ds_cfg = cfg['dataset']['lapa']
-    root = ds_cfg['data_directory']
+    base = ds_cfg['data_directory']
     device = cfg['general']['device']
     imsize = cfg['dataset']['imsize']
+    grayscale = ds_cfg.get('grayscale', True)
 
-    transform = T.Compose([
+    transforms_list = [
         T.Lambda(lambda img: F.center_crop(img, min(img.size))),
         T.Resize(imsize),
         T.ToTensor(),
-    ])
-
-    grayscale = cfg['dataset'].get('grayscale', True)
-
+    ]
     if grayscale:
-        transform = T.Compose([
-            transform,
-            ToWeightedGrayscale(),
-        ])
+        transforms_list.append(ToWeightedGrayscale())
+    transform = T.Compose(transforms_list)
+
+    train_dir = os.path.join(base, 'train', 'images')
+    val_dir = os.path.join(base, 'val', 'images')
+    test_dir = os.path.join(base, 'test', 'images')
 
     if split == 'train':
-        train_dir = os.path.join(root, 'train', 'images')
-        val_dir   = os.path.join(root, 'val',   'images')
-        train_ds = _ImageDirDataset(train_dir, transform, device)
-        val_ds   = _ImageDirDataset(val_dir,   transform, device)
-        return train_ds, val_ds
+        return (_ImageDirDataset(train_dir, transform, device),
+                _ImageDirDataset(val_dir, transform, device))
     elif split == 'test':
-        test_dir = os.path.join(root, 'test', 'images')
         return _ImageDirDataset(test_dir, transform, device)
     else:
-        raise ValueError(f"Invalid split: {split}. Use 'train', 'val', or 'test'.")
+        raise ValueError(f"Invalid split '{split}'. Use 'train' or 'test'.")
 
 
 def get_sun_dataset(cfg, split='train'):
-    """
-    Load the SUN397 dataset images recursively from <data_directory>/SUN397/.
-    Since SUN397 has no official train/val split, returns the full set for any split.
-    """
     ds_cfg = cfg['dataset']['sun']
-    root = ds_cfg['data_directory']
+    base = ds_cfg['data_directory']
     device = cfg['general']['device']
     imsize = cfg['dataset']['imsize']
+    grayscale = ds_cfg.get('grayscale', True)
 
-    transform = T.Compose([
+    transforms_list = [
         T.Lambda(lambda img: F.center_crop(img, min(img.size))),
         T.Resize(imsize),
         T.ToTensor(),
-    ])
-
-    grayscale = cfg['dataset'].get('grayscale', True)
-
+    ]
     if grayscale:
-        transform = T.Compose([
-            transform,
-            ToWeightedGrayscale(),
-        ])
+        transforms_list.append(ToWeightedGrayscale())
+    transform = T.Compose(transforms_list)
 
-    dataset = _RecursiveImageDirDataset(root, transform, device)
-    seed = 0
-    torch.manual_seed(seed)
-    indices = torch.randperm(len(dataset), generator=torch.Generator().manual_seed(seed))
-    split_idx = int(0.8 * len(dataset))
-    train_indices = indices[:split_idx]
-    val_indices = indices[split_idx:split_idx + int(0.1 * len(dataset))]
-    test_indices = indices[split_idx + int(0.1 * len(dataset)):]
+    dataset = _RecursiveImageDirDataset(base, transform, device)
+    total = len(dataset)
+    indices = torch.randperm(total, generator=torch.Generator().manual_seed(0))
+    train_end = int(0.8 * total)
+    val_end = train_end + int(0.1 * total)
 
-    if split == 'train' or split == 'val':
-        train_ds = torch.utils.data.Subset(dataset, train_indices)
-        val_ds = torch.utils.data.Subset(dataset, val_indices)
-        return train_ds, val_ds
+    train_idx = indices[:train_end]
+    val_idx = indices[train_end:val_end]
+    test_idx = indices[val_end:]
+
+    if split == 'train':
+        return Subset(dataset, train_idx), Subset(dataset, val_idx)
+    elif split == 'val':
+        return Subset(dataset, val_idx)
     elif split == 'test':
-        dataset = torch.utils.data.Subset(dataset, test_indices)
-        return dataset
+        return Subset(dataset, test_idx)
     else:
-        raise ValueError(f"Invalid split: {split}. Use 'train', 'val', or 'test'.")
-
+        raise ValueError(f"Invalid split '{split}'. Use 'train', 'val', or 'test'.")

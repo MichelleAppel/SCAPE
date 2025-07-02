@@ -1,0 +1,14 @@
+general:
+  run_name: 'DoG_coco'
+  out_dir: './out'
+  save_path: "${general.out_dir}/${general.run_name}/"
+  base_path: "config/exp7_coco/base.yaml"
+
+# ─── DATASET SELECTION ──────────────────────────────────────
+dataset:
+  processing: 'DoG'
+  DoG: # DoG options
+    method: 'cortical'
+    kde_k: 16
+    kde_alpha: 1.0
+    beta: 0.55

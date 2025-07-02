@@ -1,0 +1,15 @@
+general:
+  run_name: 'random_sun'
+  out_dir: './out'
+  save_path: "${general.out_dir}/${general.run_name}/"
+  base_path: "config/exp7_coco/base.yaml"
+
+dataset:
+  # Choose one of the following processing methods:
+  # processing: 'grayscale'
+  # processing: 'canny'
+  # processing: 'DoG'
+  processing: 'random'
+
+evaluate:
+  model_ckpt: out/random_sun/decoder_epoch02.pt       # path to the .pt you want

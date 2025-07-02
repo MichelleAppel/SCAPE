@@ -1,0 +1,9 @@
+general:
+  run_name: 'grayscale_coco'
+  out_dir: './out'
+  save_path: "${general.out_dir}/${general.run_name}/"
+  base_path: "config/exp7_coco/base.yaml"
+
+# ─── DATASET SELECTION ──────────────────────────────────────
+dataset:
+  processing: 'grayscale'
