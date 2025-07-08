@@ -1,0 +1,111 @@
+\section{Methods}
+
+\subsection{Phosphene Simulation Framework}
+To assess SCAPE under conditions that approximate clinical prosthetic vision we employ the simulator of van der Grinten et al.\ \cite{vanderGrinten2024}. This pipeline models key aspects of cortical stimulation, including the retinotopic projection of electrodes into visual-field coordinates and the rendering of each electrode’s percept as a Gaussian phosphene. The resulting phosphene image captures the spatial layout of perceptual activations and serves as the input for SCAPE’s adaptive encoding stages.
+
+
+\subsubsection{Implant Configuration}
+The simulator accepts as input the two-dimensional cortical coordinates of \(N\) electrodes and computes their corresponding phosphene centers in visual-field space:
+\[
+\{(\mu_{x,i},\mu_{y,i})\}_{i=1}^N,
+\]
+where each \(\mu_{x,i},\mu_{y,i}\) is expressed in degrees of visual angle. SCAPE uses these phosphene centers to estimate local sampling density and to guide its shift-variant filtering, requiring no additional adjustments for different implant layouts.
+
+
+\subsubsection{Retinotopic Mapping via Inverse Wedge-Dipole Model}
+The human visual cortex dedicates a substantially larger cortical surface to central vision, a phenomenon known as cortical magnification. This underlies high spatial acuity in the fovea and lower resolution in the periphery. To capture this organization, we employ the analytic wedge-dipole transform, fitted to clinical retinotopic measurements by Polimeni \emph{et al.} and integrated in the simulator of van der Grinten \emph{et al.}\ \cite{vanderGrinten2024}.
+
+In its forward form the model maps visual-field polar coordinates \((r,\theta)\) to a cortical complex coordinate \(w\):
+\[
+w = k \Bigl[\ln\bigl(r\,e^{i\alpha\theta} + a\bigr)
+       - \ln\bigl(r\,e^{i\alpha\theta} + b\bigr)\Bigr],
+\]
+where \(r\) is eccentricity in degrees, \(\theta\) is polar angle, \(k\) scales degrees to cortical millimeters, and \(a,b,\alpha\) shape the dipole response. Inverting this relation analytically yields each electrode’s visual-field center \((\mu_{x,i},\mu_{y,i})\). Defining \(\phi = w/k\), one obtains
+\[
+r\,e^{i\alpha\theta}
+  = \frac{b\,e^{\phi} - a}{1 - e^{\phi}},
+\quad
+r = \bigl|\tfrac{b\,e^{\phi} - a}{1 - e^{\phi}}\bigr|,
+\quad
+\theta = \frac{1}{\alpha}\arg\!\bigl(\tfrac{b\,e^{\phi} - a}{1 - e^{\phi}}\bigr).
+\]
+These equations convert cortical coordinates back into visual-field positions in degrees, providing the phosphene centers used by SCAPE.  
+
+
+\subsubsection{Gaussian Blob Rendering}
+Empirical reports indicate that electrically evoked phosphenes are most often perceived as localized flashes of light with an approximately circular appearance \cite{vanderGrinten2024}. Although some studies describe elongated or irregular forms, for simplicity we model each phosphene as an isotropic Gaussian. Note that SCAPE’s core computations (density estimation and adaptive filtering) rely only on phosphene centers; the Gaussian shape is used downstream for visualization, evaluation, and amplitude normalization.
+
+Formally, each phosphene center \((\mu_{x,i},\mu_{y,i})\) in visual‐field coordinates generates a two‐dimensional Gaussian blob
+\[
+G_i(x,y)
+=
+\exp\!\Bigl(-\frac{(x-\mu_{x,i})^2 + (y-\mu_{y,i})^2}{2\,\sigma^2}\Bigr),
+\]
+where \((x,y)\) are degrees of visual angle and \(\sigma\) is the nominal phosphene radius. The simulator rasterizes these Gaussians onto a regular image grid by converting \((\mu_{x,i},\mu_{y,i})\) into pixel positions according to the chosen field‐of‐view and resolution, evaluating \(G_i\) at every grid point, and summing across all \(N\) phosphenes:
+\[
+I_{\mathrm{raw}}(x,y)
+=
+\sum_{i=1}^{N} G_i(x,y).
+\]
+This raw phosphene map is then used for visualization, metric evaluation, and amplitude equalization but does not influence SCAPE’s density or filter‐scale computations.
+
+
+\subsubsection{Amplitude Equalization}
+Phosphene brightness varies with local electrode density and current spread, causing some regions to appear disproportionately bright or dim. To counteract this and present a uniform perceptual dynamic range, we apply a simple gain‐learning step after simulation.
+
+Each phosphene \(i\) has an initial amplitude \(A_i=1\). We render the raw phosphene map \(I_{\mathrm{raw}}(x,y)\) and measure the peak intensity of each blob,
+\[
+m_i = \max_{x,y}\;G_i(x,y).
+\]
+We then adjust amplitudes by minimizing the squared error to a target intensity \(m^*\):
+\[
+\mathcal{L}(A) = \frac{1}{N}\sum_{i=1}^N \bigl(A_i\,m_i - m^*\bigr)^2.
+\]
+Starting from \(A_i=1\), we update each gain by gradient descent with learning rate \(\eta\) and clamp \(A_i\) to the interval \([A_{\min},A_{\max}]\). After a fixed number of iterations, the normalized map
+\[
+I_{\mathrm{norm}}(x,y)
+=
+\sum_{i=1}^N A_i\,G_i(x,y)
+\]
+has phosphenes with comparable peak brightness, improving visual consistency for evaluation and downstream decoding.  
+
+
+
+\subsection{SCAPE Adaptive Encoding}
+The fundamental challenge in cortical prosthetic vision is that electrode arrays sample the visual field nonuniformly. Regions with dense electrode coverage can resolve fine detail while sparse regions cannot. SCAPE addresses this by adapting image filtering to the local sampling density. First, we estimate a continuous density map from the simulator‐derived phosphene centers. Next, we convert density into a spatial scale map via sampling‐theorem principles. Finally, we apply a shift‐variant filter whose parameters vary continuously across the image. This adaptive encoding preserves maximal detail where it is supported and reduces visual clutter where it is not.
+
+
+\subsubsection{Density Estimation}
+Estimating a smooth sampling density \(d(x,y)\) across the visual field is the foundation of SCAPE. This density map quantifies how many electrodes is available per unit area, and it directly determines the local spatial resolution.
+
+\paragraph{Analytic Cortical Magnification}
+When electrode layouts are fovea–centered and approximately symmetric, we can leverage clinical retinotopy data \cite{vanderGrinten2024} to obtain a closed–form density. Given eccentricity 
+\[
+r = \sqrt{x^2 + y^2},
+\] 
+the cortical magnification function
+\[
+M(r) = \frac{k}{2\pi}\,\biggl(\frac{1}{r + a} - \frac{1}{r + b}\biggr)
+\]
+relates degrees of visual angle to cortical surface area, with parameters \(k,a,b\) fitted to human measurements. We convert this to a nominal electrode density
+\[
+d_{\mathrm{analytic}}(x,y) = \frac{M(r)}{r},
+\]
+then renormalize so that
+$
+\iint d_{\mathrm{analytic}}(x,y)\,\mathrm{d}x\,\mathrm{d}y = N,
+$
+where \(N\) is the total number of phosphenes. The result is a smoothly varying map that reflects the expected sampling density under idealized, symmetric conditions.
+
+\paragraph{Adaptive Kernel–Density Estimate}
+Most real implants produce irregular or asymmetric phosphene arrangements. To capture these, we compute a nonparametric estimate from the simulator–provided phosphene centers \(\{(\mu_{x,i},\mu_{y,i})\}\). Placing a Gaussian kernel at each center with adaptive bandwidth \(h_i\), we form
+\[
+d_{\mathrm{KDE}}(x,y)
+= \sum_{i=1}^N \frac{1}{h_i^2}\,
+\exp\!\Bigl(-\frac{(x-\mu_{x,i})^2 + (y-\mu_{y,i})^2}{2\,h_i^2}\Bigr).
+\]
+Each \(h_i\) is chosen based on the distance to the \(k\)th nearest neighbour, yielding a density map that rises in tightly sampled regions and falls in sparse areas. We normalize this map so that
+$ 
+\iint d_{\mathrm{KDE}}(x,y)\,\mathrm{d}x\,\mathrm{d}y = N.
+$
+In our experiments we use this adaptive KDE by default. The final density map \(d(x,y)\) captures the varying electrode sampling and serves as the input for the subsequent \(\sigma\)–mapping step.

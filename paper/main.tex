@@ -1,0 +1,43 @@
+% !TEX root = main.tex
+\documentclass[10pt,journal,letterpaper]{IEEEtran}
+
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage[hidelinks]{hyperref}
+\usepackage{cite}       % numeric compressed citations [1–3]
+\usepackage{booktabs}   % nicer tables
+
+\begin{document}
+
+\title{SCAPE: Shift-variant Cortical-implant \\ Adaptive Phosphene Encoding}
+\author{%
+  \IEEEauthorblockN{Michelle Appel}\\
+  \IEEEauthorblockA{Donders Institute for Brain, Cognition and Behaviour,\\
+    Radboud University, Nijmegen, The Netherlands\\
+    Email: \texttt{michelle.appel@ru.nl}}%
+}
+
+\maketitle
+\thispagestyle{plain}
+\pagestyle{plain}
+
+% ---- sections ----
+\begin{abstract}
+ \input{chapters/00_abstract.tex}
+\end{abstract}
+\input{chapters/01_introduction}
+\input{chapters/02_related}
+\input{chapters/03_methods}
+\input{chapters/04_experiments}
+\input{chapters/05_results}
+\input{chapters/06_conclusion}
+
+% ---- acknowledgments (if any) ----
+% \section*{Acknowledgments}
+% We thank…
+
+% ---- bibliography ----
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}
