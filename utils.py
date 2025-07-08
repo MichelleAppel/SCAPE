@@ -3,6 +3,7 @@ import torch.nn.functional as F
 import matplotlib.pyplot as plt
 import cv2
 import numpy as np
+from scipy.ndimage import shift as ndi_shift
 
 from perlin_numpy import generate_perlin_noise_2d
 
@@ -165,3 +166,45 @@ def visualize_training_sample(batch: dict,
             ax.set_ylabel('Loss')
     plt.tight_layout()
     return figs
+
+
+def shift_stimulus_to_phosphene_centroid(
+    img: np.ndarray,
+    centroid: tuple,
+    fov: float,
+    mode: str = 'constant',
+    cval: float = 0.0
+) -> np.ndarray:
+    """
+    Translate `img` so that the phosphene-centroid (in degrees) ends up
+    at the exact center pixel of the image. Pads with cval offscreen.
+
+    :param img:       2D stimulus array, shape (H, W).
+    :param centroid:  (x_c, y_c) in degrees, from mapper.centroid_of_density().
+    :param fov:       Total field of view (degrees) covered by the image.
+    :param mode:      How to fill offscreen: same as `ndi_shift(..., mode=...)`.
+    :param cval:      Fill value for constant‐mode padding.
+    """
+    H, W = img.shape if len(img.shape) == 2 else img.shape[:2]
+    x_c, y_c = centroid
+    half_fov = fov / 2.0
+
+    # 1) map centroid (deg) → pixel coordinates
+    px = ((x_c + half_fov) / fov) * (W - 1)
+    py = ((half_fov - y_c) / fov) * (H - 1)
+
+    # 2) figure out how many pixels to shift so that (px,py) → center
+    center_x = (W - 1) / 2
+    center_y = (H - 1) / 2
+    shift_x = center_x - px
+    shift_y = center_y - py
+
+    # 3) apply shift: ndi_shift takes (shift_y, shift_x)
+    shifted = ndi_shift(
+        img,
+        shift=(-shift_y, -shift_x, 0) if img.ndim == 3 else (-shift_y, -shift_x),
+        order=1,      # bilinear
+        mode=mode,
+        cval=cval
+    )
+    return shifted

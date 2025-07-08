@@ -1,6 +1,7 @@
 import numpy as np
 import torch
 from scipy.spatial.distance import cdist
+from typing import Tuple
 
 def get_cortical_magnification(r, params):
     """
@@ -134,16 +135,46 @@ class VisualFieldMapper:
 
 
     def _adaptive_kde_2d(self, phos_coords, grid_coords, k=10, alpha=1.0):
-        dist_matrix = cdist(phos_coords, phos_coords)
-        dist_sorted = np.sort(dist_matrix, axis=1)
-        kth_dist = dist_sorted[:, k]
-        local_bandwidths = alpha * kth_dist
-
+        dist_matrix   = cdist(phos_coords, phos_coords)
+        dist_sorted   = np.sort(dist_matrix, axis=1)
+        kth_dist      = dist_sorted[:, k]         # may be zero if >k dups
+        # find a safe minimum (e.g. the smallest nonzero kth_dist)
+        nonzero       = kth_dist[kth_dist > 0]
+        eps           = nonzero.min() if nonzero.size else 1e-3
+        h             = alpha * np.where(kth_dist > 0, kth_dist, eps)
+        
         M = len(grid_coords)
         density = np.zeros(M, dtype=np.float64)
         for i in range(M):
             d = np.linalg.norm(phos_coords - grid_coords[i], axis=1)
-            h = local_bandwidths
-            kernel_val = np.exp(-0.5 * (d / h)**2) / (2.0 * np.pi * (h**2))
-            density[i] = kernel_val.sum()
+            # avoid 0/0 or x/0 by skipping any zero-h entries
+            kernel = np.exp(-0.5 * (d/h)**2) / (2.0 * np.pi * (h**2))
+            density[i] = np.sum(kernel)
         return density
+
+    def centroid_of_density(self, density_map: np.ndarray) -> Tuple[float, float]:
+        """
+        Compute the center‐of‐mass (centroid) of a 2D density map
+        in visual‐field degrees. Returns (x_c, y_c).
+        """
+        H, W = density_map.shape
+        fov = self.view_angle
+
+        # build degree‐coordinates grids only once
+        x = np.linspace(-fov/2, fov/2, W)
+        y = np.linspace( fov/2, -fov/2, H)
+        xx, yy = np.meshgrid(x, y)
+
+        # flatten everything
+        D = density_map.ravel()
+        X = xx.ravel()
+        Y = yy.ravel()
+
+        M = D.sum()
+        if M <= 0:
+            # no mass → default to foveal center
+            return 0.0, 0.0
+
+        x_c = (D * X).sum() / M
+        y_c = (D * Y).sum() / M
+        return x_c, y_c
