@@ -8,25 +8,25 @@ SCAPE (Shift-variant Cortical implant Adaptive Phosphene Encoding) is a bio-insp
    Estimate electrodes per unit area (in degrees or pixels) via cortical magnification or kernel‐density estimation (KDE).
 
 2. **Local Nyquist Frequency**  
-   $$
-     f_N(x,y) = \sqrt{\frac{\rho(x,y)}{\pi}}
-   $$
+   ```math
+   f_N(x,y) = \sqrt{\frac{\rho(x,y)}{\pi}}
+   ```
    is the maximum representable spatial frequency at (x,y).
 
 3. **Gaussian σ‐Map**  
    We choose σ(x,y) so that the Gaussian low-pass cuts off near f_N. A convenient approximation is  
-   $$
+   ```math
      \sigma(x,y) = \frac{1}{2\pi\,f_N(x,y)}
                  = \frac{1}{2\pi}\sqrt{\frac{\pi}{\rho(x,y)}}
                  = \frac{1}{2}\sqrt{\frac{1}{\pi\,\rho(x,y)}}.
-   $$
+   ```
 
 4. **Shift‐Variant DoG Filtering**  
    At each pixel, apply a DoG with local σ for pre‐processing:
-   $$
+   ```math
      I_{\rm filt}(x,y)
      = G_{\sigma(x,y)} * I(x,y)\;-\;G_{k\,\sigma(x,y)} * I(x,y),
-   $$
+   ```
    implemented efficiently with separable, modulated convolution.
 
 ## Generate Sigma Map
