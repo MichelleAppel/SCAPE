@@ -27,6 +27,7 @@ sampling:
   stimulus_scale: 300.e-6 # Only used when the sample_stimulus method is called with 'rescale=True'. The default behaviour
                        # is no scaling (i.e., the stim amplitude equals the intensity of the sampled image).
 
+
 # settings for electrode coords to visual field coords
 cortex_model:
   model: dipole
