@@ -1,0 +1,14 @@
+\section{Introduction}
+Visual cortical prostheses offer a promising path to restore vision in individuals with severe visual impairment by directly stimulating populations of neurons in visual cortex. These devices, such as the Utah array and Neuralink's cortical implants, aim to bypass damaged retinal pathways and directly encode visual information into the brain. By stimulating neurons in a spatially organized manner, these implants can evoke perceptual phosphenes that correspond to visual stimuli.
+
+However, a key challenge in designing effective cortical prostheses is the limited number of electrodes available for stimulation, which constrains the spatial resolution of the encoded visual information. This limitation necessitates careful consideration of how visual stimuli are processed and represented before being delivered to the implant.
+Current approaches to visual encoding for cortical implants often rely on uniform spatial filtering techniques, such as Sobel or Canny edge filtering, to reduce the dimensionality of visual input. While these methods can help manage the high spatial resolution of natural images, these conventional image preprocessing pipelines apply uniform filtering or feature extraction across the entire field of view, neglecting implant specific sampling density. This mismatch can produce oversmoothing in regions where electrodes are dense, degrading available detail, or unnecessary clutter in regions where electrodes are sparse, overwhelming limited channel capacity.
+
+In this work we introduce SCAPE (Shift variant Cortical prosthesis Adaptive Phosphene Encoding), an adaptive encoding framework that tailors spatial filtering to the local resolvability of each implant configuration. SCAPE first estimates the sampling density from electrode or phosphene positions using analytic magnification models or kernel density estimation. It then maps density to a local spatial scale via Nyquist principles and applies shift variant filtering, implemented here as a difference of Gaussians, to the input image before phosphene rendering. 
+
+The main contributions of this paper are:
+\begin{itemize}
+  \item A principled method for local sampling density estimation and shift variant spatial filtering tailored to cortical implant layouts.
+  \item Comprehensive evaluation of SCAPE in simulation across multiple electrode configurations, including high density, Utah array, Neuralink shank, and receptive field based schemes.
+  \item Benchmarking performance with low level fidelity metrics (SSIM, VSI, MDSI, PIEAPP), representational similarity analysis, and reconstruction accuracy of an Attention UNet decoder.
+\end{itemize}
