@@ -1,86 +1,71 @@
-# Phosphene-Aware Adaptive Filtering for Prosthetic Vision
+# SCAPE: Shift-variant Cortical-implant Adaptive Phosphene Encoding
 
-This repository implements an adaptive spatial frequency filtering framework designed specifically for prosthetic vision. Our method adapts visual filtering based on the non-uniform distribution of phosphenes (or cortical density) to better reflect the visual information available to prosthetic devices.
+SCAPE (Shift-variant Cortical implant Adaptive Phosphene Encoding) is a bio-inspired framework that compensates for the uneven spatial sampling of cortical electrode arrays by adapting filter scale locally. We first estimate a continuous sampling density map ρ(x,y), convert it via Nyquist principles into a spatially varying Gaussian‐filter width σ(x,y), then apply a shift-variant Difference-of-Gaussians (DoG) filter before training a decoder to reconstruct natural scenes from sparse phosphenes.
 
----
+## Concept and Mathematical Justification
 
-## Overview
+1. **Sampling Density ρ(x,y)**  
+   Estimate electrodes per unit area (in degrees or pixels) via cortical magnification or kernel‐density estimation (KDE).
 
-Traditional filtering applies the same operation uniformly over an image. In contrast, our approach leverages **phosphene density maps** to modulate spatial frequency processing. By adapting the filter kernels based on local density, we can enhance detail in high-resolution regions while smoothing in low-resolution areas—improving the overall perceptual quality of prosthetic vision.
+2. **Local Nyquist Frequency**  
+   $$
+     f_N(x,y) = \sqrt{\frac{\rho(x,y)}{\pi}}
+   $$
+   is the maximum representable spatial frequency at (x,y).
 
----
+3. **Gaussian σ‐Map**  
+   We choose σ(x,y) so that the Gaussian low-pass cuts off near f_N. A convenient approximation is  
+   $$
+     \sigma(x,y) = \frac{1}{2\pi\,f_N(x,y)}
+                 = \frac{1}{2\pi}\sqrt{\frac{\pi}{\rho(x,y)}}
+                 = \frac{1}{2}\sqrt{\frac{1}{\pi\,\rho(x,y)}}.
+   $$
 
-## Motivation & Context
+4. **Shift‐Variant DoG Filtering**  
+   At each pixel, apply a DoG with local σ for pre‐processing:
+   $$
+     I_{\rm filt}(x,y)
+     = G_{\sigma(x,y)} * I(x,y)\;-\;G_{k\,\sigma(x,y)} * I(x,y),
+   $$
+   implemented efficiently with separable, modulated convolution.
 
-Visual prostheses suffer from irregular spatial resolution caused by non-uniform phosphene distribution. Conventional filters, being spatially invariant, may either oversmooth or inadequately capture essential details. Our adaptive filtering framework overcomes these limitations by:
-- Dynamically adjusting kernel properties based on local phosphene density.
-- Optimizing spatial frequency processing in accordance with the available visual “pixels.”
-
-This targeted adaptation is crucial for improving the clarity and effectiveness of prosthetic vision.
-
----
-
-## Biological Inspiration
-
-The human visual system naturally prioritizes central vision, where acuity is highest, via the cortical magnification factor. Inspired by this principle, our method allocates higher resolution (i.e., finer spatial filtering) where phosphene density is higher and coarser filtering where it is lower. This mimics the adaptive strategy of the human visual cortex and enhances perceptual performance in prosthetic vision.
-
----
-
-## Mathematical Framework
-
-Our adaptive filtering relies on relating local phosphene density to the scale of filtering. For example, in the Laplacian-of-Gaussian (LoG) case, the kernel is computed as:
-
-
-$$\text{LoG}(r,\sigma) = -\frac{1}{\pi\sigma^4}\left(1 - \frac{r^2}{2\sigma^2}\right) \exp(-\frac{r^2}{2\sigma^2})$$
-
-Here:
-- $\sigma$ represents the effective spatial scale (derived from the phosphene density or a cortical map).
-- Additional scaling (e.g., multiplication by $\sigma^{2/3}$) and weighting (via a normalized sigma map) are applied to enhance the filter response in desired regions.
-
-This framework ensures that the filter adapts its spatial extent in a biologically informed manner.
-
----
-
-## Architecture
-
-At the core of our framework is the **UnifiedInputModulation** module, which implements adaptive filtering in two analytic modes:
-- **Gaussian Modulation:** Computes a standard Gaussian kernel:
-  
-  $$G(r,\sigma) = \exp(-\frac{r^2}{2\sigma^2})$$
-  
-  and normalizes it for uniform blurring.
-  
-- **Laplacian-of-Gaussian (LoG):** Computes a LoG kernel as detailed above and applies extra scaling and weighting—using either a provided sigma (or phosphene density) map or focus-of-attention distances—to accentuate edges and transitions.
-
-These analytic modes can be extended or replaced by neural alternatives (such as net_modulated or net_generated) in a modular design. The architecture separates the input modulation from any downstream convolution, allowing each stage to be optimized independently and facilitating integration into larger prosthetic vision pipelines.
-
----
-
-## Example Usage
-
-Below is a minimal example demonstrating how to use the UnifiedInputModulation module in LoG mode with a precomputed sigma map:
+## Generate Sigma Map
 
 ```python
-from modulation_module import UnifiedInputModulation
+from phosphene.density import VisualFieldMapper
 
-# Assume sigma_cortical_pix is a precomputed phosphene (cortical) density map in pixel units.
-sigma_map_tensor = torch.tensor(sigma_cortical_pix).float().cuda().detach()
+mapper = VisualFieldMapper(simulator=simulator)
 
-# Create the modulation layer using LoG mode.
-layer = UnifiedInputModulation(
-    kernel_size=119,
-    kernel_type="log",  # "log" applies the Laplacian-of-Gaussian
-    sigma_map=sigma_map_tensor,
-    dilation=1,
-    padding_mode='reflect'
-).cuda()
+# Cortical approach:
+density_cortical = mapper.build_density_map_cortical(
+    total_phosphenes=n_phosphenes
+)
+sigma_cortical = mapper.build_sigma_map_from_density(
+    density_cortical, space="pixel"
+)
 
-# Process an image tensor (img) of shape [B, C, H, W]
-filtered_img = layer(img).detach().cpu().clip(0, None)
+# KDE approach:
+density_kde = mapper.build_density_map_kde(
+    k=6, alpha=1.0, total_phosphenes=n_phosphenes
+)
+sigma_kde = mapper.build_sigma_map_from_density(
+    density_kde, space="pixel"
+)
 ```
 
-In this example, the module uses the sigma map to generate spatially adaptive LoG kernels. The filtered image output can be further processed (e.g., for generating phosphene stimuli).
+## Apply Shift-Variant DoG Filter
 
----
+```python
+from spatial_frequency.components.SeparableModulated2d import SeparableModulatedConv2d
+import torch
 
-This repository lays the foundation for biologically informed image processing in prosthetic vision—improving the translation of visual scenes into effective, adaptive stimuli for prosthetic devices.
+# Wrap σ-map in a modulation layer and filter an image
+σ = torch.tensor(sigma_kde).float().cuda().detach()
+mod_layer = SeparableModulatedConv2d(
+    in_channels=1,
+    sigma_map=σ
+).cuda().eval()
+
+filtered = mod_layer(orig_image)
+```
+
