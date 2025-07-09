@@ -6,15 +6,37 @@ Jaap de~Ruyter~van Steveninck, Umut G{\"u}{\c c}l{\"u}, Richard van Wezel, and
 \newblock End-to-end optimization of prosthetic vision.
 \newblock {\em bioRxiv}, 2020.
 
+\bibitem{Granley2023}
+Jacob Granley, Tristan Fauvel, Matthew Chalk, and Michael Beyeler.
+\newblock Human-in-the-loop optimization for deep stimulus encoding in visual
+  prostheses, 2023.
+
+\bibitem{Granley2022}
+Jacob Granley, Lucas Relic, and Michael Beyeler.
+\newblock Hybrid neural autoencoders for stimulus encoding in visual and other
+  sensory neuroprostheses, 2022.
+
 \bibitem{Hu2018}
 Jie Hu, Li~Shen, Samuel Albanie, Gang Sun, and Enhua Wu.
 \newblock Squeeze-and-excitation networks, 2019.
+
+\bibitem{Kasowski2022}
+Justin Kasowski and Michael Beyeler.
+\newblock Immersive virtual reality simulations of bionic vision.
+\newblock In {\em Augmented Humans 2022}, AHs 2022, page 82–93. ACM, March
+  2022.
 
 \bibitem{Kriegeskorte2008}
 Nikolaus Kriegeskorte, Marieke Mur, and Peter Bandettini.
 \newblock Representational similarity analysis – connecting the branches of
   systems neuroscience.
 \newblock {\em Frontiers in systems neuroscience}, 2:4, 02 2008.
+
+\bibitem{Liu2005}
+Wentai Liu, W.~Fink, M.~Tarbell, and M.~Sivaprakasam.
+\newblock Image processing and interface for retinal visual prostheses.
+\newblock In {\em 2005 IEEE International Symposium on Circuits and Systems
+  (ISCAS)}, pages 2927--2930 Vol. 3, 2005.
 
 \bibitem{Nyquist1928}
 H.~Nyquist.
@@ -38,6 +60,11 @@ J.R. Polimeni, M.~Balasubramanian, and E.L. Schwartz.
 Ekta Prashnani, Hong Cai, Yasamin Mostofi, and Pradeep Sen.
 \newblock Pieapp: Perceptual image-error assessment through pairwise
   preference, 2018.
+
+\bibitem{Relic2022}
+Lucas Relic, Bowen Zhang, Yi-Lin Tuan, and Michael Beyeler.
+\newblock Deep learning-based perceptual stimulus encoder for bionic vision,
+  2022.
 
 \bibitem{Ronneberger2015}
 Olaf Ronneberger, Philipp Fischer, and Thomas Brox.
@@ -64,6 +91,12 @@ Zhou Wang, A.C. Bovik, H.R. Sheikh, and E.P. Simoncelli.
 \newblock Image quality assessment: from error visibility to structural
   similarity.
 \newblock {\em IEEE Transactions on Image Processing}, 13(4):600--612, 2004.
+
+\bibitem{Oh2024}
+Jungsuk~Kim Yeonji~Oh, Jonggi~Hong.
+\newblock Retinal prosthesis edge detection (rped) algorithm: Low-power and
+  improved visual acuity strategy for artificial retinal implants.
+\newblock {\em PLoS ONE}, 19(6):e0305132, 2024.
 
 \bibitem{Young1987}
 Richard~A. Young.

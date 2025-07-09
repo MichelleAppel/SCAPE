@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex main"] 1752091635 "main.aux" "main.bbl" "main" 1752091791 0
-  "./references.bib" 1752063637 11695 ed2382dcaeb96699d2b946ffdca9bf48 ""
+["bibtex main"] 1752095388 "main.aux" "main.bbl" "main" 1752095392 0
+  "./references.bib" 1752095278 14347 cd07f0d6a3fb7768294dd05adba684bf ""
   "/usr/share/texlive/texmf-dist/bibtex/bst/base/plain.bst" 1685185333 20613 bd3fbfa9f64872b81ac57a0dd2ed855f ""
-  "main.aux" 1752091791 7265 b9dfd51abfe9a708a0ab20c8605e35ce "pdflatex"
+  "main.aux" 1752095391 8552 5e65ded681a12c746b3000549bdd0f1e "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1752091789 "/home/mappel/Dynaphos/spatial_frequency/paper/main.tex" "main.pdf" "main" 1752091791 0
+["pdflatex"] 1752095388 "/home/mappel/Dynaphos/spatial_frequency/paper/main.tex" "main.pdf" "main" 1752095392 0
   "/home/mappel/.texlive2020/texmf-var/web2c/pdftex/pdflatex.fmt" 1752001958 1329206 c44b6bc9265e7c3aac474a38f81af1d9 ""
   "/home/mappel/Dynaphos/spatial_frequency/paper/main.tex" 1752066289 1074 68012d1d388678da0ed6f1587e245c89 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc" 1685185333 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
@@ -129,16 +129,16 @@
   "IEEEtran.cls" 1752005316 281957 5b2e4fa15b0f7eabb840ebf67df4c0f7 ""
   "chapters/00_abstract.tex" 1752006840 1337 f792430f00b7415fc55ff5749f78b7af ""
   "chapters/01_introduction.tex" 1752005618 0 d41d8cd98f00b204e9800998ecf8427e ""
-  "chapters/02_related.tex" 1752005618 0 d41d8cd98f00b204e9800998ecf8427e ""
+  "chapters/02_related.tex" 1752095381 4365 59d50f959bca367219890ebe68516fc6 ""
   "chapters/03_methods.tex" 1752091788 29924 e4251f7e7f53b9720f15a18ca980274c ""
   "chapters/04_experiments.tex" 1752005905 0 d41d8cd98f00b204e9800998ecf8427e ""
   "chapters/05_results.tex" 1752005644 0 d41d8cd98f00b204e9800998ecf8427e ""
   "chapters/06_conclusion.tex" 1752005651 0 d41d8cd98f00b204e9800998ecf8427e ""
   "figures/SCAPE.drawio.pdf" 1752072363 985291 35cbe5aef6f97baeff692d789af1ee53 ""
   "figures/dynamicamplitudenorm.png" 1752090975 231353 54ca256067279408bf7a4cac862e3b17 ""
-  "main.aux" 1752091791 7265 b9dfd51abfe9a708a0ab20c8605e35ce "pdflatex"
-  "main.bbl" 1752091635 3425 9193d60e9724716c93ca495704fa5ba9 "bibtex main"
-  "main.out" 1752091791 3452 bef5aabeabca851adc54563409d8125c "pdflatex"
+  "main.aux" 1752095391 8552 5e65ded681a12c746b3000549bdd0f1e "pdflatex"
+  "main.bbl" 1752095388 4684 247bf263e44eb9e0e0b6218fa95c7950 "bibtex main"
+  "main.out" 1752095391 4802 99811e04e7e0eb291cf2f94ce5d8d32c "pdflatex"
   (generated)
   "main.aux"
   "main.log"
