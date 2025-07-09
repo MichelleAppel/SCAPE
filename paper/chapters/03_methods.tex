@@ -57,24 +57,79 @@ I_{\mathrm{raw}}(x,y)
 This raw phosphene map is then used for visualization, metric evaluation, and amplitude equalization but does not influence SCAPE’s density or filter‐scale computations.
 
 
-\subsubsection{Amplitude Equalization}
-Phosphene brightness varies with local electrode density and current spread, causing some regions to appear disproportionately bright or dim. To counteract this and present a uniform perceptual dynamic range, we apply a simple gain‐learning step after simulation.
+\subsubsection{Activation-to-Electrode Mapping}
 
-Each phosphene \(i\) has an initial amplitude \(A_i=1\). We render the raw phosphene map \(I_{\mathrm{raw}}(x,y)\) and measure the peak intensity of each blob,
+To evoke a specific percept with a cortical implant, we ultimately need to decide which electrodes to turn on and how much current to send through each.  A convenient intermediate representation is a continuous \emph{activation map} 
+\[
+  A(x,y)\in[0,1]
+\]
+defined over the visual field.  Intuitively, brighter regions of this map correspond to stronger intended stimulation, and darker regions to weaker or no stimulation.  
+
+Given the $N$ electrode centers \(\{(\mu_i^x,\mu_i^y)\}_{i=1}^N\), we sample this map to produce a raw activation vector \(\mathbf{a}=(a_1,\dots,a_N)\).  Two common sampling strategies are:
+
+\begin{itemize}
+  \item \textbf{Point sampling:}  
+    \(\displaystyle a_i = A(\mu_i^x,\mu_i^y)\).
+  \item \textbf{Local pooling:}  
+    \(\displaystyle a_i = \max_{(x,y)\in R_i} A(x,y)\), where \(R_i\) is a small neighborhood around \((\mu_i^x,\mu_i^y)\) (e.g.\ a disk whose radius reflects local magnification).
+\end{itemize}
+
+In our simulator implementation, we build a direct correspondence between each electrode and pixel(s) of the activation map by precomputing, for every electrode \(i\), a “distance map” on the visual‐field grid.  The simulator then uses these distance maps to (a) find the nearest pixel index for point sampling, or (b) define a binary mask for region pooling, entirely in pixel‐space.  
+
+In a real implant system, the same correspondence can instead be obtained analytically: one applies the inverse retinotopic mapping (e.g.\ the wedge‐dipole transform) to compute exactly which image coordinates fall under each electrode’s receptive field, without requiring any precomputed pixel lookup.
+
+Because \(A(x,y)\) was normalized into \([0,1]\), we then apply a global stimulus scale \(S\) (in Amperes) to obtain the actual per–electrode currents
+\[
+  I_i = S\,a_i.
+\]
+Choosing \(S\) appropriately ensures that we stay within safe charge‐delivery limits while preserving the relative pattern of activation.  This current vector \(\{I_i\}\) is then handed to the phosphene simulator, which applies temporal filtering, thresholding, and Gaussian‐blob rendering to generate the final perceptual image.  
+
+In the end, our goal is to design or optimize the activation map \(A(x,y)\) (and thus the stimulus vector \(\{I_i\}\)) so that the resulting phosphenes are as clear and interpretable as possible.
+
+
+
+
+\subsubsection{Amplitude Equalization}
+Phosphene brightness does not scale linearly with electrode current. Local electrode density and current spread interact with multiple nonlinear stages, such as overlapping Gaussian-blob summation, saturation in sigmoid transforms, thresholding and temporal filtering, which cause some regions of the percept to appear disproportionately bright or dim. Because these nonlinear effects accumulate, there is no practical closed-form inverse that maps a target brightness profile back to electrode currents.
+
+To achieve a uniform perceptual dynamic range, we apply a simple gain-learning step after simulation. Each phosphene \(i\) has an initial amplitude \(A_i=1\). We first drive all electrodes at the same nominal current \(S\), render the raw percept
+\[
+I_{\mathrm{raw}}(x,y)
+=
+\sum_{i=1}^N S\,G_i(x,y),
+\]
+and measure each blob’s peak intensity,
 \[
 m_i = \max_{x,y}\;G_i(x,y).
 \]
-We then adjust amplitudes by minimizing the squared error to a target intensity \(m^*\):
+We then optimize the gains \(\{A_i\}\) by minimizing
 \[
-\mathcal{L}(A) = \frac{1}{N}\sum_{i=1}^N \bigl(A_i\,m_i - m^*\bigr)^2.
+\mathcal{L}(A)
+=
+\frac{1}{N}\sum_{i=1}^N \bigl(A_i\,m_i - m^*\bigr)^2,
 \]
-Starting from \(A_i=1\), we update each gain by gradient descent with learning rate \(\eta\) and clamp \(A_i\) to the interval \([A_{\min},A_{\max}]\). After a fixed number of iterations, the normalized map
+updating each \(A_i\) by gradient descent with learning rate \(\eta\) and clamping to \([A_{\min},A_{\max}]\). After convergence the normalized percept
 \[
 I_{\mathrm{norm}}(x,y)
 =
-\sum_{i=1}^N A_i\,G_i(x,y)
+\sum_{i=1}^N A_i\,S\,G_i(x,y)
 \]
-has phosphenes with comparable peak brightness, improving visual consistency for evaluation and downstream decoding.  
+has phosphenes with comparable peak brightness, improving visual consistency for evaluation and downstream decoding.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.9\columnwidth]{figures/dynamicamplitudenorm.png}
+  \caption{Dynamic amplitude normalization example.  
+    \emph{Left:} raw percept obtained by driving every electrode at the same current \(S\).  
+    \emph{Center:} normalized percept after learning per-electrode gains \(A_i\).  
+    \emph{Right:} learned gains \(A_i\in[A_{\min},A_{\max}]\).  
+    Normalization yields a more even brightness profile and reduces total current draw, conserving implant power and minimizing excessive charge delivery.}
+  \label{fig:amplitude_norm}
+\end{figure}
+
+This calibration step yields a more uniform perceptual phosphene map, improving clarity and interpretability of encoded images. Compressing the amplitude range also lowers the total current required, which reduces neural fatigue and extends implant battery life. Although amplitude equalization is not required by SCAPE’s core processing, we apply it here to standardize perceptual output for evaluation and comparison.
+
+
 
 
 

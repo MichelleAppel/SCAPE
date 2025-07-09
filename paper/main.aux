@@ -25,42 +25,43 @@
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {I-A}1}Electrode Placement}{1}{subsubsection.1.1.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {I-A}2}Retinotopic Projection and Phosphene Centers}{1}{subsubsection.1.1.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {I-A}3}Gaussian Blob Rendering}{1}{subsubsection.1.1.3}\protected@file@percent }
-\citation{vanderGrinten2024}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {I-A}4}Amplitude Equalization}{2}{subsubsection.1.1.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {I-A}4}Activation-to-Electrode Mapping}{2}{subsubsection.1.1.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {I-A}5}Amplitude Equalization}{2}{subsubsection.1.1.5}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Dynamic amplitude normalization example. \emph  {Left:} raw percept obtained by driving every electrode at the same current \(S\). \emph  {Center:} normalized percept after learning per-electrode gains \(A_i\). \emph  {Right:} learned gains \(A_i\in [A_{\qopname  \relax m{min}},A_{\qopname  \relax m{max}}]\). Normalization yields a more even brightness profile and reduces total current draw, conserving implant power and minimizing excessive charge delivery.}}{2}{figure.1}\protected@file@percent }
+\newlabel{fig:amplitude_norm}{{1}{2}{Dynamic amplitude normalization example. \emph {Left:} raw percept obtained by driving every electrode at the same current \(S\). \emph {Center:} normalized percept after learning per-electrode gains \(A_i\). \emph {Right:} learned gains \(A_i\in [A_{\min },A_{\max }]\). Normalization yields a more even brightness profile and reduces total current draw, conserving implant power and minimizing excessive charge delivery}{figure.1}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {I-B}}SCAPE Adaptive Encoding}{2}{subsection.1.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {I-B}1}Density Estimation}{2}{subsubsection.1.2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {I-B}1a}Analytic Cortical Magnification}{2}{paragraph.1.2.1.1}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Overview of the SCAPE pipeline. Starting from a cortical implant layout (top left) we obtain phosphene centers via the simulator, estimate a local density map, convert it into a spatial scale ($\sigma $) map, and then apply shift-variant filtering to produce an activation map for phosphene rendering.}}{2}{figure.1}\protected@file@percent }
-\newlabel{fig:scape_pipeline}{{1}{2}{Overview of the SCAPE pipeline. Starting from a cortical implant layout (top left) we obtain phosphene centers via the simulator, estimate a local density map, convert it into a spatial scale ($\sigma $) map, and then apply shift-variant filtering to produce an activation map for phosphene rendering}{figure.1}{}}
+\citation{vanderGrinten2024}
 \citation{Nyquist1928}
-\citation{Young1987}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Overview of the SCAPE pipeline. Starting from a cortical implant layout (top left) we obtain phosphene centers via the simulator, estimate a local density map, convert it into a spatial scale ($\sigma $) map, and then apply shift-variant filtering to produce an activation map for phosphene rendering.}}{3}{figure.2}\protected@file@percent }
+\newlabel{fig:scape_pipeline}{{2}{3}{Overview of the SCAPE pipeline. Starting from a cortical implant layout (top left) we obtain phosphene centers via the simulator, estimate a local density map, convert it into a spatial scale ($\sigma $) map, and then apply shift-variant filtering to produce an activation map for phosphene rendering}{figure.2}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {I-B}1}Density Estimation}{3}{subsubsection.1.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {I-B}1a}Analytic Cortical Magnification}{3}{paragraph.1.2.1.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {I-B}1b}Adaptive Kernel Density Estimation}{3}{paragraph.1.2.1.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {I-B}2}\(\sigma \)-Mapping via Nyquist Principles}{3}{subsubsection.1.2.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {I-B}3}Shift-variant Filtering}{3}{subsubsection.1.2.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {I-B}3a}Difference-of-Gaussians Example}{3}{paragraph.1.2.3.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {I-B}3b}Extending to Other Kernels}{3}{paragraph.1.2.3.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {I-C}}Reconstruction Decoder Integration}{3}{subsection.1.3}\protected@file@percent }
+\citation{Young1987}
 \citation{deRuytervanSteveninck2020}
 \citation{Ronneberger2015}
 \citation{Hu2018}
 \citation{Yu2016}
 \citation{Oktay2018}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {I-B}3}Shift-variant Filtering}{4}{subsubsection.1.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {I-B}3a}Difference-of-Gaussians Example}{4}{paragraph.1.2.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {I-B}3b}Extending to Other Kernels}{4}{paragraph.1.2.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {I-C}}Reconstruction Decoder Integration}{4}{subsection.1.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {I-C}1}Attention-UNet Architecture}{4}{subsubsection.1.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {I-D}}Evaluation Metrics}{4}{subsection.1.4}\protected@file@percent }
 \citation{Wang2004}
 \citation{Zhang2014}
 \citation{ZiaeiNafchi2016}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {I-C}1}Attention-UNet Architecture}{4}{subsubsection.1.3.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {I-D}}Evaluation Metrics}{4}{subsection.1.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {I-D}1}Low‐Level Fidelity Metrics}{4}{subsubsection.1.4.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {I-D}1a}Structural Similarity Index (SSIM)}{4}{paragraph.1.4.1.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {I-D}1b}Visual Saliency Induced Index (VSI)}{4}{paragraph.1.4.1.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {I-D}1c}Mean Deviation Similarity Index (MDSI)}{4}{paragraph.1.4.1.3}\protected@file@percent }
 \citation{Prashnani2018}
 \citation{Prashnani2018}
 \citation{Kriegeskorte2008}
-\citation{Wang2018}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {I-D}1}Low‐Level Fidelity Metrics}{5}{subsubsection.1.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {I-D}1a}Structural Similarity Index (SSIM)}{5}{paragraph.1.4.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {I-D}1b}Visual Saliency Induced Index (VSI)}{5}{paragraph.1.4.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {I-D}1c}Mean Deviation Similarity Index (MDSI)}{5}{paragraph.1.4.1.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {I-D}1d}Perceptual Image‐Error Assessment through Pairwise Preference (PIEAPP)}{5}{paragraph.1.4.1.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {I-D}2}Representational Similarity Analysis}{5}{subsubsection.1.4.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {I-D}3}Reconstruction Performance}{5}{subsubsection.1.4.3}\protected@file@percent }
+\citation{Wang2018}
 \bibstyle{plain}
 \bibdata{references}
 \bibcite{deRuytervanSteveninck2020}{1}
@@ -73,10 +74,12 @@
 \bibcite{Ronneberger2015}{8}
 \bibcite{vanderGrinten2024}{9}
 \bibcite{Wang2018}{10}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {I-D}2}Representational Similarity Analysis}{6}{subsubsection.1.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {I-D}3}Reconstruction Performance}{6}{subsubsection.1.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{References}{6}{section*.1}\protected@file@percent }
 \bibcite{Wang2004}{11}
 \bibcite{Young1987}{12}
 \bibcite{Yu2016}{13}
 \bibcite{Zhang2014}{14}
 \bibcite{ZiaeiNafchi2016}{15}
-\@writefile{toc}{\contentsline {section}{References}{6}{section*.1}\protected@file@percent }
-\gdef \@abspage@last{6}
+\gdef \@abspage@last{7}

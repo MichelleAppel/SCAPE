@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2025.7.8)  9 JUL 2025 16:46
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2025.7.8)  9 JUL 2025 22:09
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -389,64 +389,73 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 
 ]
+<figures/dynamicamplitudenorm.png, id=100, 807.9786pt x 253.6677pt>
+File: figures/dynamicamplitudenorm.png Graphic file (type png)
+<use figures/dynamicamplitudenorm.png>
+Package pdftex.def Info: figures/dynamicamplitudenorm.png  used on input line 121.
+(pdftex.def)             Requested size: 226.79846pt x 71.20451pt.
+
 
 pdfTeX warning: pdflatex (file ./figures/SCAPE.drawio.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<figures/SCAPE.drawio.pdf, id=96, 348.34138pt x 817.13275pt>
+<figures/SCAPE.drawio.pdf, id=102, 348.34138pt x 817.13275pt>
 File: figures/SCAPE.drawio.pdf Graphic file (type pdf)
 <use figures/SCAPE.drawio.pdf>
-Package pdftex.def Info: figures/SCAPE.drawio.pdf  used on input line 88.
+Package pdftex.def Info: figures/SCAPE.drawio.pdf  used on input line 143.
 (pdftex.def)             Requested size: 226.79846pt x 532.02773pt.
-[2 <./figures/SCAPE.drawio.pdf>]
+[2 <./figures/dynamicamplitudenorm.png>]
+Underfull \vbox (badness 2547) has occurred while \output is active []
+
+
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 133.
+(hyperref)                removing `math shift' on input line 188.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\sigma' on input line 133.
+(hyperref)                removing `\sigma' on input line 188.
 
-[3]
-Underfull \hbox (badness 3428) in paragraph at lines 191--192
+[3 <./figures/SCAPE.drawio.pdf>]
+Underfull \hbox (badness 3428) in paragraph at lines 246--247
 []\OT1/ptm/b/n/10 Squeeze-and-Excitation (SE) blocks \OT1/ptm/m/n/10 to adap-tively
  []
 
-LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 196.
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 251.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 )
-Underfull \hbox (badness 1867) in paragraph at lines 196--197
+Underfull \hbox (badness 1867) in paragraph at lines 251--252
 []\OT1/ptm/m/n/10 Down-sampling is achieved via max-pooling and up-
  []
 
-
-Overfull \hbox (22.76733pt too wide) detected at line 269
+[4]
+Overfull \hbox (22.76733pt too wide) detected at line 324
 []\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 x; y\OT1/cmr/m/n/10 ) = []\OML/cmm/m/it/10 :
  []
 
 
-Underfull \hbox (badness 2111) in paragraph at lines 285--287
+Underfull \hbox (badness 2111) in paragraph at lines 340--342
 \OT1/ptm/m/n/10 Deviations from the mean high-light re-gions where the
  []
 
-[4] [5]) (./chapters/04_experiments.tex) (./chapters/05_results.tex) (./chapters/06_conclusion.tex) (./main.bbl) [6
+[5]) (./chapters/04_experiments.tex) (./chapters/05_results.tex) (./chapters/06_conclusion.tex) (./main.bbl [6]) [7
 
 ] (./main.aux)
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 336DA5918753D432D07908FC55C36F53;3226.
+(rerunfilecheck)             Checksum: BEF5AABEABCA851ADC54563409D8125C;3452.
  ) 
 Here is how much of TeX's memory you used:
- 9990 strings out of 481008
- 148626 string characters out of 5909440
- 464875 words of memory out of 5000000
- 26967 multiletter control sequences out of 15000+600000
- 440668 words of font info for 100 fonts, out of 8000000 for 9000
+ 10012 strings out of 481008
+ 149004 string characters out of 5909440
+ 466437 words of memory out of 5000000
+ 26979 multiletter control sequences out of 15000+600000
+ 442216 words of font info for 105 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 71i,12n,74p,1427b,345s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (6 pages, 1165797 bytes).
+ 71i,12n,74p,1427b,466s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on main.pdf (7 pages, 1407388 bytes).
 PDF statistics:
- 239 PDF objects out of 1000 (max. 8388607)
- 202 compressed objects within 3 object streams
- 48 named destinations out of 1000 (max. 500000)
- 142 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 274 PDF objects out of 1000 (max. 8388607)
+ 229 compressed objects within 3 object streams
+ 51 named destinations out of 1000 (max. 500000)
+ 155 words of extra memory for PDF output out of 10000 (max. 10000000)
 
