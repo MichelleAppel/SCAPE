@@ -35,7 +35,14 @@ Applying this inverse transform to each \((x_i,y_i)\) and adding optional Gaussi
 \[
 \{(\mu_{x,i},\mu_{y,i})\}_{i=1}^N,
 \]
-expressed in degrees of visual angle. These centers form the basis for SCAPE’s density estimation and adaptive filtering \cite{vanderGrinten2024}.
+expressed in degrees of visual angle. These centers form the basis for SCAPE’s density estimation and adaptive filtering \cite{vanderGrinten2024}. An example implant scheme is shown in Figure~\ref{fig:cortex-phosphene-locations}, where the left panel plots the cortical electrode locations of 4 Utah Arrays in \(x,y\) coordinates and the right panel shows the corresponding visual‐field polar coordinates of the phosphenes.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.9\columnwidth]{figures/cortextophosphenelocations4utaharrays.png}
+  \caption{Cortical electrode locations of 4 Utah Arrays (left) plotted in cortical \(x,y\) coordinates with overlaid retinotopic grid, and corresponding phosphene centers (right) in visual‐field polar coordinates. Here we show the 4‐Utah‐arrays implant scheme.}
+  \label{fig:cortex-phosphene-locations}
+\end{figure}
 
 
 
@@ -54,7 +61,14 @@ I_{\mathrm{raw}}(x,y)
 =
 \sum_{i=1}^{N} G_i(x,y).
 \]
-This raw phosphene map is then used for visualization, metric evaluation, and amplitude equalization but does not influence SCAPE’s density or filter‐scale computations.
+This raw phosphene map is then used for visualization, metric evaluation, and amplitude equalization but does not influence SCAPE’s density or filter‐scale computations. An example of this rendering is shown in Figure~\ref{fig:phosphene-rendering}, where the left panel plots the centers of the phosphenes in visual‐field coordinates and the right panel shows the corresponding Gaussian blobs.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.9\columnwidth]{figures/phosphenerendering4utaharrays.png}
+  \caption{Simulation of phosphene responses for a 4-Utah-array cortical implant. \textbf{Left:} Phosphene center locations in visual-field coordinates, shown on a polar grid spanning ±8° of eccentricity. \textbf{Right:} Corresponding Gaussian-blob rendering of phosphenes for a nominal stimulus amplitude (80 µA). This rendering illustrates how spatially discrete electrode activations translate into blurred perceptual spots that vary with cortical sampling density.}
+  \label{fig:phosphene-rendering}
+\end{figure}
 
 
 \subsubsection{Activation-to-Electrode Mapping}

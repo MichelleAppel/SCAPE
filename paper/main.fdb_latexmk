@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex main"] 1752096076 "main.aux" "main.bbl" "main" 1752096166 0
+["bibtex main"] 1752138445 "main.aux" "main.bbl" "main" 1752138479 0
   "./references.bib" 1752095684 14347 cd07f0d6a3fb7768294dd05adba684bf ""
   "/usr/share/texlive/texmf-dist/bibtex/bst/base/plain.bst" 1685185333 20613 bd3fbfa9f64872b81ac57a0dd2ed855f ""
-  "main.aux" 1752096166 8692 4940300545ff332a4115611515529b64 "pdflatex"
+  "main.aux" 1752138478 10471 463603ea07af147fcffd492ef5f6d496 "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1752096163 "/home/mappel/Dynaphos/spatial_frequency/paper/main.tex" "main.pdf" "main" 1752096166 0
+["pdflatex"] 1752138475 "/home/mappel/Dynaphos/spatial_frequency/paper/main.tex" "main.pdf" "main" 1752138479 0
   "/home/mappel/.texlive2020/texmf-var/web2c/pdftex/pdflatex.fmt" 1752001958 1329206 c44b6bc9265e7c3aac474a38f81af1d9 ""
   "/home/mappel/Dynaphos/spatial_frequency/paper/main.tex" 1752066289 1074 68012d1d388678da0ed6f1587e245c89 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc" 1685185333 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
@@ -130,15 +130,17 @@
   "chapters/00_abstract.tex" 1752006840 1337 f792430f00b7415fc55ff5749f78b7af ""
   "chapters/01_introduction.tex" 1752096163 2671 07ea670e2b09fda8f51b82adf8748540 ""
   "chapters/02_related.tex" 1752095418 4365 59d50f959bca367219890ebe68516fc6 ""
-  "chapters/03_methods.tex" 1752091788 29924 e4251f7e7f53b9720f15a18ca980274c ""
+  "chapters/03_methods.tex" 1752138475 31514 244f1fe4f561e688c51125fde1053a83 ""
   "chapters/04_experiments.tex" 1752005905 0 d41d8cd98f00b204e9800998ecf8427e ""
   "chapters/05_results.tex" 1752005644 0 d41d8cd98f00b204e9800998ecf8427e ""
   "chapters/06_conclusion.tex" 1752005651 0 d41d8cd98f00b204e9800998ecf8427e ""
   "figures/SCAPE.drawio.pdf" 1752072363 985291 35cbe5aef6f97baeff692d789af1ee53 ""
+  "figures/cortextophosphenelocations4utaharrays.png" 1752137319 82759 332ff40a892fa78ddcbbe5a398818770 ""
   "figures/dynamicamplitudenorm.png" 1752090975 231353 54ca256067279408bf7a4cac862e3b17 ""
-  "main.aux" 1752096166 8692 4940300545ff332a4115611515529b64 "pdflatex"
-  "main.bbl" 1752096076 4684 247bf263e44eb9e0e0b6218fa95c7950 "bibtex main"
-  "main.out" 1752096166 4906 a86279407b1280c4a419ff4da78b21db "pdflatex"
+  "figures/phosphenerendering4utaharrays.png" 1752137841 63820 40ee443d6fc4f17f2a607eca839f581e ""
+  "main.aux" 1752138478 10471 463603ea07af147fcffd492ef5f6d496 "pdflatex"
+  "main.bbl" 1752138445 4684 247bf263e44eb9e0e0b6218fa95c7950 "bibtex main"
+  "main.out" 1752138478 4906 a86279407b1280c4a419ff4da78b21db "pdflatex"
   (generated)
   "main.aux"
   "main.log"
