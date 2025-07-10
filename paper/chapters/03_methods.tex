@@ -199,18 +199,19 @@ This adaptive KDE provides a flexible density estimate that captures local varia
 
 
 \subsubsection{\(\sigma\)-Mapping via Nyquist Principles}
-Once a smooth density map \(d(x,y)\) is available, SCAPE computes a corresponding spatial scale map \(\sigma(x,y)\) that specifies the width of the local filter. By the Nyquist sampling theorem \cite{Nyquist1928}, the highest spatial frequency resolvable at \((x,y)\) is
+Once a smooth density map \(d(x,y)\) is available, SCAPE computes a spatial‐scale map \(\sigma(x,y)\) that indicates the precise local sampling limit. By the Nyquist sampling theorem \cite{Nyquist1928}, the highest spatial frequency resolvable at \((x,y)\) is
 \[
 f_{\mathrm{Nyq}}(x,y)
 =\tfrac{1}{2}\sqrt{\frac{d(x,y)}{\pi}},
 \]
-since a local density of \(d\) phosphenes per unit area implies an average spacing of \(\sqrt{1/d}\). To suppress frequencies above \(f_{\mathrm{Nyq}}\), we choose a Gaussian filter whose standard deviation satisfies
+since a local density of \(d\) phosphenes per unit area implies an average spacing of \(\Delta\approx\sqrt{1/d}\).  To match this limit exactly, we set
 \[
 \sigma(x,y)
 = \frac{\kappa}{f_{\mathrm{Nyq}}(x,y)}
 = 2\,\kappa\sqrt{\frac{\pi}{d(x,y)}},
 \]
-where \(\kappa\) is a tuning constant (typically \(\kappa=1\)) that controls the cutoff sharpness. This mapping ensures that filter width increases in regions of low density, reducing visual clutter where detail cannot be resolved, and decreases in regions of high density, preserving fine structure.
+where \(\kappa>0\) (typically \(1\)) adjusts the transition sharpness.  The resulting \(\sigma\)-map directly specifies the standard deviation of the local processing kernel at each location, thereby guiding where and at what scale spatial frequencies should be preserved or suppressed.
+
 
 
 \subsubsection{Shift-variant Filtering}
