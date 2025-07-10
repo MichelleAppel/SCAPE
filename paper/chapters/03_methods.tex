@@ -293,6 +293,43 @@ where all statistics are computed over a small window around \((x,y)\).  The ove
 \]
 
 
+\paragraph{Spectral‐Residual Saliency Index (SR-SIM)}  
+SR-SIM evaluates image fidelity by combining spectral‐residual visual saliency with gradient‐based structure similarity \cite{Zhang2012}.  Given a reference \(I_o\) and a phosphene image \(I_p\), let  
+\[
+\mathrm{SVRS}_o(x,y),\;\mathrm{SVRS}_p(x,y)
+\]
+be their saliency maps computed via the spectral residual of the log‐amplitude spectrum, and let  
+\[
+\mathrm{GM}_o(x,y),\;\mathrm{GM}_p(x,y)
+\]
+be their gradient magnitude maps (Scharr‐filtered).  We form two local similarity measures  
+\[
+S_{\mathrm{S}}(x,y)
+=\frac{2\,\mathrm{SVRS}_o(x,y)\,\mathrm{SVRS}_p(x,y)+C_1}
+      {\mathrm{SVRS}_o(x,y)^2+\mathrm{SVRS}_p(x,y)^2+C_1},
+\quad
+\]
+\[
+S_{\mathrm{G}}(x,y)
+=\frac{2\,\mathrm{GM}_o(x,y)\,\mathrm{GM}_p(x,y)+C_2}
+      {\mathrm{GM}_o(x,y)^2+\mathrm{GM}_p(x,y)^2+C_2},
+\]
+with constants \(C_1,C_2\) for numerical stability.  Defining  
+\(\mathrm{SVRS}_m(x,y)=\max\{\mathrm{SVRS}_o,\mathrm{SVRS}_p\}\), the fused local score is  
+\[
+S_L(x,y)
+=\bigl[S_{\mathrm{S}}(x,y)\bigr]\,
+\bigl[S_{\mathrm{G}}(x,y)\bigr]^\alpha\,
+\mathrm{SVRS}_m(x,y),
+\]
+where \(\alpha\) (typically 0.5) balances structure sensitivity.  The global SR-SIM index is the normalized sum  
+\[
+\mathrm{SR{\text -}SIM}(I_p,I_o)
+=\frac{\sum_{x,y}S_L(x,y)}
+      {\sum_{x,y}\mathrm{SVRS}_m(x,y)}.
+\]
+This metric captures both saliency‐weighted structural agreement and overall contrast fidelity in a computationally efficient manner.
+
 
 
 \paragraph{Visual Saliency Induced Index (VSI)}  
@@ -322,6 +359,34 @@ emphasizes salient regions.  The global VSI is the saliency‐weighted average:
 = \frac{\sum_{x,y}W(x,y)\,S(x,y)}
        {\sum_{x,y}W(x,y)}.
 \]
+
+\paragraph{Feature Similarity Index (FSIM)}  
+The Feature Similarity Index (FSIM) evaluates image fidelity by comparing low‐level features known to align with human perception: phase congruency (PC) and gradient magnitude (GM) \cite{Zhang2011}.  Given a reference image \(I_o\) and a phosphene rendering \(I_p\), we first extract their PC maps \(\mathrm{PC}_o(x,y)\), \(\mathrm{PC}_p(x,y)\) and GM maps \(\mathrm{GM}_o(x,y)\), \(\mathrm{GM}_p(x,y)\).  At each pixel \((x,y)\) we compute two similarity measures:
+\[
+S_{\mathrm{PC}}(x,y)
+= \frac{2\,\mathrm{PC}_o(x,y)\,\mathrm{PC}_p(x,y) + T_1}
+       {\mathrm{PC}_o(x,y)^2 + \mathrm{PC}_p(x,y)^2 + T_1},
+\quad
+\]
+\[
+S_{\mathrm{G}}(x,y)
+= \frac{2\,\mathrm{GM}_o(x,y)\,\mathrm{GM}_p(x,y) + T_2}
+       {\mathrm{GM}_o(x,y)^2 + \mathrm{GM}_p(x,y)^2 + T_2},
+\]
+where \(T_1,T_2\) stabilize the ratios.  We then form a fused local score
+\[
+S_L(x,y)
+= \bigl[S_{\mathrm{PC}}(x,y)\bigr]^\alpha\,
+  \bigl[S_{\mathrm{G}}(x,y)\bigr]^\beta,
+\]
+with \(\alpha=\beta=1\).  Finally, FSIM weights each location by the maximal phase congruency  
+\(\mathrm{PC}_m(x,y)=\max\{\mathrm{PC}_o(x,y),\mathrm{PC}_p(x,y)\}\), yielding
+\[
+\mathrm{FSIM}(I_p,I_o)
+= \frac{\sum_{x,y}\mathrm{PC}_m(x,y)\,S_L(x,y)}
+       {\sum_{x,y}\mathrm{PC}_m(x,y)}.
+\]
+This formulation emphasizes perceptually salient features while penalizing structural deviations between \(I_p\) and \(I_o\).
 
 
 \paragraph{Mean Deviation Similarity Index (MDSI)}  
@@ -355,6 +420,16 @@ and pool by the Minkowski deviation
 \]
 Deviations from the mean highlight regions where the phosphene encoding departs most from the reference structure, yielding a sensitive measure of localized fidelity loss.  
  
+
+\paragraph{Content Loss}  
+To capture perceptually meaningful differences beyond pixel‐wise errors, we measure the dissimilarity between deep feature representations of the phosphene image \(I_p\) and the original scene \(I_o\) extracted from a pretrained convolutional network.  Denote by \(\phi_\ell(I)\) the activation tensor at layer \(\ell\) of a VGG‐type model.  The content loss is then  
+\[
+\mathcal{L}_{\mathrm{content}}(I_p,I_o)
+= \bigl\lVert \phi_\ell(I_p) \;-\;\phi_\ell(I_o)\bigr\rVert_2^2.
+\]
+By choosing mid‐ to high‐level layers, this loss emphasizes preservation of object structure and semantic content rather than low‐level textures \cite{Gatys2015,Zhang2018}.  In our experiments we normalize inputs using ImageNet statistics and extract features from VGG19, averaging across spatial dimensions to yield a single content‐distance score per image pair.  Lower content loss indicates that SCAPE’s encoding retains more of the high‐level scene layout that a human observer would deem important.  
+
+
 
 \paragraph{Perceptual Image‐Error Assessment through Pairwise Preference (PIEAPP)}  
 PIEAPP \cite{Prashnani2018} is a learned full‐reference metric designed to predict perceptual error by modeling human preferences between image pairs. It operates by decomposing the input images into overlapping patches and computing learned feature representations. Given a reference image \(I_o\) and a phosphene image \(I_p\), each patch \(k\) yields a feature embedding difference \(\Delta f_k\). A two‐stage regression network maps these differences to an estimated perceptual error \(d_k\in\mathbb{R}\) and an associated confidence weight \(w_k>0\). Formally, the model computes

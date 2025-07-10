@@ -6,6 +6,10 @@ Jaap de~Ruyter~van Steveninck, Umut G{\"u}{\c c}l{\"u}, Richard van Wezel, and
 \newblock End-to-end optimization of prosthetic vision.
 \newblock {\em bioRxiv}, 2020.
 
+\bibitem{Gatys2015}
+Leon~A. Gatys, Alexander~S. Ecker, and Matthias Bethge.
+\newblock A neural algorithm of artistic style, 2015.
+
 \bibitem{Granley2023}
 Jacob Granley, Tristan Fauvel, Matthew Chalk, and Michael Beyeler.
 \newblock Human-in-the-loop optimization for deep stimulus encoding in visual
@@ -108,11 +112,28 @@ Richard~A. Young.
 Fisher Yu and Vladlen Koltun.
 \newblock Multi-scale context aggregation by dilated convolutions, 2016.
 
+\bibitem{Zhang2012}
+Lin Zhang and Hongyu Li.
+\newblock Sr-sim: A fast and high performance iqa index based on spectral
+  residual.
+\newblock In {\em 2012 19th IEEE International Conference on Image Processing},
+  pages 1473--1476, 2012.
+
 \bibitem{Zhang2014}
 Lin Zhang, Ying Shen, and Hongyu Li.
 \newblock Vsi: A visual saliency-induced index for perceptual image quality
   assessment.
 \newblock {\em IEEE Transactions on Image Processing}, 23(10):4270--4281, 2014.
+
+\bibitem{Zhang2011}
+Lin Zhang, Lei Zhang, Xuanqin Mou, and David Zhang.
+\newblock Fsim: A feature similarity index for image quality assessment.
+\newblock {\em IEEE Transactions on Image Processing}, 20(8):2378--2386, 2011.
+
+\bibitem{Zhang2018}
+Richard Zhang, Phillip Isola, Alexei~A. Efros, Eli Shechtman, and Oliver Wang.
+\newblock The unreasonable effectiveness of deep features as a perceptual
+  metric, 2018.
 
 \bibitem{ZiaeiNafchi2016}
 Hossein Ziaei~Nafchi, Atena Shahkolaei, Rachid Hedjam, and Mohamed Cheriet.
