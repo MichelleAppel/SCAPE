@@ -12,6 +12,13 @@ We begin with \(E\) electrodes implanted in cortical tissue, each with a two-dim
 These positions are obtained from clinical implant schematics or patient-specific models.
 
 
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.9\columnwidth]{figures/cortextophosphenelocations4utaharrays.png}
+  \caption{Cortical electrode locations of 4 Utah Arrays (left) plotted in cortical \(x,y\) coordinates with overlaid retinotopic grid, and corresponding phosphene centers (right) in visual‐field polar coordinates.}
+  \label{fig:cortex-phosphene-locations}
+\end{figure}
+
 \subsubsection{Retinotopic Projection and Phosphene Centers}
 Each cortical electrode \((x_i,y_i)\) is mapped into visual-field coordinates \((\mu_{x,i},\mu_{y,i})\) using the inverse of the Wedge–Dipole transform introduced by Polimeni \emph{et al.}\ \cite{Polimeni2006}. This model captures cortical magnification, in which the foveal region is allocated a larger cortical representation than the periphery. In complex notation the forward mapping from visual-field polar coordinates \((r,\theta)\) to cortical coordinate \(w\) is
 \[
@@ -36,14 +43,6 @@ Applying this inverse transform to each \((x_i,y_i)\) and adding optional Gaussi
 \{(\mu_{x,i},\mu_{y,i})\}_{i=1}^N,
 \]
 expressed in degrees of visual angle. These centers form the basis for SCAPE’s density estimation and adaptive filtering \cite{vanderGrinten2024}. An example implant scheme is shown in Figure~\ref{fig:cortex-phosphene-locations}, where the left panel plots the cortical electrode locations of 4 Utah Arrays in \(x,y\) coordinates and the right panel shows the corresponding visual‐field polar coordinates of the phosphenes.
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.9\columnwidth]{figures/cortextophosphenelocations4utaharrays.png}
-  \caption{Cortical electrode locations of 4 Utah Arrays (left) plotted in cortical \(x,y\) coordinates with overlaid retinotopic grid, and corresponding phosphene centers (right) in visual‐field polar coordinates. Here we show the 4‐Utah‐arrays implant scheme.}
-  \label{fig:cortex-phosphene-locations}
-\end{figure}
-
 
 
 \subsubsection{Gaussian Blob Rendering}

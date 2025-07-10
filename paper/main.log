@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2025.7.8)  10 JUL 2025 18:00
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2025.7.8)  10 JUL 2025 18:26
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -394,29 +394,25 @@ Underfull \hbox (badness 2229) in paragraph at lines 13--14
 
 
 ]) (./chapters/03_methods.tex
-<figures/cortextophosphenelocations4utaharrays.png, id=129, 714.7503pt x 359.9046pt>
+<figures/cortextophosphenelocations4utaharrays.png, id=126, 714.7503pt x 359.9046pt>
 File: figures/cortextophosphenelocations4utaharrays.png Graphic file (type png)
 <use figures/cortextophosphenelocations4utaharrays.png>
-Package pdftex.def Info: figures/cortextophosphenelocations4utaharrays.png  used on input line 42.
+Package pdftex.def Info: figures/cortextophosphenelocations4utaharrays.png  used on input line 17.
 (pdftex.def)             Requested size: 226.79846pt x 114.19978pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[2]
-<figures/phosphenerendering4utaharrays.png, id=154, 710.4141pt x 377.2494pt>
+ [2 <./figures/cortextophosphenelocations4utaharrays.png>]
+<figures/phosphenerendering4utaharrays.png, id=156, 710.4141pt x 377.2494pt>
 File: figures/phosphenerendering4utaharrays.png Graphic file (type png)
 <use figures/phosphenerendering4utaharrays.png>
-Package pdftex.def Info: figures/phosphenerendering4utaharrays.png  used on input line 68.
+Package pdftex.def Info: figures/phosphenerendering4utaharrays.png  used on input line 67.
 (pdftex.def)             Requested size: 226.79846pt x 120.43445pt.
-LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 69.
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 68.
  (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
-) [3 <./figures/cortextophosphenelocations4utaharrays.png> <./figures/phosphenerendering4utaharrays.png>]
+) [3 <./figures/phosphenerendering4utaharrays.png>]
 <figures/dynamicamplitudenorm.png, id=164, 807.9786pt x 253.6677pt>
 File: figures/dynamicamplitudenorm.png Graphic file (type png)
 <use figures/dynamicamplitudenorm.png>
-Package pdftex.def Info: figures/dynamicamplitudenorm.png  used on input line 135.
+Package pdftex.def Info: figures/dynamicamplitudenorm.png  used on input line 134.
 (pdftex.def)             Requested size: 226.79846pt x 71.20451pt.
 
 
@@ -424,44 +420,44 @@ pdfTeX warning: pdflatex (file ./figures/SCAPE.pdf): PDF inclusion: found PDF ve
 <figures/SCAPE.pdf, id=165, 348.34138pt x 817.13275pt>
 File: figures/SCAPE.pdf Graphic file (type pdf)
 <use figures/SCAPE.pdf>
-Package pdftex.def Info: figures/SCAPE.pdf  used on input line 157.
+Package pdftex.def Info: figures/SCAPE.pdf  used on input line 156.
 (pdftex.def)             Requested size: 226.79846pt x 532.02773pt.
 [4 <./figures/dynamicamplitudenorm.png> <./figures/SCAPE.pdf>]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 202.
+(hyperref)                removing `math shift' on input line 201.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\sigma' on input line 202.
+(hyperref)                removing `\sigma' on input line 201.
 
 [5]
-Underfull \hbox (badness 3428) in paragraph at lines 261--262
+Underfull \hbox (badness 3428) in paragraph at lines 260--261
 []\OT1/ptm/b/n/10 Squeeze-and-Excitation (SE) blocks \OT1/ptm/m/n/10 to adap-tively
  []
 
 
-Underfull \hbox (badness 1867) in paragraph at lines 266--267
+Underfull \hbox (badness 1867) in paragraph at lines 265--266
 []\OT1/ptm/m/n/10 Down-sampling is achieved via max-pooling and up-
  []
 
 
-Underfull \hbox (badness 2865) in paragraph at lines 316--319
+Underfull \hbox (badness 2865) in paragraph at lines 315--318
 \OT1/ptm/m/n/10 with con-stants $\OML/cmm/m/it/10 C[]; C[]$ \OT1/ptm/m/n/10 for nu-mer-i-cal sta-bil-ity. Defin-ing
  []
 
 [6]
-Underfull \hbox (badness 1762) in paragraph at lines 381--384
+Underfull \hbox (badness 1762) in paragraph at lines 380--383
 \OT1/ptm/m/n/10 with $\OML/cmm/m/it/10  \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 ^^L \OT1/cmr/m/n/10 = 1$\OT1/ptm/m/n/10 . Fi-nally, FSIM weights each lo-
  []
 
 
-Overfull \hbox (22.76733pt too wide) detected at line 404
+Overfull \hbox (22.76733pt too wide) detected at line 403
 []\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 x; y\OT1/cmr/m/n/10 ) = []\OML/cmm/m/it/10 :
  []
 
 
-Underfull \hbox (badness 2111) in paragraph at lines 420--422
+Underfull \hbox (badness 2111) in paragraph at lines 419--421
 \OT1/ptm/m/n/10 Deviations from the mean high-light re-gions where the
  []
 
@@ -474,13 +470,13 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 Here is how much of TeX's memory you used:
  10072 strings out of 481008
  150177 string characters out of 5909440
- 468390 words of memory out of 5000000
+ 466724 words of memory out of 5000000
  27012 multiletter control sequences out of 15000+600000
  443637 words of font info for 107 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  71i,12n,74p,1427b,462s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (9 pages, 1507490 bytes).
+Output written on main.pdf (9 pages, 1507459 bytes).
 PDF statistics:
  350 PDF objects out of 1000 (max. 8388607)
  299 compressed objects within 3 object streams
