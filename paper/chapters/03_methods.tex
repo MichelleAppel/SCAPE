@@ -144,19 +144,16 @@ This calibration step yields a more uniform perceptual phosphene map, improving 
 
 
 
-
-
 \subsection{SCAPE Adaptive Encoding}
 
 The fundamental challenge in cortical prosthetic vision is that electrode arrays sample the visual field nonuniformly. Regions with dense electrode coverage can resolve fine detail while sparse regions cannot. SCAPE addresses this by adapting image filtering to the local sampling density. First, we estimate a continuous density map from the simulator-derived phosphene centers. Next, we convert density into a spatial scale map via sampling-theorem principles. Finally, we apply a shift-variant filter whose parameters vary continuously across the image. This adaptive encoding preserves maximal detail where it is supported and reduces visual clutter where it is not.
 
-\begin{figure}[ht]
+\begin{figure*}[ht]
   \centering
-  % scale to 0.55 of the line width
-  \includegraphics[width=0.9\linewidth]{figures/SCAPE.pdf}
+  \includegraphics[width=\textwidth]{figures/SCAPElandscapeblack.pdf}
   \caption{Overview of the SCAPE pipeline. Starting from a cortical implant layout (top left) we obtain phosphene centers via the simulator, estimate a local density map, convert it into a spatial scale ($\sigma$) map, and then apply shift-variant filtering to produce an activation map for phosphene rendering.}
   \label{fig:scape_pipeline}
-\end{figure}
+\end{figure*}
 
 Figure~\ref{fig:scape_pipeline} illustrates the full SCAPE pipeline at a glance: from electrode layout to phosphene centers (Panel 1), to density and $\sigma$‐mapping (Panels 2–3), to the final shift‐variant filter output (Panel 4).  
 

@@ -47,17 +47,17 @@
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-A}4}Activation-to-Electrode Mapping}{3}{subsubsection.3.1.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-A}5}Amplitude Equalization}{3}{subsubsection.3.1.5}\protected@file@percent }
 \citation{vanderGrinten2024}
+\citation{Nyquist1928}
 \@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Dynamic amplitude normalization example. \emph  {Left:} raw percept obtained by driving every electrode at the same current \(S\). \emph  {Center:} normalized percept after learning per-electrode gains \(A_i\). \emph  {Right:} learned gains \(A_i\in [A_{\qopname  \relax m{min}},A_{\qopname  \relax m{max}}]\). Normalization yields a more even brightness profile and reduces total current draw, conserving implant power and minimizing excessive charge delivery.}}{4}{figure.3}\protected@file@percent }
 \newlabel{fig:amplitude_norm}{{3}{4}{Dynamic amplitude normalization example. \emph {Left:} raw percept obtained by driving every electrode at the same current \(S\). \emph {Center:} normalized percept after learning per-electrode gains \(A_i\). \emph {Right:} learned gains \(A_i\in [A_{\min },A_{\max }]\). Normalization yields a more even brightness profile and reduces total current draw, conserving implant power and minimizing excessive charge delivery}{figure.3}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-B}}SCAPE Adaptive Encoding}{4}{subsection.3.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-B}1}Density Estimation}{4}{subsubsection.3.2.1}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Overview of the SCAPE pipeline. Starting from a cortical implant layout (top left) we obtain phosphene centers via the simulator, estimate a local density map, convert it into a spatial scale ($\sigma $) map, and then apply shift-variant filtering to produce an activation map for phosphene rendering.}}{4}{figure.4}\protected@file@percent }
-\newlabel{fig:scape_pipeline}{{4}{4}{Overview of the SCAPE pipeline. Starting from a cortical implant layout (top left) we obtain phosphene centers via the simulator, estimate a local density map, convert it into a spatial scale ($\sigma $) map, and then apply shift-variant filtering to produce an activation map for phosphene rendering}{figure.4}{}}
 \@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {III-B}1a}Analytic Cortical Magnification}{4}{paragraph.3.2.1.1}\protected@file@percent }
-\citation{Nyquist1928}
+\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {III-B}1b}Adaptive Kernel Density Estimation}{4}{paragraph.3.2.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-B}2}\(\sigma \)-Mapping via Nyquist Principles}{4}{subsubsection.3.2.2}\protected@file@percent }
 \citation{Young1987}
-\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {III-B}1b}Adaptive Kernel Density Estimation}{5}{paragraph.3.2.1.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-B}2}\(\sigma \)-Mapping via Nyquist Principles}{5}{subsubsection.3.2.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Overview of the SCAPE pipeline. Starting from a cortical implant layout (top left) we obtain phosphene centers via the simulator, estimate a local density map, convert it into a spatial scale ($\sigma $) map, and then apply shift-variant filtering to produce an activation map for phosphene rendering.}}{5}{figure.4}\protected@file@percent }
+\newlabel{fig:scape_pipeline}{{4}{5}{Overview of the SCAPE pipeline. Starting from a cortical implant layout (top left) we obtain phosphene centers via the simulator, estimate a local density map, convert it into a spatial scale ($\sigma $) map, and then apply shift-variant filtering to produce an activation map for phosphene rendering}{figure.4}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-B}3}Shift-variant Filtering}{5}{subsubsection.3.2.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {III-B}3a}Difference-of-Gaussians Example}{5}{paragraph.3.2.3.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {III-B}3b}Extending to Other Kernels}{5}{paragraph.3.2.3.2}\protected@file@percent }
@@ -81,12 +81,11 @@
 \citation{Gatys2015,Zhang2018}
 \citation{Prashnani2018}
 \citation{Prashnani2018}
-\citation{Kriegeskorte2008}
 \@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {III-D}1d}Feature Similarity Index (FSIM)}{7}{paragraph.3.4.1.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {III-D}1e}Mean Deviation Similarity Index (MDSI)}{7}{paragraph.3.4.1.5}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {III-D}1f}Content Loss}{7}{paragraph.3.4.1.6}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {III-D}1g}Perceptual Image‐Error Assessment through Pairwise Preference (PIEAPP)}{7}{paragraph.3.4.1.7}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-D}2}Representational Similarity Analysis}{7}{subsubsection.3.4.2}\protected@file@percent }
+\citation{Kriegeskorte2008}
 \citation{Wang2018}
 \bibstyle{plain}
 \bibdata{references}
@@ -99,13 +98,14 @@
 \bibcite{Kriegeskorte2008}{7}
 \bibcite{Liu2005}{8}
 \bibcite{Nyquist1928}{9}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-D}2}Representational Similarity Analysis}{8}{subsubsection.3.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-D}3}Reconstruction Performance}{8}{subsubsection.3.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{References}{8}{section*.1}\protected@file@percent }
 \bibcite{Oktay2018}{10}
 \bibcite{Polimeni2006}{11}
 \bibcite{Prashnani2018}{12}
 \bibcite{Relic2022}{13}
 \bibcite{Ronneberger2015}{14}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-D}3}Reconstruction Performance}{8}{subsubsection.3.4.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{References}{8}{section*.1}\protected@file@percent }
 \bibcite{vanderGrinten2024}{15}
 \bibcite{Wang2018}{16}
 \bibcite{Wang2004}{17}

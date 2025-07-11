@@ -692,11 +692,11 @@ INPUT ./figures/dynamicamplitudenorm.png
 INPUT ./figures/dynamicamplitudenorm.png
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx8.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx6.tfm
-INPUT ./figures/SCAPE.pdf
-INPUT ./figures/SCAPE.pdf
-INPUT figures/SCAPE.pdf
-INPUT ./figures/SCAPE.pdf
-INPUT ./figures/SCAPE.pdf
+INPUT ./figures/SCAPElandscapeblack.pdf
+INPUT ./figures/SCAPElandscapeblack.pdf
+INPUT figures/SCAPElandscapeblack.pdf
+INPUT ./figures/SCAPElandscapeblack.pdf
+INPUT ./figures/SCAPElandscapeblack.pdf
 INPUT /usr/share/texlive/texmf-dist/fonts/vf/adobe/times/ptmri7t.vf
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/adobe/times/ptmri8r.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/adobe/times/ptmr8c.tfm
