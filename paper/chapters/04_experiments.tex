@@ -1,0 +1,123 @@
+\section{Experiments}
+\label{sec:experiments}
+
+The experiments are designed to evaluate how well SCAPE adapts to different visual scenes, implant layouts, and spatial sampling densities compared to non-adaptive baselines.  
+We assess performance across multiple datasets with diverse image statistics and test a range of implant schemes that vary in electrode count and distribution.  
+All methods are processed through the same prosthetic vision simulation framework to ensure a fair comparison.  
+Performance is quantified using complementary approaches: low-level fidelity metrics applied to phosphene renderings, representational similarity analysis to assess preservation of stimulus relationships, and reconstruction-based evaluation to gauge how well a learned decoder can recover the original scene from each encoding.  
+This multi-faceted evaluation allows us to capture both the structural accuracy of the encoded images and their potential usability for downstream perception.
+
+
+\subsection{Datasets}
+We evaluate SCAPE using three publicly available datasets chosen to cover a wide range of visual statistics and content domains:
+\begin{itemize}
+    \item \textbf{LaPa}: human face images, representing structured, high-contrast features and smooth shading.
+    \item \textbf{MS~COCO}: diverse natural scenes and objects, providing varied spatial frequencies and complex layouts.
+    \item \textbf{SUN}: indoor and outdoor scene photographs, including both cluttered and open environments.
+\end{itemize}
+
+All images are first converted to grayscale to reflect the fact that brightness is the dominant cue available in prosthetic vision, where phosphenes primarily convey intensity rather than color.  
+In early visual cortex, luminance signals are more strongly represented than chromatic signals, making brightness the most relevant dimension for encoding (citation to be added).  
+Preliminary experiments with color confirmed that intensity alone preserved the majority of task-relevant structure.
+
+Grayscale conversion is performed using \textbf{Rec.\,709 perceptual luminance} (luma) weighting, which aligns with human brightness perception:
+\begin{equation}
+Y = 0.2126\,R + 0.7152\,G + 0.0722\,B,
+\end{equation}
+where $R$, $G$, and $B$ are normalized to $[0,1]$.  
+After conversion, perceptual normalization is applied to ensure a consistent dynamic range across images before encoding.
+
+
+
+\subsection{Implant Schemes}
+We evaluate SCAPE across five implant layouts that span large differences in sampling density, spatial extent, and geometric regularity. This set stresses density adaptation both in the foveal region and in the periphery, and it includes layouts used in recent prosthetic vision studies.
+
+\begin{table*}[t]
+\centering
+\begin{tabular}{lcccc}
+\toprule
+Scheme & View angle (deg) & Electrodes ($N$) & Eccentricity range (deg) \\
+\midrule
+1 Utah array & 0.4  & 94   & 0.009 to 0.203 \\
+Utah RFs     & 6.0  & 256  & 0.000 to 2.120 \\
+4 Utah arrays & 16.0 & 320  & 1.632 to 7.931 \\
+Uniform 1024 & 16.0 & 1024 & 0.001 to 7.984 \\
+Neuralink    & 25.0 & 4224 & 0.000 to 12.095 \\
+\bottomrule
+\end{tabular}
+\caption{Implant layouts and basic properties. Counts reflect the effective number of electrodes inside the simulator field of view. Eccentricity is reported in degrees of visual angle.}
+\label{tab:implant_schemes}
+\end{table*}
+
+\paragraph{Uniform 1024}
+This layout provides a dense, near-uniform sampling of the visual field and serves as a standard reference in the literature on differentiable prosthetic vision. It allows direct comparison to prior work that uses a similar order of magnitude in channel count \cite{deRuytervanSteveninck2020}. It also exposes whether SCAPE preserves fine structure when the density is sufficient across most of the field of view.
+
+\paragraph{Four Utah arrays}
+This layout models a realistic multi-array configuration with gaps between arrays and moderate channel count. It introduces strong spatial inhomogeneity due to array borders and inter-array spacing, which is a common feature of practical cortical implants. It therefore tests whether SCAPE can suppress clutter in sparse regions while preserving detail within array footprints.
+
+\paragraph{One Utah array}
+This layout matches a single-array setup and concentrates sampling near fixation with a very small field of view. It reflects ongoing experimental configurations used in current research programs at the Institute of Bioengineering of the Miguel Hernández University. It tests SCAPE under severe channel limits and minimal coverage, which is useful for understanding performance in constrained early clinical or preclinical settings.
+
+\paragraph{Neuralink shank}
+This layout represents a high-site-count configuration that covers a wide field of view with many closely spaced sites. It stresses computational efficiency and scale selection, since local density varies with eccentricity and along the shank geometry. It helps determine whether SCAPE scales to thousands of sites while maintaining efficiency and stability.
+
+\paragraph{Utah RFs}
+This layout is derived from receptive-field considerations anchored to a Utah-like geometry. It provides intermediate coverage between a single array and a four-array montage, and it yields a more graded eccentricity profile than a strict grid. It serves as a control that links analytic receptive-field placement to a hardware-inspired layout, which is useful for validating the density-to-scale mapping without strong grid artifacts.
+
+\medskip
+Together these schemes span two orders of magnitude in channel count, from 94 to 4224. They also span field of view from a fraction of a degree to more than twelve degrees of eccentricity. This diversity is important because SCAPE is designed to set filter scale from local sampling density. The chosen set probes that mechanism in both uniform and highly inhomogeneous layouts, which is essential for a fair test of adaptive encoding.
+
+
+\subsection{Baselines}
+We compare SCAPE to simple and widely used encoders that do not adapt their spatial scale to local sampling density. Each baseline produces an activation map that is passed through the same simulator and the same amplitude normalization as SCAPE to ensure a fair comparison.
+
+\paragraph{Perceptual luminance}
+A direct perceptual luminance image is used as a minimalist baseline. Images are converted to grayscale with Rec.\,709 weights and then forwarded without additional filtering. This tests how much structure survives without any feature selection.
+
+\paragraph{Canny edge detection}
+Canny is a standard choice in prosthetic vision pipelines because it preserves object boundaries under severe spatial resolution limits and often improves recognition in simulated conditions. We include a Canny baseline with standard smoothing and hysteresis thresholding, applied uniformly across the field of view. This represents a strong nonadaptive feature extractor centred on contours.
+
+\paragraph{Random control}
+As a structure free control we sample a random activation pattern that matches the total activation energy of the method under test. This helps verify that improvements are not due to trivial differences in overall current or luminance.
+
+\medskip
+All baselines use identical preprocessing, identical simulator settings, and identical amplitude normalization. This keeps the comparison focused on the effect of adaptive scale selection rather than on downstream rendering differences.
+
+
+
+\subsection{SCAPE Configuration}
+SCAPE builds a local density map from phosphene coordinates using adaptive kernel density estimation and converts that density into a spatial scale map \(\sigma(x,y)\). The scale map controls a shift variant Difference of Gaussians that runs with separable one dimensional passes.
+
+\paragraph{Density estimation}
+All experiments use adaptive KDE over phosphene centers in visual field coordinates. Bandwidth \(h_i\) for point \(i\) equals \(\alpha\) times the distance to its \(k\)-th nearest neighbor. We set \(k=16\) and \(\alpha=1.0\). The resulting density map is normalized so that its surface integral equals the total number of phosphenes of the scheme under test.
+
+\paragraph{Mapping density to scale}
+We convert density \(d(x,y)\) into a local scale through a Nyquist motivated rule. We use
+\[
+\sigma_{\text{fov}}(x,y) \;=\; \frac{2}{\pi \sqrt{2}\,\beta}\,\frac{1}{\sqrt{d(x,y)}} \quad\text{with}\quad \beta=0.55,
+\]
+which yields a scale that decreases in regions with higher sampling density and increases in sparse regions. For filtering on an image grid we convert \(\sigma_{\text{fov}}\) from degrees to pixels using the simulator field of view and resolution.
+
+\paragraph{Filter family and execution}
+We use a Difference of Gaussians with ratio \(\lambda=1.6\) to approximate a Laplacian of Gaussian while remaining efficient. The filter runs as two separable Gaussian passes per branch, first horizontal then vertical, at \(\sigma_1(x,y)\) and \(\sigma_2(x,y)=\lambda\,\sigma_1(x,y)\). Gaussian weights are truncated where their value falls below a small threshold and each one dimensional kernel is normalized to sum to one. Padding uses reflection at image borders. The half kernel radius is capped at a fixed maximum to bound runtime and memory.
+
+\paragraph{Retinotopic model}
+Retinotopic projection follows the dipole form of the Polimeni wedge–dipole family with standard parameters. This model sets the visual field coordinate system used by the KDE and by the degree to pixel conversion.
+
+\paragraph{Sampling to electrodes}
+The shift variant DoG produces an activation map on the simulator grid. Electrode currents are obtained by sampling the activation map at phosphene centers. The same sampling rule is used for every implant scheme.
+
+\paragraph{Scope of configuration}
+Unless noted otherwise we do not apply extra smoothing or quantization to the \(\sigma\) map. All encoders, including baselines, share the same preprocessing, simulator settings, and the same amplitude normalization described in the next subsection.
+
+
+\subsection{Amplitude Normalization}
+Explain how amplitude equalization is applied and why.
+
+\subsection{Evaluation Protocol}
+Detail the metrics and evaluation procedures used, including:
+\begin{itemize}
+    \item Low-level fidelity metrics
+    \item Representational similarity analysis
+    \item Reconstruction performance
+\end{itemize}

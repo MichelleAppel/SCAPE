@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2025.7.8)  11 JUL 2025 15:12
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2025.7.8)  21 AUG 2025 12:17
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -394,91 +394,101 @@ Underfull \hbox (badness 2229) in paragraph at lines 13--14
 
 
 ]) (./chapters/03_methods.tex
-<figures/cortextophosphenelocations4utaharrays.png, id=126, 714.7503pt x 359.9046pt>
+<figures/cortextophosphenelocations4utaharrays.png, id=182, 714.7503pt x 359.9046pt>
 File: figures/cortextophosphenelocations4utaharrays.png Graphic file (type png)
 <use figures/cortextophosphenelocations4utaharrays.png>
-Package pdftex.def Info: figures/cortextophosphenelocations4utaharrays.png  used on input line 17.
+Package pdftex.def Info: figures/cortextophosphenelocations4utaharrays.png  used on input line 18.
 (pdftex.def)             Requested size: 226.79846pt x 114.19978pt.
  [2 <./figures/cortextophosphenelocations4utaharrays.png>]
-<figures/phosphenerendering4utaharrays.png, id=156, 710.4141pt x 377.2494pt>
+<figures/phosphenerendering4utaharrays.png, id=213, 710.4141pt x 377.2494pt>
 File: figures/phosphenerendering4utaharrays.png Graphic file (type png)
 <use figures/phosphenerendering4utaharrays.png>
-Package pdftex.def Info: figures/phosphenerendering4utaharrays.png  used on input line 67.
+Package pdftex.def Info: figures/phosphenerendering4utaharrays.png  used on input line 68.
 (pdftex.def)             Requested size: 226.79846pt x 120.43445pt.
-LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 68.
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 69.
  (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 ) [3 <./figures/phosphenerendering4utaharrays.png>]
-<figures/dynamicamplitudenorm.png, id=164, 807.9786pt x 253.6677pt>
+<figures/dynamicamplitudenorm.png, id=221, 807.9786pt x 253.6677pt>
 File: figures/dynamicamplitudenorm.png Graphic file (type png)
 <use figures/dynamicamplitudenorm.png>
-Package pdftex.def Info: figures/dynamicamplitudenorm.png  used on input line 134.
+Package pdftex.def Info: figures/dynamicamplitudenorm.png  used on input line 135.
 (pdftex.def)             Requested size: 226.79846pt x 71.20451pt.
 
 
 pdfTeX warning: pdflatex (file ./figures/SCAPElandscapeblack.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<figures/SCAPElandscapeblack.pdf, id=165, 811.11026pt x 398.4486pt>
+<figures/SCAPElandscapeblack.pdf, id=222, 811.11026pt x 398.4486pt>
 File: figures/SCAPElandscapeblack.pdf Graphic file (type pdf)
 <use figures/SCAPElandscapeblack.pdf>
-Package pdftex.def Info: figures/SCAPElandscapeblack.pdf  used on input line 153.
+Package pdftex.def Info: figures/SCAPElandscapeblack.pdf  used on input line 154.
 (pdftex.def)             Requested size: 516.0pt x 253.49234pt.
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 198.
+(hyperref)                removing `math shift' on input line 199.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\sigma' on input line 198.
+(hyperref)                removing `\sigma' on input line 199.
 
 [4 <./figures/dynamicamplitudenorm.png>] [5 <./figures/SCAPElandscapeblack.pdf>]
-Underfull \hbox (badness 3428) in paragraph at lines 257--258
+Underfull \hbox (badness 3428) in paragraph at lines 258--259
 []\OT1/ptm/b/n/10 Squeeze-and-Excitation (SE) blocks \OT1/ptm/m/n/10 to adap-tively
  []
 
 
-Underfull \hbox (badness 1867) in paragraph at lines 262--263
+Underfull \hbox (badness 1867) in paragraph at lines 263--264
 []\OT1/ptm/m/n/10 Down-sampling is achieved via max-pooling and up-
  []
 
 
-Underfull \hbox (badness 2865) in paragraph at lines 312--315
+Underfull \hbox (badness 2865) in paragraph at lines 313--316
 \OT1/ptm/m/n/10 with con-stants $\OML/cmm/m/it/10 C[]; C[]$ \OT1/ptm/m/n/10 for nu-mer-i-cal sta-bil-ity. Defin-ing
  []
 
 [6]
-Underfull \hbox (badness 1762) in paragraph at lines 377--380
+Underfull \hbox (badness 1762) in paragraph at lines 378--381
 \OT1/ptm/m/n/10 with $\OML/cmm/m/it/10  \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 ^^L \OT1/cmr/m/n/10 = 1$\OT1/ptm/m/n/10 . Fi-nally, FSIM weights each lo-
  []
 
 
-Overfull \hbox (22.76733pt too wide) detected at line 400
+Overfull \hbox (22.76733pt too wide) detected at line 401
 []\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 x; y\OT1/cmr/m/n/10 ) = []\OML/cmm/m/it/10 :
  []
 
 
-Underfull \hbox (badness 2111) in paragraph at lines 416--418
+Underfull \hbox (badness 2111) in paragraph at lines 417--419
 \OT1/ptm/m/n/10 Deviations from the mean high-light re-gions where the
  []
 
-[7]) (./chapters/04_experiments.tex) (./chapters/05_results.tex) (./chapters/06_conclusion.tex) (./main.bbl [8]) [9
+[7]) (./chapters/04_experiments.tex [8] [9]) (./chapters/05_results.tex
+Underfull \hbox (badness 4479) in paragraph at lines 19--20
+[]\OT1/ptm/m/n/10 Compare cor-re-la-tions across im-plant schemes and
+ []
+
+
+Underfull \hbox (badness 1789) in paragraph at lines 26--27
+[]\OT1/ptm/m/n/10 Quantitative met-rics for each dataset and en-cod-ing
+ []
+
+) (./chapters/06_conclusion.tex) (./main.bbl [10]) [11
 
 ] (./main.aux)
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: A86279407B1280C4A419FF4DA78B21DB;4906.
+(rerunfilecheck)             Checksum: 61F1650DF9629D67EC5B8EEA9D821463;7086.
  ) 
 Here is how much of TeX's memory you used:
- 10072 strings out of 481008
- 150261 string characters out of 5909440
- 467724 words of memory out of 5000000
- 27012 multiletter control sequences out of 15000+600000
- 443637 words of font info for 107 fonts, out of 8000000 for 9000
+ 10126 strings out of 481008
+ 151030 string characters out of 5909440
+ 468082 words of memory out of 5000000
+ 27032 multiletter control sequences out of 15000+600000
+ 446439 words of font info for 110 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 71i,12n,74p,1427b,460s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 71i,12n,74p,1427b,464s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (9 pages, 1508303 bytes).
+Output written on main.pdf (11 pages, 1522843 bytes).
 PDF statistics:
- 350 PDF objects out of 1000 (max. 8388607)
- 299 compressed objects within 3 object streams
- 75 named destinations out of 1000 (max. 500000)
- 221 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 437 PDF objects out of 1000 (max. 8388607)
+ 383 compressed objects within 4 object streams
+ 107 named destinations out of 1000 (max. 500000)
+ 333 words of extra memory for PDF output out of 10000 (max. 10000000)
 
