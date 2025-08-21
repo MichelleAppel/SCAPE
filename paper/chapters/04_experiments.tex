@@ -107,17 +107,59 @@ Retinotopic projection follows the dipole form of the Polimeni wedge–dipole fa
 \paragraph{Sampling to electrodes}
 The shift variant DoG produces an activation map on the simulator grid. Electrode currents are obtained by sampling the activation map at phosphene centers. The same sampling rule is used for every implant scheme.
 
-\paragraph{Scope of configuration}
-Unless noted otherwise we do not apply extra smoothing or quantization to the \(\sigma\) map. All encoders, including baselines, share the same preprocessing, simulator settings, and the same amplitude normalization described in the next subsection.
-
 
 \subsection{Amplitude Normalization}
-Explain how amplitude equalization is applied and why.
+To keep comparisons fair across encoders, we apply the same dynamic amplitude equalization to every method. The calibration runs once per implant scheme after mapping activations to electrode currents and before simulation. The resulting per electrode gains are reused for all images and all encoders within that scheme and across datasets. The procedure follows the definition in the Methods section and is tuned for stability.
+
+We optimize the gains with a learning rate of \(0.002\) for \(2000\) steps, constrain each gain to \([0,\texttt{amplitude}]\), and use a small scale factor of \(1\times10^{-4}\) to set the update magnitude. In practice this removes simulator induced brightness bias, reduces extreme responses, and keeps total delivered current comparable, so the results reflect differences in encoding rather than artifacts of the simulation.
+
 
 \subsection{Evaluation Protocol}
-Detail the metrics and evaluation procedures used, including:
-\begin{itemize}
-    \item Low-level fidelity metrics
-    \item Representational similarity analysis
-    \item Reconstruction performance
-\end{itemize}
+We evaluate each encoder under identical preprocessing, simulator settings, and amplitude normalization. Every method produces an activation map that is sampled to electrode currents and rendered with the same phosphene simulator. This keeps the comparison focused on the encoding itself.
+
+Performance is assessed along three complementary axes that capture different aspects of usefulness. Low level fidelity metrics quantify how closely phosphene renderings preserve local structure and contrast. Representational similarity analysis tests whether pairwise relationships between stimuli are preserved after encoding. Reconstruction based evaluation measures how well a learned decoder can recover the original scene from the phosphene representation.
+
+All metrics are computed per image and then aggregated as the mean with standard error over the evaluation split. Unless stated otherwise, the same protocol is applied across datasets and implant schemes so that results are directly comparable.
+
+\paragraph{Low level fidelity metrics}
+We compare each phosphene rendering to its grayscale reference using SSIM, FSIM, SR SIM, VSI, MDSI, DISTS, VGG based content loss, and MSE. All metrics operate on single channel images. When needed, the phosphene output is resized to the reference grid and evaluated with the same normalization used at input. We rely on standard implementations with default parameters. SSIM and MSE capture luminance and contrast agreement, FSIM and SR SIM emphasize feature and saliency structure, VSI and MDSI weight perceptually important regions, and DISTS together with the VGG based content loss probe similarity in deep feature space. Scores are computed per image and reported as the mean with standard error over the evaluation split.
+
+
+\begin{table}[t]
+\centering
+\small
+\caption{Low-level fidelity metrics on COCO. Values are distances, lower is better.}
+\label{tab:low_coco}
+\begin{tabular}{llcccc}
+\toprule
+Method & Implant & SSIM & FSIM & MDSI & LPIPS \\
+\midrule
+Grayscale & 1 Utah & ... & ... & ... & ... \\
+          & 4 Utah & ... & ... & ... & ... \\
+          & 1024   & ... & ... & ... & ... \\
+          & Utah RFs & ... & ... & ... & ... \\
+          & Neuralink & ... & ... & ... & ... \\
+\midrule
+Canny     & 1 Utah & ... & ... & ... & ... \\
+          & 4 Utah & ... & ... & ... & ... \\
+          & 1024   & ... & ... & ... & ... \\
+          & Utah RFs & ... & ... & ... & ... \\
+          & Neuralink & ... & ... & ... & ... \\
+\midrule
+DoG       & 1 Utah & ... & ... & ... & ... \\
+          & ...    &     &     &     &     \\
+\midrule
+Random    & 1 Utah & ... & ... & ... & ... \\
+          & ...    &     &     &     &     \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+
+
+\paragraph{Representational similarity analysis}
+For each dataset and implant scheme we build representational dissimilarity matrices for the original images and for each encoded set. Images are converted to grayscale vectors in pixel space, then pairwise dissimilarity is computed as correlation distance \(D_{ij}=1-\mathrm{corr}(r_i,r_j)\). We compare encoders by correlating the upper triangular parts of the reference and encoded RDMs using Spearman correlation \(\rho\). Higher \(\rho\) indicates better preservation of the relational geometry of the stimulus set. We report \(\rho\) per dataset and scheme for SCAPE and all baselines, with standard errors estimated by bootstrap resampling of images.
+
+\paragraph{Reconstruction performance}
+We measure how much scene information survives each encoding by training a fixed decoder to reconstruct the original image from phosphene renderings. For every encoder, dataset, and implant scheme we train an Attention U Net on the corresponding phosphene maps using the same preprocessing, the same simulator settings, and the same training schedule. Inputs and targets are single channel perceptual luminance images with the normalization described above. Evaluation uses a held out split and reports SSIM, LPIPS, DISTS, FSIM, VSI, MDSI, and PIEAPP. Scores are computed per image and summarized as the mean with standard error. We also include representative reconstructions to illustrate qualitative differences that are not fully captured by the metrics.

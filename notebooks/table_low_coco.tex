@@ -1,0 +1,36 @@
+\begin{table}[t]
+\centering
+\small
+\caption{Low-level fidelity metrics on COCO. Values are distances, lower is better.}
+\label{tab:low_coco}
+\begin{tabular}{llcccccc}
+\toprule
+Method & Implant & FSIM & PIEAPP & CONTENT & SRSIM & VSI & MDSI \\
+\midrule
+Canny & 1 Utah & 0.499 & \textbf{1.052} & 6.303 & 0.434 & \textbf{0.221} & 0.409 \\
+ & 4 Utah & 0.525 & 1.548 & 5.846 & 0.480 & 0.259 & 0.372 \\
+ & Neuralink & 0.500 & 2.631 & 6.350 & 0.421 & 0.244 & 0.381 \\
+ & Uniform 1024 & \textbf{0.457} & 4.698 & \textbf{4.854} & \textbf{0.356} & 0.230 & 0.407 \\
+ & Utah RFs & 0.530 & 1.711 & 4.876 & 0.485 & 0.261 & \textbf{0.364} \\
+\midrule
+DoG & 1 Utah & \textbf{0.506} & \textbf{1.336} & \textbf{6.092} & \textbf{0.443} & \textbf{0.224} & 0.419 \\
+ & 4 Utah & 0.527 & 2.209 & 8.035 & 0.483 & 0.263 & 0.403 \\
+ & Neuralink & 0.524 & 3.947 & 9.653 & 0.475 & 0.276 & 0.476 \\
+ & Uniform 1024 & 0.554 & 6.986 & 6.328 & 0.449 & 0.296 & 0.572 \\
+ & Utah RFs & 0.530 & 3.133 & 6.521 & 0.489 & 0.265 & \textbf{0.388} \\
+\midrule
+Grayscale & 1 Utah & \textbf{0.507} & \textbf{1.241} & \textbf{6.246} & 0.443 & \textbf{0.224} & 0.421 \\
+ & 4 Utah & 0.527 & 2.107 & 7.706 & 0.482 & 0.262 & 0.398 \\
+ & Neuralink & 0.521 & 3.558 & 9.664 & 0.467 & 0.269 & 0.470 \\
+ & Uniform 1024 & 0.543 & 6.539 & 6.651 & \textbf{0.442} & 0.285 & 0.559 \\
+ & Utah RFs & 0.529 & 2.959 & 6.339 & 0.488 & 0.264 & \textbf{0.385} \\
+\midrule
+Random & 1 Utah & \textbf{0.504} & \textbf{1.306} & \textbf{6.085} & \textbf{0.440} & \textbf{0.224} & 0.421 \\
+ & 4 Utah & 0.528 & 2.164 & 7.767 & 0.485 & 0.263 & 0.401 \\
+ & Neuralink & 0.523 & 3.448 & 9.286 & 0.475 & 0.274 & 0.469 \\
+ & Uniform 1024 & 0.555 & 6.610 & 6.234 & 0.448 & 0.297 & 0.569 \\
+ & Utah RFs & 0.530 & 3.027 & 6.286 & 0.490 & 0.265 & \textbf{0.386} \\
+\midrule
+\bottomrule
+\end{tabular}
+\end{table}

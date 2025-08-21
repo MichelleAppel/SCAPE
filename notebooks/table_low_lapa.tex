@@ -1,0 +1,37 @@
+\begin{table}[t]
+\centering
+\small
+\caption{Low-level fidelity metrics on LaPa. Values are distances, lower is better.}
+\label{tab:low_lapa}
+\begin{tabular}{llcccccc}
+\toprule
+Implant & Method & FSIM & PIEAPP & CONTENT & SRSIM & VSI & MDSI \\
+\midrule
+\multirow{4}*{1 Utah} & Canny & \textbf{0.404} & \textbf{0.456} & \textbf{5.118} & \textbf{0.359} & 0.176 & \textbf{0.385} \\
+ & DoG & 0.412 & 0.903 & 5.524 & 0.373 & \textbf{0.168} & 0.427 \\
+ & Grayscale & 0.413 & 0.797 & 5.646 & 0.382 & 0.170 & 0.431 \\
+ & Random & 0.410 & 0.881 & 5.247 & 0.375 & 0.169 & 0.427 \\
+\midrule
+\multirow{4}*{4 Utah} & Canny & 0.430 & \textbf{0.939} & \textbf{4.542} & \textbf{0.389} & \textbf{0.199} & \textbf{0.369} \\
+ & DoG & 0.421 & 2.445 & 7.636 & 0.401 & 0.204 & 0.411 \\
+ & Grayscale & \textbf{0.420} & 2.379 & 6.979 & 0.399 & 0.202 & 0.405 \\
+ & Random & 0.421 & 2.426 & 7.190 & 0.404 & 0.204 & 0.409 \\
+\midrule
+\multirow{4}*{Neuralink} & Canny & \textbf{0.415} & \textbf{1.466} & \textbf{4.316} & \textbf{0.354} & \textbf{0.195} & \textbf{0.368} \\
+ & DoG & 0.443 & 5.211 & 10.108 & 0.434 & 0.237 & 0.502 \\
+ & Grayscale & 0.437 & 3.998 & 9.633 & 0.413 & 0.226 & 0.484 \\
+ & Random & 0.441 & 4.465 & 9.677 & 0.424 & 0.233 & 0.493 \\
+\midrule
+\multirow{4}*{Uniform 1024} & Canny & \textbf{0.381} & \textbf{2.800} & \textbf{3.469} & \textbf{0.317} & \textbf{0.190} & \textbf{0.376} \\
+ & DoG & 0.519 & 8.240 & 7.038 & 0.454 & 0.280 & 0.600 \\
+ & Grayscale & 0.498 & 7.626 & 7.427 & 0.432 & 0.262 & 0.583 \\
+ & Random & 0.520 & 8.103 & 6.472 & 0.442 & 0.280 & 0.602 \\
+\midrule
+\multirow{4}*{Utah RFs} & Canny & 0.448 & \textbf{0.648} & \textbf{3.922} & \textbf{0.392} & \textbf{0.199} & \textbf{0.363} \\
+ & DoG & 0.425 & 3.477 & 6.635 & 0.406 & 0.206 & 0.397 \\
+ & Grayscale & \textbf{0.423} & 3.267 & 5.962 & 0.394 & 0.203 & 0.390 \\
+ & Random & 0.424 & 3.424 & 6.277 & 0.401 & 0.206 & 0.395 \\
+\midrule
+\bottomrule
+\end{tabular}
+\end{table}
