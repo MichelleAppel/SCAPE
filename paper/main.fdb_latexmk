@@ -1,15 +1,15 @@
 # Fdb version 4
-["bibtex main"] 1756408941 "main.aux" "main.bbl" "main" 1756408950 0
+["bibtex main"] 1756408941 "main.aux" "main.bbl" "main" 1756409191 0
   "./references.bib" 1756407587 17106 a6056818cacc7037896c5db00dd2d21c ""
   "/usr/share/texlive/texmf-dist/bibtex/bst/base/plain.bst" 1685185333 20613 bd3fbfa9f64872b81ac57a0dd2ed855f ""
-  "main.aux" 1756408950 21906 fdbfa374296df0799010c61f4a0ee8aa "pdflatex"
+  "main.aux" 1756409191 21906 fdbfa374296df0799010c61f4a0ee8aa "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1756408941 "/home/mappel/Dynaphos/spatial_frequency/paper/main.tex" "main.pdf" "main" 1756408950 0
+["pdflatex"] 1756409186 "/home/mappel/Dynaphos/spatial_frequency/paper/main.tex" "main.pdf" "main" 1756409191 0
   "/home/mappel/.texlive2020/texmf-var/web2c/pdftex/pdflatex.fmt" 1752001958 1329206 c44b6bc9265e7c3aac474a38f81af1d9 ""
-  "/home/mappel/Dynaphos/spatial_frequency/paper/main.tex" 1756408752 1685 6e9178e12193c05f30bef5b617452877 ""
+  "/home/mappel/Dynaphos/spatial_frequency/paper/main.tex" 1756409186 1686 af20a0be90527b89e21c4b2c09cf1600 ""
   "/home/mappel/Dynaphos/spatial_frequency/results/DoG_coco/images/sample_0010.png" 1756366629 287028 1914ce0b5d9da2bdbc124f975f8de6df ""
   "/home/mappel/Dynaphos/spatial_frequency/results/DoG_lapa/images/sample_0008.png" 1756327871 232859 0dea000869010436673a275c79a2fe76 ""
   "/home/mappel/Dynaphos/spatial_frequency/results/DoG_sun/images/sample_0008.png" 1756366634 317824 5e15f23476b8bdd940f66d4ebdbde0a8 ""
@@ -160,9 +160,9 @@
   "figures/processingmethods1.png" 1756391403 354153 92ad79f4535c70a274c3185467590eb1 ""
   "figures/processingmethods2.png" 1756391416 321811 ee7fd5e56fbbfe0365d608ed5bd2e482 ""
   "figures/processingmethods3.png" 1756391433 372718 3d6553a7eecbff6f2d0cc12a507297bf ""
-  "main.aux" 1756408950 21906 fdbfa374296df0799010c61f4a0ee8aa "pdflatex"
+  "main.aux" 1756409191 21906 fdbfa374296df0799010c61f4a0ee8aa "pdflatex"
   "main.bbl" 1756408941 4250 d58889a6ed62587b578ee5c7e709ad48 "bibtex main"
-  "main.out" 1756408950 7379 10ab329a2c35432e8235cf7f9f0566f5 "pdflatex"
+  "main.out" 1756409191 7379 10ab329a2c35432e8235cf7f9f0566f5 "pdflatex"
   (generated)
   "main.aux"
   "main.log"
