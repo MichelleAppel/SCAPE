@@ -184,7 +184,7 @@ loss:
 
 evaluate:
   split: test
-  model_ckpt: out/DoG_lapa/decoder_epoch01.pt       # path to the .pt you want
+  model_ckpt: out/DoG_lapa/decoder_epoch10.pt       # path to the .pt you want
   metrics:
     - mse
     - ssim

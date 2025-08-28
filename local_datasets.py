@@ -55,16 +55,21 @@ class _CocoImageDataset(Dataset):
 
 def get_coco_dataset(cfg, split='train'):
     """
-    Load COCO Detection dataset. Returns (train_ds, val_ds) for 'train', else single dataset.
-    Wraps outputs so each sample is a dict with only 'image'.
+    Load COCO dataset. Returns (train_ds, val_ds) for 'train', else a single dataset.
+    For 'train' and 'val' splits: uses torchvision CocoDetection with annotations.
+    For 'test' split: loads only images (no ground-truth annotations available in COCO).
+    
     Expects cfg['dataset']['coco'] keys:
       - data_directory: path to COCO base folder
       - image_dir_<split>: subfolder for images (default <split>2017)
-      - ann_file_<split>: annotation JSON (default annotations/instances_<split>2017.json)
+      - ann_file_<split>: annotation JSON (default annotations/instances_<split>2017.json) [not for test]
       - grayscale: bool
       - imsize: resize size
     """
+    import os
     from torchvision.datasets import CocoDetection
+    from torch.utils.data import Dataset
+    from PIL import Image
 
     coco_cfg = cfg['dataset']['coco']
     base = coco_cfg['data_directory'].rstrip('/')
@@ -90,6 +95,21 @@ def get_coco_dataset(cfg, split='train'):
         ann_fp = os.path.join(base, ann_file_name)
         return CocoDetection(root=img_dir, annFile=ann_fp, transform=transform)
 
+    # --- NEW: image-only dataset for test split ---
+    class _CocoTestImages(Dataset):
+        def __init__(self, img_dir, transform=None):
+            self.img_dir = img_dir
+            self.files = sorted([f for f in os.listdir(img_dir) if f.endswith('.jpg')])
+            self.transform = transform
+        def __len__(self):
+            return len(self.files)
+        def __getitem__(self, idx):
+            img_path = os.path.join(self.img_dir, self.files[idx])
+            img = Image.open(img_path).convert("RGB")
+            if self.transform:
+                img = self.transform(img)
+            return {"image": img, "filename": self.files[idx]}
+
     if split == 'train':
         base_train = make_base_ds('train')
         base_val = make_base_ds('val')
@@ -98,10 +118,12 @@ def get_coco_dataset(cfg, split='train'):
         base_val = make_base_ds('val')
         return _CocoImageDataset(base_val)
     elif split == 'test':
-        base_test = make_base_ds('test')
-        return _CocoImageDataset(base_test)
+        img_dir_name = coco_cfg.get('image_dir_test', 'test2017')
+        img_dir = os.path.join(base, img_dir_name)
+        return _CocoTestImages(img_dir, transform=transform)
     else:
         raise ValueError(f"Invalid split '{split}'. Use 'train', 'val', or 'test'.")
+
 
 
 class _ImageDirDataset(Dataset):

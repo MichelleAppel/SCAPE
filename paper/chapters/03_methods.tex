@@ -101,8 +101,6 @@ Choosing \(S\) appropriately ensures that we stay within safe charge‐delivery 
 In the end, our goal is to design or optimize the activation map \(A(x,y)\) (and thus the stimulus vector \(\{I_i\}\)) so that the resulting phosphenes are as clear and interpretable as possible.
 
 
-
-
 \subsubsection{Amplitude Equalization}
 Phosphene brightness does not scale linearly with electrode current. Local electrode density and current spread interact with multiple nonlinear stages, such as overlapping Gaussian-blob summation, saturation in sigmoid transforms, thresholding and temporal filtering, which cause some regions of the percept to appear disproportionately bright or dim. Because these nonlinear effects accumulate, there is no practical closed-form inverse that maps a target brightness profile back to electrode currents.
 
@@ -146,7 +144,6 @@ This calibration step yields a more uniform perceptual phosphene map, improving 
 
 
 \subsection{SCAPE Adaptive Encoding}
-
 The fundamental challenge in cortical prosthetic vision is that electrode arrays sample the visual field nonuniformly. Regions with dense electrode coverage can resolve fine detail while sparse regions cannot. SCAPE addresses this by adapting image filtering to the local sampling density. First, we estimate a continuous density map from the simulator-derived phosphene centers. Next, we convert density into a spatial scale map via sampling-theorem principles. Finally, we apply a shift-variant filter whose parameters vary continuously across the image. This adaptive encoding preserves maximal detail where it is supported and reduces visual clutter where it is not.
 
 \begin{figure*}[ht]
@@ -235,12 +232,14 @@ where \(G_{\sigma}\) is a Gaussian of standard deviation \(\sigma(x,y)\) and \(*
 \]
 with \(\lambda>1\) (typically \(\lambda=1.6\)) chosen so that \(\mathrm{DoG}\approx\mathrm{LoG}\).
 
-To implement this shift-variant DoG efficiently, we factor each Gaussian \(G_{\sigma}\) into separable one-dimensional kernels. This reduces the complexity to \(\mathcal{O}(n)\) per pixel and allows us to modulate kernel width dynamically according to the local \(\sigma(x,y)\) map.  In practice this involves two passes of row- and column-wise convolutions with varying standard deviations, yielding real-time performance even on mobile hardware.  This separable DoG serves as a simple yet powerful example of SCAPE’s core idea: by varying filter scale across the image, we capture fine edges where phosphene density is high and suppress noise where it is low.
-
+To implement this shift-variant DoG efficiently, we factor each Gaussian $G_{\sigma}$ into separable one-dimensional kernels. 
+This reduces the complexity to $\mathcal{O}(n)$ per pixel and allows us to modulate kernel width dynamically according to the local $\sigma(x,y)$ map. 
+In practice this involves two passes of row- and column-wise convolutions with varying standard deviations, yielding real-time performance even on mobile hardware. 
+This computational tractability is important for prosthetic vision pipelines, where efficiency and low latency are critical. 
+This separable DoG serves as a simple yet powerful example of SCAPE’s core idea: by varying filter scale across the image, we capture fine edges where phosphene density is high and suppress noise where it is low.
 
 \paragraph{Extending to Other Kernels}
 While the DoG serves as a straightforward example, SCAPE’s shift-variant framework accommodates any spatial filter family.  For instance, one can replace the Gaussian kernels with orientation-tuned Gabor filters to emphasize contours aligned with cortical receptive-field preferences. More generally, the kernel \(K(\cdot;\sigma(x,y))\) may be parameterized by a small set of basis functions (wavelets, steerable filters) whose shape adapts with \(\sigma\).  In future work one can even learn these kernels end-to-end: by embedding SCAPE into a differentiable reconstruction pipeline, the per-location filter weights can be optimized jointly with a decoder network.  This flexibility allows SCAPE to capture both classical center–surround processing and more complex feature tuning while retaining its core principle of local, density-driven adaptation.  
-
 
 
 \subsection{Reconstruction Decoder Integration}
@@ -265,228 +264,55 @@ Down-sampling is achieved via max-pooling and up-sampling via transposed convolu
 
 
 \subsection{Evaluation Metrics}
-Comparing sparse phosphene encodings directly to natural images is inherently challenging, as conventional pixelwise measures assume dense, continuous luminance patterns. Nevertheless, low‐level fidelity metrics provide useful insight into structural preservation when applied carefully to upsampled phosphene maps. To obtain a more complete assessment, we combine these fundamental measures with representational similarity analysis, which evaluates the geometry of stimulus relationships, and decoder‐based reconstruction performance, which tests how accessible the encoded information is for downstream interpretation. Together, these complementary approaches offer a multifaceted evaluation of SCAPE’s ability to convey visual content through the phosphene bottleneck.
-
-\subsubsection{Low‐Level Fidelity Metrics}
-To quantify how faithfully SCAPE’s phosphene output \(I_p\) preserves the original scene \(I_o\), we apply full‐reference image quality metrics that each compute a local similarity or error map and then pool these values into a single score.  In the following paragraphs we describe how SSIM, VSI, MDSI and PIEAPP are formulated and computed for the pair \((I_p,I_o)\).  
-
-
-\paragraph{Structural Similarity Index (SSIM)}  
-The Structural Similarity Index \cite{Wang2004} evaluates local agreement in luminance, contrast, and structure.  At each pixel \((x,y)\) define
-\begin{align*}
-S_{\mathrm{SSIM}}(x,y)
-&= \frac{2\,\mu_p(x,y)\,\mu_o(x,y) + C_1}
-       {\mu_p(x,y)^2 + \mu_o(x,y)^2 + C_1}\\
-&\quad\times
-    \frac{2\,\sigma_{po}(x,y) + C_2}
-         {\sigma_p(x,y)^2 + \sigma_o(x,y)^2 + C_2}\,,
-\end{align*}
-where all statistics are computed over a small window around \((x,y)\).  The overall SSIM is
-\[
-\mathrm{SSIM}(I_p,I_o)
-= \frac{1}{M\,N}
-  \sum_{x=1}^{M}\sum_{y=1}^{N}
-  S_{\mathrm{SSIM}}(x,y).
-\]
-
-
-\paragraph{Spectral‐Residual Saliency Index (SR-SIM)}  
-SR-SIM evaluates image fidelity by combining spectral‐residual visual saliency with gradient‐based structure similarity \cite{Zhang2012}.  Given a reference \(I_o\) and a phosphene image \(I_p\), let  
-\[
-\mathrm{SVRS}_o(x,y),\;\mathrm{SVRS}_p(x,y)
-\]
-be their saliency maps computed via the spectral residual of the log‐amplitude spectrum, and let  
-\[
-\mathrm{GM}_o(x,y),\;\mathrm{GM}_p(x,y)
-\]
-be their gradient magnitude maps (Scharr‐filtered).  We form two local similarity measures  
-\[
-S_{\mathrm{S}}(x,y)
-=\frac{2\,\mathrm{SVRS}_o(x,y)\,\mathrm{SVRS}_p(x,y)+C_1}
-      {\mathrm{SVRS}_o(x,y)^2+\mathrm{SVRS}_p(x,y)^2+C_1},
-\quad
-\]
-\[
-S_{\mathrm{G}}(x,y)
-=\frac{2\,\mathrm{GM}_o(x,y)\,\mathrm{GM}_p(x,y)+C_2}
-      {\mathrm{GM}_o(x,y)^2+\mathrm{GM}_p(x,y)^2+C_2},
-\]
-with constants \(C_1,C_2\) for numerical stability.  Defining  
-\(\mathrm{SVRS}_m(x,y)=\max\{\mathrm{SVRS}_o,\mathrm{SVRS}_p\}\), the fused local score is  
-\[
-S_L(x,y)
-=\bigl[S_{\mathrm{S}}(x,y)\bigr]\,
-\bigl[S_{\mathrm{G}}(x,y)\bigr]^\alpha\,
-\mathrm{SVRS}_m(x,y),
-\]
-where \(\alpha\) (typically 0.5) balances structure sensitivity.  The global SR-SIM index is the normalized sum  
-\[
-\mathrm{SR{\text -}SIM}(I_p,I_o)
-=\frac{\sum_{x,y}S_L(x,y)}
-      {\sum_{x,y}\mathrm{SVRS}_m(x,y)}.
-\]
-This metric captures both saliency‐weighted structural agreement and overall contrast fidelity in a computationally efficient manner.
-
-
-
-\paragraph{Visual Saliency Induced Index (VSI)}  
-VSI \cite{Zhang2014} augments structural similarity with a model of visual attention.  First, saliency maps \(v_o(x,y)\) and \(v_p(x,y)\) are computed for the reference \(I_o\) and phosphene image \(I_p\) using the SDSP spectral‐residual approach, which combines spectral residuals, spatial distribution and color cues to highlight regions likely to attract gaze.  These maps are normalized to the range \([0,1]\).  
-
-Next, three local similarity maps are formed:
-\begin{align*}
-s_{\mathrm{vs}}(x,y)
-&= \mathrm{sim}\bigl(v_o(x,y),\,v_p(x,y)\bigr),\\
-s_{g}(x,y)
-&= \mathrm{sim}\bigl(\nabla I_o(x,y),\,\nabla I_p(x,y)\bigr),\\
-s_{c}(x,y)
-&= \mathrm{sim}\bigl(C_o(x,y),\,C_p(x,y)\bigr),
-\end{align*}
-where \(\mathrm{sim}(a,b)=\frac{2ab + C}{a^2 + b^2 + C}\) is the standard similarity kernel, \(\nabla\) denotes the Scharr‐filtered gradient magnitude in luminance, and \(C_o,C_p\) are the two chromatic channels in a perceptual color space.  These maps are fused into a single local score
-\[
-S(x,y)
-= s_{\mathrm{vs}}(x,y)\,\bigl[s_{g}(x,y)\bigr]^{\alpha}\,\bigl[s_{c}(x,y)\bigr]^{\beta},
-\]
-with empirically chosen exponents \(\alpha\) and \(\beta\).  Finally, a per-pixel weight
-\[
-W(x,y) \;=\;\max\!\bigl(v_o(x,y),\,v_p(x,y)\bigr)
-\]
-emphasizes salient regions.  The global VSI is the saliency‐weighted average:
-\[
-\mathrm{VSI}(I_p,I_o)
-= \frac{\sum_{x,y}W(x,y)\,S(x,y)}
-       {\sum_{x,y}W(x,y)}.
-\]
-
-\paragraph{Feature Similarity Index (FSIM)}  
-The Feature Similarity Index (FSIM) evaluates image fidelity by comparing low‐level features known to align with human perception: phase congruency (PC) and gradient magnitude (GM) \cite{Zhang2011}.  Given a reference image \(I_o\) and a phosphene rendering \(I_p\), we first extract their PC maps \(\mathrm{PC}_o(x,y)\), \(\mathrm{PC}_p(x,y)\) and GM maps \(\mathrm{GM}_o(x,y)\), \(\mathrm{GM}_p(x,y)\).  At each pixel \((x,y)\) we compute two similarity measures:
-\[
-S_{\mathrm{PC}}(x,y)
-= \frac{2\,\mathrm{PC}_o(x,y)\,\mathrm{PC}_p(x,y) + T_1}
-       {\mathrm{PC}_o(x,y)^2 + \mathrm{PC}_p(x,y)^2 + T_1},
-\quad
-\]
-\[
-S_{\mathrm{G}}(x,y)
-= \frac{2\,\mathrm{GM}_o(x,y)\,\mathrm{GM}_p(x,y) + T_2}
-       {\mathrm{GM}_o(x,y)^2 + \mathrm{GM}_p(x,y)^2 + T_2},
-\]
-where \(T_1,T_2\) stabilize the ratios.  We then form a fused local score
-\[
-S_L(x,y)
-= \bigl[S_{\mathrm{PC}}(x,y)\bigr]^\alpha\,
-  \bigl[S_{\mathrm{G}}(x,y)\bigr]^\beta,
-\]
-with \(\alpha=\beta=1\).  Finally, FSIM weights each location by the maximal phase congruency  
-\(\mathrm{PC}_m(x,y)=\max\{\mathrm{PC}_o(x,y),\mathrm{PC}_p(x,y)\}\), yielding
-\[
-\mathrm{FSIM}(I_p,I_o)
-= \frac{\sum_{x,y}\mathrm{PC}_m(x,y)\,S_L(x,y)}
-       {\sum_{x,y}\mathrm{PC}_m(x,y)}.
-\]
-This formulation emphasizes perceptually salient features while penalizing structural deviations between \(I_p\) and \(I_o\).
-
-
-\paragraph{Mean Deviation Similarity Index (MDSI)}  
-MDSI \cite{ZiaeiNafchi2016} assesses image fidelity by combining gradient and chromaticity similarities with deviation‐based pooling, making it robust to localized distortions.  Given a reference \(I_o\) and a phosphene image \(I_p\), let \(\nabla I_o\) and \(\nabla I_p\) be their gradient magnitude maps (computed via Prewitt filters) and let \(C_o, M_o\) and \(C_p, M_p\) be the two opponent color channels in a perceptual color space.  Define at each pixel \((x,y)\):  
-\[
-\mathrm{GS}(x,y)
-= \frac{2\,\nabla I_o(x,y)\,\nabla I_p(x,y) + c_1}
-       {\nabla I_o(x,y)^2 + \nabla I_p(x,y)^2 + c_1},
-\qquad
-\]
-\[
-\mathrm{CS}(x,y)
-= \frac{2\bigl(C_o(x,y)\,C_p(x,y) + M_o(x,y)\,M_p(x,y)\bigr) + c_3}
-       {C_o(x,y)^2 + M_o(x,y)^2 + C_p(x,y)^2 + M_p(x,y)^2 + c_3}.
-\]
-These maps are fused into a combined similarity
-\[
-S(x,y)
-= \alpha\,\mathrm{GS}(x,y) + (1-\alpha)\,\mathrm{CS}(x,y),
-\]
-with weighting \(\alpha\).  To emphasize pixels where similarity deviates most from its mean, we compute  
-\[
-s_i = S(x_i,y_i)^{1/4}, 
-\quad
-\bar s = \frac{1}{N}\sum_{i=1}^N s_i,
-\]
-and pool by the Minkowski deviation
-\[
-\mathrm{MDSI}(I_p,I_o)
-= \biggl[\frac{1}{N}\sum_{i=1}^N \bigl|\,s_i - \bar s\bigr|\biggr]^{1/4}.
-\]
-Deviations from the mean highlight regions where the phosphene encoding departs most from the reference structure, yielding a sensitive measure of localized fidelity loss.  
- 
-
-\paragraph{Content Loss}  
-To capture perceptually meaningful differences beyond pixel‐wise errors, we measure the dissimilarity between deep feature representations of the phosphene image \(I_p\) and the original scene \(I_o\) extracted from a pretrained convolutional network.  Denote by \(\phi_\ell(I)\) the activation tensor at layer \(\ell\) of a VGG‐type model.  The content loss is then  
-\[
-\mathcal{L}_{\mathrm{content}}(I_p,I_o)
-= \bigl\lVert \phi_\ell(I_p) \;-\;\phi_\ell(I_o)\bigr\rVert_2^2.
-\]
-By choosing mid‐ to high‐level layers, this loss emphasizes preservation of object structure and semantic content rather than low‐level textures \cite{Gatys2015,Zhang2018}.  In our experiments we normalize inputs using ImageNet statistics and extract features from VGG19, averaging across spatial dimensions to yield a single content‐distance score per image pair.  Lower content loss indicates that SCAPE’s encoding retains more of the high‐level scene layout that a human observer would deem important.  
-
-
-
-\paragraph{Perceptual Image‐Error Assessment through Pairwise Preference (PIEAPP)}  
-PIEAPP \cite{Prashnani2018} is a learned full‐reference metric designed to predict perceptual error by modeling human preferences between image pairs. It operates by decomposing the input images into overlapping patches and computing learned feature representations. Given a reference image \(I_o\) and a phosphene image \(I_p\), each patch \(k\) yields a feature embedding difference \(\Delta f_k\). A two‐stage regression network maps these differences to an estimated perceptual error \(d_k\in\mathbb{R}\) and an associated confidence weight \(w_k>0\). Formally, the model computes
-\[
-\Delta f_k = \varphi\bigl(P_k(I_o)\bigr)\;-\;\varphi\bigl(P_k(I_p)\bigr),
-\]
-where \(P_k(\cdot)\) extracts the \(k\)-th patch and \(\varphi\) is the learned feature encoder. The per‐patch perceptual error is then
-\[
-d_k = g\bigl(\Delta f_k\bigr),
-\]
-where \(g\) is a regression module that predicts the perceived dissimilarity. Weights are obtained as
-\[
-w_k = h\bigl(\Delta f_k\bigr),
-\]
-with \(h\) a second regression branch modeling reliability. The final PIEAPP score aggregates over all \(K\) patches:
-\[
-\mathrm{PIEAPP}(I_p, I_o)
-= \frac{\sum_{k=1}^K w_k \, d_k}{\sum_{k=1}^K w_k}.
-\]
-This approach has been shown to correlate strongly with human judgments of perceptual error in natural images. In our experiments, we use PIEAPP as an approximate measure of perceptual fidelity by treating \(I_o\) as the original input image and \(I_p\) as the phosphene representation. Although PIEAPP was not trained on sparse phosphene patterns, lower scores still suggest that the encoding preserves more information relevant to human perception. For full details, see \cite{Prashnani2018} and the reference implementation.  
-
 
 \subsubsection{Representational Similarity Analysis}
-Representational Similarity Analysis (RSA) is a widely used framework in neuroscience for comparing the structure of internal representations across different systems \cite{Kriegeskorte2008}. Instead of requiring spatial alignment or direct correspondence between individual activation patterns, RSA abstracts each representation into a pairwise dissimilarity matrix. This approach enables comparisons across measurement modalities with very different spatial resolution and scales, such as fMRI voxel patterns, single-unit electrophysiology, and artificial neural networks.
+Representational Similarity Analysis (RSA) is a widely used framework in neuroscience for comparing the structure of internal representations across different systems \cite{Kriegeskorte2008}. Instead of requiring spatial alignment or direct correspondence between individual activation patterns, RSA abstracts each representation into a pairwise dissimilarity matrix. This approach enables comparisons across modalities with very different spatial resolutions and scales.
 
 In classic applications, each stimulus is represented as a vector \(r_i\) of activations in a brain region (for example, responses in V1). The representational dissimilarity matrix (RDM) is then defined by
 \[
-D_{ij} = \delta\bigl(r_i, r_j\bigr),
+D_{ij} = \delta(r_i, r_j),
 \]
 where \(\delta\) is a dissimilarity metric such as correlation distance
 \[
 \delta_{\mathrm{corr}}(r_i, r_j) = \frac{1 - \mathrm{corr}(r_i, r_j)}{2}.
 \]
-This RDM characterizes how different the representations of all pairs of stimuli are relative to each other. 
+This RDM characterizes how different the representations of all pairs of stimuli are relative to each other.
 
-Conceptually, RSA offers what Kriegeskorte et al. termed a "second-order" representational comparison: while first-order comparisons measure similarity between raw activations, second-order comparisons examine whether the geometric relationships between stimuli are preserved. In neuroscience, such second-order comparisons have been used to show that different cortical regions (e.g., V1 vs. higher visual areas) encode distinct relational structures that align with perceptual or semantic similarity \cite{Wang2018}.
-
-This principle motivates our use of RSA for phosphene encoding. Phosphenes are, in a sense, direct artificial activations of V1. Although our encoding is constrained by electrode sampling, it still forms a structured response space, conceptually akin to biological V1 patterns. By building RDMs of phosphene renderings, we can ask whether the relational geometry of the stimulus space is retained. If it is, then different stimuli remain discriminable in the same way, even if their absolute fidelity is degraded.
+This principle motivates our use of RSA for phosphene encoding. Phosphenes are, in a sense, direct artificial activations of V1. Although our encoding is constrained by electrode sampling, it still forms a structured response space. By building RDMs of phosphene renderings, we can ask whether the relational geometry of the stimulus space is retained. If it is, then different stimuli remain discriminable in the same way, even if their absolute fidelity is degraded.
 
 Practically, for a set of \(N\) images, we flatten each phosphene rendering into a vector
 \[
-r_i = \mathrm{vec}\bigl(I_p(i)\bigr),
+r_i = \mathrm{vec}(I_p(i)),
 \]
 and compute the correlation distance matrix
 \[
-D_p(i,j) = \frac{1 - \mathrm{corr}\bigl(r_i, r_j\bigr)}{2}.
+D_p(i,j) = \frac{1 - \mathrm{corr}(r_i, r_j)}{2}.
 \]
-Similarly, we compute an RDM for the reference images \(I_o\). To quantify second-order similarity, we correlate the upper triangles of these matrices:
+Similarly, we compute an RDM for the original images \(I_o\). To quantify second-order similarity, we correlate the upper triangles of these matrices:
 \[
-\rho = \mathrm{corr}_{\mathrm{Spearman}}\Bigl(\mathrm{vec}\bigl(D_p^{\mathrm{upper}}\bigr), \,\mathrm{vec}\bigl(D_o^{\mathrm{upper}}\bigr)\Bigr).
+\rho = \mathrm{corr}_{\mathrm{Spearman}}\Bigl(\mathrm{vec}(D_p^{\mathrm{upper}}), \,\mathrm{vec}(D_o^{\mathrm{upper}})\Bigr).
 \]
+
 High \(\rho\) indicates that the pairwise relationships between stimuli are well preserved by the encoding, even if pixelwise error is high. Low \(\rho\) suggests that the encoding distorts the relational structure, potentially impairing discriminability.
 
-Although we compute dissimilarities here in pixel space, RSA can be applied in any feature space. For example, one could use embeddings from a pretrained neural network (e.g., VGG activations), perceptual models, or even behavioral similarity judgments. This flexibility allows RSA to bridge low-level and high-level aspects of representation in a unified framework.
+In this work we restrict RSA to \textbf{pixel-space representations} of images, which provides a direct low-level reference for evaluating structural fidelity of phosphene encodings. Although RSA can also be applied in higher-level feature spaces (e.g. pretrained neural network embeddings or behavioral similarity judgments), these were not used in the present analysis.
 
-In summary, RSA enables us to quantify whether phosphene encodings retain the relative distinctions between stimuli: a property that is often more relevant for perception and recognition than absolute pixel fidelity alone.
 
 \subsubsection{Reconstruction Performance}
 As a final evaluation axis, we assess how effectively a decoder network can reconstruct the original input image from the phosphene representation. Unlike the low-level fidelity metrics applied directly to the phosphene maps, this approach yields reconstructed natural images, making it more appropriate to apply conventional perceptual and pixel-based quality measures.
 
-Specifically, for each phosphene-encoded input, the trained decoder produces a reconstructed image \(\hat{I}_o\). We then compare \(\hat{I}_o\) to the original reference image \(I_o\) using a suite of complementary metrics. These include pixelwise measures such as mean squared error (MSE) and SSIM, as well as perceptual similarity metrics such as LPIPS, VGG-based perceptual distance, DISTS, and PIEAPP. For completeness, we also report advanced full-reference metrics including FSIM, MDSI, VSI, and SRSIM. Together, these scores provide a multifaceted view of how much visual detail the encoding preserves in a form usable for end-to-end reconstruction.
+Specifically, for each phosphene-encoded input, the trained decoder produces a reconstructed image \(\hat{I}_o\). We then compare \(\hat{I}_o\) to the original reference image \(I_o\) using a suite of complementary metrics. These include:
 
-Because the reconstructions are natural images, these metrics are applied without further adaptation. Higher perceptual similarity and lower pixelwise error indicate that the encoding retains more information useful for reconstructing recognizable content.
+\begin{itemize}
+    \item \textbf{Mean Squared Error (MSE)} – measures average pixelwise error. Lower is better.
+    \item \textbf{Structural Similarity Index (SSIM)} – assesses structural fidelity of luminance patterns. Lower values indicate smaller loss and thus better performance in our implementation.
+    \item \textbf{Peak Signal-to-Noise Ratio (PSNR)} – quantifies the ratio between signal power and reconstruction error. Higher is better.
+    \item \textbf{LPIPS} – learned perceptual similarity metric based on deep feature distances. Lower is better.
+    \item \textbf{DISTS} – deep image structure and texture similarity, combining structural and perceptual cues. Lower is better.
+    \item \textbf{MDSI} – mean deviation similarity index, designed for full-reference image quality assessment. Lower is better.
+    \item \textbf{VSI} – visual saliency-induced index, emphasizing perceptual saliency in quality assessment. Lower is better.
+\end{itemize}
+
+This selection covers both intensity-based reconstruction metrics (MSE, SSIM, PSNR) and perceptual similarity metrics (LPIPS, DISTS, MDSI, VSI). Together they provide a multifaceted view of how much visual detail each encoding preserves in a form usable for end-to-end reconstruction. 
+
+Because the reconstructions are natural images, the metrics are applied without further adaptation. All metrics except PSNR are treated as loss functions, where lower values indicate better reconstruction quality.

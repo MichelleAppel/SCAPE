@@ -164,12 +164,18 @@ loss:
 
 evaluate:
   split: test
-  model_ckpt: out/LoG_sun/decoder_epoch01.pt       # path to the .pt you want
+  model_ckpt: out/LoG_coco/decoder_epoch04.pt       # path to the .pt you want
   metrics:
     - mse
     - ssim
     - vgg_perceptual
     - lpips
+    - fsim
+    - dists
+    - pieapp
+    - mdsi
+    - vsi
+    - srsim
   batch_size: 8
   num_workers: 0
   num_images_eval: 5000 # number of images to evaluate

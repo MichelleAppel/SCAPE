@@ -6,20 +6,26 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{cite}       % numeric compressed citations [1–3]
 \usepackage{booktabs}   % nicer tables
-% \usepackage{multirow}
-% \renewcommand{\arraystretch}{1.2}
-
-
+\usepackage{float}
+\usepackage{subcaption} % for subtables
+\usepackage{placeins}   % in the preamble
 
 \begin{document}
 
 \title{SCAPE: Shift-variant Cortical-implant \\ Adaptive Phosphene Encoding}
 \author{%
-  \IEEEauthorblockN{Michelle Appel}\\
-  \IEEEauthorblockA{Donders Institute for Brain, Cognition and Behaviour,\\
-    Radboud University, Nijmegen, The Netherlands\\
-    Email: \texttt{michelle.appel@ru.nl}}%
+  \IEEEauthorblockN{Michelle Appel\IEEEauthorrefmark{1},
+                    Antonio Lozano\IEEEauthorrefmark{2},
+                    Eleftherios Papadopoulos\IEEEauthorrefmark{1},
+                    Umut Güçlü\IEEEauthorrefmark{1},
+                    Yagmur Güçlütürk\IEEEauthorrefmark{1},
+                    }\\
+  \IEEEauthorblockA{\IEEEauthorrefmark{1}Donders Institute for Brain, Cognition and Behaviour,\\
+                    Radboud University, Nijmegen, The Netherlands}\\
+  \IEEEauthorblockA{\IEEEauthorrefmark{2}Institute of Bioengineering, Universidad Miguel Hernández de Elche, Spain}\\
+  \IEEEauthorblockA{Email: \texttt{michelle.appel@ru.nl}}% (Optionally put a shared email or omit for others)
 }
+
 
 \maketitle
 \thispagestyle{plain}
@@ -33,7 +39,7 @@
 \input{chapters/02_related}
 \input{chapters/03_methods}
 \input{chapters/04_experiments}
-% \input{chapters/05_results}
+\input{chapters/05_results}
 \input{chapters/06_conclusion}
 
 % ---- acknowledgments (if any) ----

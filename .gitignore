@@ -6,3 +6,12 @@ example_images/images/
 summaries/
 wandb/
 results/
+outRDM/
+outRDM_debug/
+SCAPE for slides/
+notebooks/lowlevel_results/
+notebooks/paper_figs/
+notebooks/rsa_out_vgg/
+notebooks/tables/
+batch_rsa_out/
+/config/*

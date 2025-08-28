@@ -1,5 +1,5 @@
 general:
-  run_name: 'grayscale_sun'
+  run_name: 'grayscale_coco'
   out_dir: './out'
   save_path: "${general.out_dir}/${general.run_name}/"
   base_path: "config/exp7_coco/base.yaml"
@@ -12,4 +12,4 @@ dataset:
   # processing: 'random'
 
 evaluate:
-  model_ckpt: out/grayscale_sun/decoder_epoch02.pt       # path to the .pt you want
+  model_ckpt: out/grayscale_coco/decoder_epoch04.pt       # path to the .pt you want

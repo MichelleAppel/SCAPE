@@ -6,10 +6,6 @@ Jaap de~Ruyter~van Steveninck, Umut G{\"u}{\c c}l{\"u}, Richard van Wezel, and
 \newblock End-to-end optimization of prosthetic vision.
 \newblock {\em bioRxiv}, 2020.
 
-\bibitem{Gatys2015}
-Leon~A. Gatys, Alexander~S. Ecker, and Matthias Bethge.
-\newblock A neural algorithm of artistic style, 2015.
-
 \bibitem{Granley2023}
 Jacob Granley, Tristan Fauvel, Matthew Chalk, and Michael Beyeler.
 \newblock Human-in-the-loop optimization for deep stimulus encoding in visual
@@ -42,6 +38,12 @@ Wentai Liu, W.~Fink, M.~Tarbell, and M.~Sivaprakasam.
 \newblock In {\em 2005 IEEE International Symposium on Circuits and Systems
   (ISCAS)}, pages 2927--2930 Vol. 3, 2005.
 
+\bibitem{Musk2019}
+Elon Musk and Neuralink.
+\newblock An integrated brain-machine interface platform with thousands of
+  channels.
+\newblock {\em Journal of Medical Internet Research}, 21(10):e16194, 2019.
+
 \bibitem{Nyquist1928}
 H.~Nyquist.
 \newblock Certain topics in telegraph transmission theory.
@@ -59,11 +61,6 @@ J.R. Polimeni, M.~Balasubramanian, and E.L. Schwartz.
 \newblock Multi-area visuotopic map complexes in macaque striate and
   extra-striate cortex.
 \newblock {\em Vision Research}, 46(20):3336--3359, 2006.
-
-\bibitem{Prashnani2018}
-Ekta Prashnani, Hong Cai, Yasamin Mostofi, and Pradeep Sen.
-\newblock Pieapp: Perceptual image-error assessment through pairwise
-  preference, 2018.
 
 \bibitem{Relic2022}
 Lucas Relic, Bowen Zhang, Yi-Lin Tuan, and Michael Beyeler.
@@ -83,18 +80,10 @@ Maureen van~der Grinten, Jaap de~Ruyter~van Steveninck, Antonio Lozano, Laura
   differentiable optimization of visual cortical prostheses.
 \newblock {\em eLife}, 13:e85812, feb 2024.
 
-\bibitem{Wang2018}
-Xiaosha Wang, Yangwen Xu, Yuwei Wang, Yi~Zeng, Jiacai Zhang, Zhen-Hua Ling, and
-  Yanchao Bi.
-\newblock Representational similarity analysis reveals task-dependent semantic
-  influence of the visual word form area.
-\newblock {\em Scientific Reports}, 8, 02 2018.
-
-\bibitem{Wang2004}
-Zhou Wang, A.C. Bovik, H.R. Sheikh, and E.P. Simoncelli.
-\newblock Image quality assessment: from error visibility to structural
-  similarity.
-\newblock {\em IEEE Transactions on Image Processing}, 13(4):600--612, 2004.
+\bibitem{Wang2015}
+Wenliang Wang, Ran Li, Jian Ding, Louis Tao, Da-Peng Li, and Yi~Wang.
+\newblock V1 neurons respond to luminance changes faster than contrast changes.
+\newblock {\em Scientific Reports}, 5:17173, 12 2015.
 
 \bibitem{Oh2024}
 Jungsuk~Kim Yeonji~Oh, Jonggi~Hong.
@@ -112,33 +101,11 @@ Richard~A. Young.
 Fisher Yu and Vladlen Koltun.
 \newblock Multi-scale context aggregation by dilated convolutions, 2016.
 
-\bibitem{Zhang2012}
-Lin Zhang and Hongyu Li.
-\newblock Sr-sim: A fast and high performance iqa index based on spectral
-  residual.
-\newblock In {\em 2012 19th IEEE International Conference on Image Processing},
-  pages 1473--1476, 2012.
-
-\bibitem{Zhang2014}
-Lin Zhang, Ying Shen, and Hongyu Li.
-\newblock Vsi: A visual saliency-induced index for perceptual image quality
-  assessment.
-\newblock {\em IEEE Transactions on Image Processing}, 23(10):4270--4281, 2014.
-
-\bibitem{Zhang2011}
-Lin Zhang, Lei Zhang, Xuanqin Mou, and David Zhang.
-\newblock Fsim: A feature similarity index for image quality assessment.
-\newblock {\em IEEE Transactions on Image Processing}, 20(8):2378--2386, 2011.
-
-\bibitem{Zhang2018}
-Richard Zhang, Phillip Isola, Alexei~A. Efros, Eli Shechtman, and Oliver Wang.
-\newblock The unreasonable effectiveness of deep features as a perceptual
-  metric, 2018.
-
-\bibitem{ZiaeiNafchi2016}
-Hossein Ziaei~Nafchi, Atena Shahkolaei, Rachid Hedjam, and Mohamed Cheriet.
-\newblock Mean deviation similarity index: Efficient and reliable
-  full-reference image quality evaluator.
-\newblock {\em IEEE Access}, 4:5579–5590, 2016.
+\bibitem{Zhao2023}
+Z.~Zhao, H.~Zhu, X.~Li, L.~Sun, F.~He, J.~E. Chung, D.~F. Liu, L.~Frank,
+  L.~Luan, and C.~Xie.
+\newblock Ultraflexible electrode arrays for months-long high-density
+  electrophysiological mapping of thousands of neurons in rodents.
+\newblock {\em Nature Biomedical Engineering}, 7(4):520--532, 2023.
 
 \end{thebibliography}
