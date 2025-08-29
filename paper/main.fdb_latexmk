@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex main"] 1756456622 "main.aux" "main.bbl" "main" 1756456863 0
+["bibtex main"] 1756457561 "main.aux" "main.bbl" "main" 1756457567 0
   "./references.bib" 1756456380 37746 9f633ad7edd3c729747b9feadbc6f5ba ""
   "/usr/share/texlive/texmf-dist/bibtex/bst/base/plain.bst" 1685185333 20613 bd3fbfa9f64872b81ac57a0dd2ed855f ""
-  "main.aux" 1756456863 22526 73a526f6c1e4bd6e80b373004ab7ee38 "pdflatex"
+  "main.aux" 1756457567 22526 beba6fca74171b5cf4eddea49a265b20 "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1756456857 "/home/mappel/Dynaphos/spatial_frequency/paper/main.tex" "main.pdf" "main" 1756456863 0
+["pdflatex"] 1756457561 "/home/mappel/Dynaphos/spatial_frequency/paper/main.tex" "main.pdf" "main" 1756457567 0
   "/home/mappel/.texlive2020/texmf-var/web2c/pdftex/pdflatex.fmt" 1752001958 1329206 c44b6bc9265e7c3aac474a38f81af1d9 ""
   "/home/mappel/Dynaphos/spatial_frequency/paper/main.tex" 1756409516 1686 af20a0be90527b89e21c4b2c09cf1600 ""
   "/home/mappel/Dynaphos/spatial_frequency/results/DoG_coco/images/sample_0010.png" 1756366629 287028 1914ce0b5d9da2bdbc124f975f8de6df ""
@@ -146,8 +146,8 @@
   "chapters/02_related.tex" 1756455824 3826 409cfcf2a18a20e2e5ff8700704c2f1c ""
   "chapters/03_methods.tex" 1756455865 24847 0a3fe2c29d60dd34d21f9a5073cb321c ""
   "chapters/04_experiments.tex" 1756407753 16712 64a07504b89a47074679b4613eae0796 ""
-  "chapters/05_results.tex" 1756456856 10202 8e52fcd274dbec8727dbf7279bb2b5d7 ""
-  "chapters/06_conclusion.tex" 1756456756 5921 8acbea15ab7ee998303b93a8b04f9d63 ""
+  "chapters/05_results.tex" 1756456895 10202 8e52fcd274dbec8727dbf7279bb2b5d7 ""
+  "chapters/06_conclusion.tex" 1756457562 6111 c14168306adaf9eb59c7e0b165b9334f ""
   "figures/RSA.png" 1756390902 176163 988f2fb01343f1d8cd200d305fb2eb81 ""
   "figures/SCAPElandscapeblack.pdf" 1752239438 956023 984f5b92def862ccd347db5d3a03dd7d ""
   "figures/cortextophosphenelocations4utaharrays.png" 1752163223 80751 86087dd4aeb94e28c0752aa25ba1d957 ""
@@ -160,9 +160,9 @@
   "figures/processingmethods1.png" 1756391403 354153 92ad79f4535c70a274c3185467590eb1 ""
   "figures/processingmethods2.png" 1756391416 321811 ee7fd5e56fbbfe0365d608ed5bd2e482 ""
   "figures/processingmethods3.png" 1756391433 372718 3d6553a7eecbff6f2d0cc12a507297bf ""
-  "main.aux" 1756456863 22526 73a526f6c1e4bd6e80b373004ab7ee38 "pdflatex"
-  "main.bbl" 1756456622 7442 48bb86cd2d8f91782d2c46585849183b "bibtex main"
-  "main.out" 1756456863 7379 10ab329a2c35432e8235cf7f9f0566f5 "pdflatex"
+  "main.aux" 1756457567 22526 beba6fca74171b5cf4eddea49a265b20 "pdflatex"
+  "main.bbl" 1756457561 7442 48bb86cd2d8f91782d2c46585849183b "bibtex main"
+  "main.out" 1756457567 7379 10ab329a2c35432e8235cf7f9f0566f5 "pdflatex"
   (generated)
   "main.aux"
   "main.log"
