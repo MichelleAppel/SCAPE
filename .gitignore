@@ -16,3 +16,4 @@ notebooks/tables/
 batch_rsa_out/
 /config/*
 notebooks_private/
+.vscode/
