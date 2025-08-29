@@ -1,6 +1,6 @@
 # SCAPE: Shift-variant Cortical-implant Adaptive Phosphene Encoding
 
-📄 [**Paper:**](paper/main.pdf)
+[📄 **Paper**](paper/main.pdf)
 
 SCAPE (Shift-variant Cortical-implant Adaptive Phosphene Encoding) is a bio-inspired framework for encoding visual information in cortical prostheses. 
 Unlike conventional pipelines that apply uniform filters across the visual field, SCAPE adapts spatial filtering to the **local sampling density** imposed 
