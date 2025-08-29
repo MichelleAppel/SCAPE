@@ -18,20 +18,20 @@ These qualitative examples illustrate why adaptive scale selection is important:
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.9\columnwidth]{figures/RSA.png}
-    \caption{\textbf{Representational similarity analysis relative to pixel-space reference.} 
+    \caption{\textbf{Representational similarity analysis.} 
     Dissimilarity ($1-\rho$) between phosphene encodings and original image RDMs across COCO, LaPa, and SUN datasets. 
     Bars show mean dissimilarity, error bars denote bootstrap confidence intervals, and $p$-values (permutation test) are reported below each bar. 
-    Lower values correspond to greater preservation of pixel-space structure.}
+    Lower values correspond to greater preservation of structure.}
     \label{fig:rsa_pixel}
 \end{figure}
 
 
 \subsection{Representational Dissimilarity Analysis}
 We next assessed the representational fidelity of different phosphene encoding strategies using RSA as defined in Section~\ref{sec:experiments}. 
-Figure~\ref{fig:rsa_pixel} shows the dissimilarity of phosphene encodings relative to pixel-space RDMs across three datasets (COCO, LaPa, SUN) and four implant schemes. 
+Figure~\ref{fig:rsa_pixel} shows the dissimilarity of phosphene encodings relative to RDMs across three datasets (COCO, LaPa, SUN) and four implant schemes. 
 Lower values correspond to better preservation of the relational structure of the original images.
 
-Across all conditions, \textbf{SCAPE (adaptive DoG)} achieved the lowest dissimilarity, indicating that its density-adaptive filtering preserves pixel-level similarity structure most effectively. 
+Across all conditions, \textbf{SCAPE (adaptive DoG)} achieved the lowest dissimilarity, indicating that its density-adaptive filtering preserves similarity structure most effectively. 
 The \textbf{fixed-scale DoG} baseline performed moderately well but failed to adapt across sampling densities, leading to higher dissimilarity in sparse layouts. 
 \textbf{Canny edges} and the \textbf{random control} consistently produced substantially higher dissimilarities, reflecting poor alignment with stimulus similarity. 
 Permutation-based $p$-values (shown below each bar) confirm that SCAPE significantly outperforms the nonadaptive baselines across datasets and implant schemes.
