@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2025.7.8)  28 AUG 2025 21:26
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2025.7.8)  29 AUG 2025 10:40
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -430,13 +430,13 @@ File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 
 
 ]) (./chapters/03_methods.tex
-<figures/cortextophosphenelocations4utaharrays.png, id=191, 714.7503pt x 359.9046pt>
+<figures/cortextophosphenelocations4utaharrays.png, id=207, 714.7503pt x 359.9046pt>
 File: figures/cortextophosphenelocations4utaharrays.png Graphic file (type png)
 <use figures/cortextophosphenelocations4utaharrays.png>
 Package pdftex.def Info: figures/cortextophosphenelocations4utaharrays.png  used on input line 18.
 (pdftex.def)             Requested size: 226.79846pt x 114.19978pt.
  [2 <./figures/cortextophosphenelocations4utaharrays.png>]
-<figures/phosphenerendering4utaharrays.png, id=221, 710.4141pt x 377.2494pt>
+<figures/phosphenerendering4utaharrays.png, id=238, 710.4141pt x 377.2494pt>
 File: figures/phosphenerendering4utaharrays.png Graphic file (type png)
 <use figures/phosphenerendering4utaharrays.png>
 Package pdftex.def Info: figures/phosphenerendering4utaharrays.png  used on input line 68.
@@ -445,7 +445,7 @@ LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 69
  (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 ) [3 <./figures/phosphenerendering4utaharrays.png>]
-<figures/dynamicamplitudenorm.png, id=229, 807.9786pt x 253.6677pt>
+<figures/dynamicamplitudenorm.png, id=248, 807.9786pt x 253.6677pt>
 File: figures/dynamicamplitudenorm.png Graphic file (type png)
 <use figures/dynamicamplitudenorm.png>
 Package pdftex.def Info: figures/dynamicamplitudenorm.png  used on input line 133.
@@ -453,7 +453,7 @@ Package pdftex.def Info: figures/dynamicamplitudenorm.png  used on input line 13
 
 
 pdfTeX warning: pdflatex (file ./figures/SCAPElandscapeblack.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<figures/SCAPElandscapeblack.pdf, id=230, 811.11026pt x 398.4486pt>
+<figures/SCAPElandscapeblack.pdf, id=249, 811.11026pt x 398.4486pt>
 File: figures/SCAPElandscapeblack.pdf Graphic file (type pdf)
 <use figures/SCAPElandscapeblack.pdf>
 Package pdftex.def Info: figures/SCAPElandscapeblack.pdf  used on input line 151.
@@ -477,37 +477,37 @@ Underfull \hbox (badness 1867) in paragraph at lines 262--263
  []
 
 [6]) (./chapters/04_experiments.tex [7]
-<figures/implant schemes/1024default.png, id=301, 259.4493pt x 1143.3114pt>
+<figures/implant schemes/1024default.png, id=318, 259.4493pt x 1143.3114pt>
 File: figures/implant schemes/1024default.png Graphic file (type png)
 <use figures/implant schemes/1024default.png>
 Package pdftex.def Info: figures/implant schemes/1024default.png  used on input line 68.
 (pdftex.def)             Requested size: 118.6778pt x 522.98134pt.
-<figures/implant schemes/neuralink.png, id=302, 250.0542pt x 1143.3114pt>
+<figures/implant schemes/neuralink.png, id=319, 250.0542pt x 1143.3114pt>
 File: figures/implant schemes/neuralink.png Graphic file (type png)
 <use figures/implant schemes/neuralink.png>
 Package pdftex.def Info: figures/implant schemes/neuralink.png  used on input line 69.
 (pdftex.def)             Requested size: 115.07172pt x 526.13898pt.
-<figures/implant schemes/1 utah array.png, id=303, 250.0542pt x 1143.3114pt>
+<figures/implant schemes/1 utah array.png, id=320, 250.0542pt x 1143.3114pt>
 File: figures/implant schemes/1 utah array.png Graphic file (type png)
 <use figures/implant schemes/1 utah array.png>
 Package pdftex.def Info: figures/implant schemes/1 utah array.png  used on input line 70.
 (pdftex.def)             Requested size: 115.07172pt x 526.13898pt.
-<figures/implant schemes/4 utah arrays.png, id=304, 250.0542pt x 1143.3114pt>
+<figures/implant schemes/4 utah arrays.png, id=321, 250.0542pt x 1143.3114pt>
 File: figures/implant schemes/4 utah arrays.png Graphic file (type png)
 <use figures/implant schemes/4 utah arrays.png>
 Package pdftex.def Info: figures/implant schemes/4 utah arrays.png  used on input line 71.
 (pdftex.def)             Requested size: 115.07172pt x 526.13898pt.
-<figures/processingmethods1.png, id=310, 1069.596pt x 429.2838pt>
+<figures/processingmethods1.png, id=327, 1069.596pt x 429.2838pt>
 File: figures/processingmethods1.png Graphic file (type png)
 <use figures/processingmethods1.png>
 Package pdftex.def Info: figures/processingmethods1.png  used on input line 96.
 (pdftex.def)             Requested size: 516.0pt x 207.10193pt.
-<figures/processingmethods2.png, id=311, 1069.596pt x 429.2838pt>
+<figures/processingmethods2.png, id=328, 1069.596pt x 429.2838pt>
 File: figures/processingmethods2.png Graphic file (type png)
 <use figures/processingmethods2.png>
 Package pdftex.def Info: figures/processingmethods2.png  used on input line 97.
 (pdftex.def)             Requested size: 516.0pt x 207.10193pt.
-<figures/processingmethods3.png, id=312, 1069.596pt x 429.2838pt>
+<figures/processingmethods3.png, id=329, 1069.596pt x 429.2838pt>
 File: figures/processingmethods3.png Graphic file (type png)
 <use figures/processingmethods3.png>
 Package pdftex.def Info: figures/processingmethods3.png  used on input line 98.
@@ -533,92 +533,93 @@ LaTeX Warning: Text page 10 contains only floats.
 Overfull \vbox (13.50586pt too high) has occurred while \output is active []
 
  [10 <./figures/processingmethods1.png> <./figures/processingmethods2.png> <./figures/processingmethods3.png>]) (./chapters/05_results.tex
-<figures/RSA.png, id=350, 421.87613pt x 1079.98482pt>
+<figures/RSA.png, id=365, 421.87613pt x 1079.98482pt>
 File: figures/RSA.png Graphic file (type png)
 <use figures/RSA.png>
-Package pdftex.def Info: figures/RSA.png  used on input line 25.
+Package pdftex.def Info: figures/RSA.png  used on input line 20.
 (pdftex.def)             Requested size: 226.79846pt x 580.5794pt.
- [11]
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[11]
 
 LaTeX Warning: Text page 12 contains only floats.
 
 
 Overfull \vbox (3.97955pt too high) has occurred while \output is active []
 
-</home/mappel/Dynaphos/spatial_frequency/results/DoG_coco/images/sample_0010.png, id=364, 1084.05pt x 361.35pt>
+</home/mappel/Dynaphos/spatial_frequency/results/DoG_coco/images/sample_0010.png, id=381, 1084.05pt x 361.35pt>
 File: /home/mappel/Dynaphos/spatial_frequency/results/DoG_coco/images/sample_0010.png Graphic file (type png)
 <use /home/mappel/Dynaphos/spatial_frequency/results/DoG_coco/images/sample_0010.png>
-Package pdftex.def Info: /home/mappel/Dynaphos/spatial_frequency/results/DoG_coco/images/sample_0010.png  used on input line 60.
+Package pdftex.def Info: /home/mappel/Dynaphos/spatial_frequency/results/DoG_coco/images/sample_0010.png  used on input line 61.
 (pdftex.def)             Requested size: 239.39923pt x 79.79498pt.
-</home/mappel/Dynaphos/spatial_frequency/results/canny_coco/images/sample_0010.png, id=365, 1084.05pt x 361.35pt>
+</home/mappel/Dynaphos/spatial_frequency/results/canny_coco/images/sample_0010.png, id=382, 1084.05pt x 361.35pt>
 File: /home/mappel/Dynaphos/spatial_frequency/results/canny_coco/images/sample_0010.png Graphic file (type png)
 <use /home/mappel/Dynaphos/spatial_frequency/results/canny_coco/images/sample_0010.png>
-Package pdftex.def Info: /home/mappel/Dynaphos/spatial_frequency/results/canny_coco/images/sample_0010.png  used on input line 61.
+Package pdftex.def Info: /home/mappel/Dynaphos/spatial_frequency/results/canny_coco/images/sample_0010.png  used on input line 62.
 (pdftex.def)             Requested size: 239.39923pt x 79.79498pt.
-</home/mappel/Dynaphos/spatial_frequency/results/random_coco/images/sample_0010.png, id=366, 1084.05pt x 361.35pt>
+</home/mappel/Dynaphos/spatial_frequency/results/random_coco/images/sample_0010.png, id=383, 1084.05pt x 361.35pt>
 File: /home/mappel/Dynaphos/spatial_frequency/results/random_coco/images/sample_0010.png Graphic file (type png)
 <use /home/mappel/Dynaphos/spatial_frequency/results/random_coco/images/sample_0010.png>
-Package pdftex.def Info: /home/mappel/Dynaphos/spatial_frequency/results/random_coco/images/sample_0010.png  used on input line 62.
+Package pdftex.def Info: /home/mappel/Dynaphos/spatial_frequency/results/random_coco/images/sample_0010.png  used on input line 63.
 (pdftex.def)             Requested size: 239.39923pt x 79.79498pt.
-</home/mappel/Dynaphos/spatial_frequency/results/DoG_lapa/images/sample_0008.png, id=367, 1084.05pt x 361.35pt>
+</home/mappel/Dynaphos/spatial_frequency/results/DoG_lapa/images/sample_0008.png, id=384, 1084.05pt x 361.35pt>
 File: /home/mappel/Dynaphos/spatial_frequency/results/DoG_lapa/images/sample_0008.png Graphic file (type png)
 <use /home/mappel/Dynaphos/spatial_frequency/results/DoG_lapa/images/sample_0008.png>
-Package pdftex.def Info: /home/mappel/Dynaphos/spatial_frequency/results/DoG_lapa/images/sample_0008.png  used on input line 69.
+Package pdftex.def Info: /home/mappel/Dynaphos/spatial_frequency/results/DoG_lapa/images/sample_0008.png  used on input line 70.
 (pdftex.def)             Requested size: 239.39923pt x 79.79498pt.
-</home/mappel/Dynaphos/spatial_frequency/results/canny_lapa/images/sample_0008.png, id=368, 1084.05pt x 361.35pt>
+</home/mappel/Dynaphos/spatial_frequency/results/canny_lapa/images/sample_0008.png, id=385, 1084.05pt x 361.35pt>
 File: /home/mappel/Dynaphos/spatial_frequency/results/canny_lapa/images/sample_0008.png Graphic file (type png)
 <use /home/mappel/Dynaphos/spatial_frequency/results/canny_lapa/images/sample_0008.png>
-Package pdftex.def Info: /home/mappel/Dynaphos/spatial_frequency/results/canny_lapa/images/sample_0008.png  used on input line 70.
+Package pdftex.def Info: /home/mappel/Dynaphos/spatial_frequency/results/canny_lapa/images/sample_0008.png  used on input line 71.
 (pdftex.def)             Requested size: 239.39923pt x 79.79498pt.
-</home/mappel/Dynaphos/spatial_frequency/results/random_lapa/images/sample_0008.png, id=369, 1084.05pt x 361.35pt>
+</home/mappel/Dynaphos/spatial_frequency/results/random_lapa/images/sample_0008.png, id=386, 1084.05pt x 361.35pt>
 File: /home/mappel/Dynaphos/spatial_frequency/results/random_lapa/images/sample_0008.png Graphic file (type png)
 <use /home/mappel/Dynaphos/spatial_frequency/results/random_lapa/images/sample_0008.png>
-Package pdftex.def Info: /home/mappel/Dynaphos/spatial_frequency/results/random_lapa/images/sample_0008.png  used on input line 71.
+Package pdftex.def Info: /home/mappel/Dynaphos/spatial_frequency/results/random_lapa/images/sample_0008.png  used on input line 72.
 (pdftex.def)             Requested size: 239.39923pt x 79.79498pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-</home/mappel/Dynaphos/spatial_frequency/results/DoG_sun/images/sample_0008.png, id=370, 1084.05pt x 361.35pt>
+</home/mappel/Dynaphos/spatial_frequency/results/DoG_sun/images/sample_0008.png, id=387, 1084.05pt x 361.35pt>
 File: /home/mappel/Dynaphos/spatial_frequency/results/DoG_sun/images/sample_0008.png Graphic file (type png)
 <use /home/mappel/Dynaphos/spatial_frequency/results/DoG_sun/images/sample_0008.png>
-Package pdftex.def Info: /home/mappel/Dynaphos/spatial_frequency/results/DoG_sun/images/sample_0008.png  used on input line 78.
+Package pdftex.def Info: /home/mappel/Dynaphos/spatial_frequency/results/DoG_sun/images/sample_0008.png  used on input line 79.
 (pdftex.def)             Requested size: 239.39923pt x 79.79498pt.
-</home/mappel/Dynaphos/spatial_frequency/results/canny_sun/images/sample_0008.png, id=371, 1084.05pt x 361.35pt>
+</home/mappel/Dynaphos/spatial_frequency/results/canny_sun/images/sample_0008.png, id=388, 1084.05pt x 361.35pt>
 File: /home/mappel/Dynaphos/spatial_frequency/results/canny_sun/images/sample_0008.png Graphic file (type png)
 <use /home/mappel/Dynaphos/spatial_frequency/results/canny_sun/images/sample_0008.png>
-Package pdftex.def Info: /home/mappel/Dynaphos/spatial_frequency/results/canny_sun/images/sample_0008.png  used on input line 79.
+Package pdftex.def Info: /home/mappel/Dynaphos/spatial_frequency/results/canny_sun/images/sample_0008.png  used on input line 80.
 (pdftex.def)             Requested size: 239.39923pt x 79.79498pt.
-</home/mappel/Dynaphos/spatial_frequency/results/random_sun/images/sample_0008.png, id=372, 1084.05pt x 361.35pt>
+</home/mappel/Dynaphos/spatial_frequency/results/random_sun/images/sample_0008.png, id=389, 1084.05pt x 361.35pt>
 File: /home/mappel/Dynaphos/spatial_frequency/results/random_sun/images/sample_0008.png Graphic file (type png)
 <use /home/mappel/Dynaphos/spatial_frequency/results/random_sun/images/sample_0008.png>
-Package pdftex.def Info: /home/mappel/Dynaphos/spatial_frequency/results/random_sun/images/sample_0008.png  used on input line 80.
+Package pdftex.def Info: /home/mappel/Dynaphos/spatial_frequency/results/random_sun/images/sample_0008.png  used on input line 81.
 (pdftex.def)             Requested size: 239.39923pt x 79.79498pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-) (./chapters/06_conclusion.tex [12 <./figures/RSA.png> </home/mappel/Dynaphos/spatial_frequency/results/DoG_coco/images/sample_0010.png> </home/mappel/Dynaphos/spatial_frequency/results/canny_coco/images/sample_0010.png> </home/mappel/Dynaphos/spatial_frequency/results/random_coco/images/sample_0010.png>] [13 </home/mappel/Dynaphos/spatial_frequency/results/DoG_lapa/images/sample_0008.png> </home/mappel/Dynaphos/spatial_frequency/results/canny_lapa/images/sample_0008.png> </home/mappel/Dynaphos/spatial_frequency/results/random_lapa/images/sample_0008.png> </home/mappel/Dynaphos/spatial_frequency/results/DoG_sun/images/sample_0008.png> </home/mappel/Dynaphos/spatial_frequency/results/canny_sun/images/sample_0008.png> </home/mappel/Dynaphos/spatial_frequency/results/random_sun/images/sample_0008.png>]
-Underfull \hbox (badness 2856) in paragraph at lines 23--24
-[]\OT1/ptm/m/n/10 Equally im-por-tant is the com-pu-ta-tional ef-fi-ciency of
- []
+) (./chapters/06_conclusion.tex [12 <./figures/RSA.png> </home/mappel/Dynaphos/spatial_frequency/results/DoG_coco/images/sample_0010.png> </home/mappel/Dynaphos/spatial_frequency/results/canny_coco/images/sample_0010.png> </home/mappel/Dynaphos/spatial_frequency/results/random_coco/images/sample_0010.png>] [13 </home/mappel/Dynaphos/spatial_frequency/results/DoG_lapa/images/sample_0008.png> </home/mappel/Dynaphos/spatial_frequency/results/canny_lapa/images/sample_0008.png> </home/mappel/Dynaphos/spatial_frequency/results/random_lapa/images/sample_0008.png> </home/mappel/Dynaphos/spatial_frequency/results/DoG_sun/images/sample_0008.png> </home/mappel/Dynaphos/spatial_frequency/results/canny_sun/images/sample_0008.png> </home/mappel/Dynaphos/spatial_frequency/results/random_sun/images/sample_0008.png>]) (./main.bbl [14]) [15
 
-[14]) (./main.bbl) [15] (./main.aux)
+] (./main.aux)
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 10AB329A2C35432E8235CF7F9F0566F5;7379.
  ) 
 Here is how much of TeX's memory you used:
- 11613 strings out of 481008
- 183491 string characters out of 5909440
- 494932 words of memory out of 5000000
- 28481 multiletter control sequences out of 15000+600000
+ 11634 strings out of 481008
+ 183779 string characters out of 5909440
+ 496267 words of memory out of 5000000
+ 28492 multiletter control sequences out of 15000+600000
  448690 words of font info for 124 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  71i,11n,77p,1395b,480s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (15 pages, 6138115 bytes).
+Output written on main.pdf (15 pages, 6138019 bytes).
 PDF statistics:
- 485 PDF objects out of 1000 (max. 8388607)
- 394 compressed objects within 4 object streams
- 108 named destinations out of 1000 (max. 500000)
+ 521 PDF objects out of 1000 (max. 8388607)
+ 429 compressed objects within 5 object streams
+ 118 named destinations out of 1000 (max. 500000)
  434 words of extra memory for PDF output out of 10000 (max. 10000000)
 

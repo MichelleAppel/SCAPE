@@ -1,10 +1,46 @@
 \begin{thebibliography}{10}
 
+\bibitem{Bak1990}
+M~Bak, J~P Girvin, F~T Hambrecht, C~V Kufta, G~E Loeb, and E~M Schmidt.
+\newblock Visual sensations produced by intracortical microstimulation of the
+  human occipital cortex.
+\newblock {\em Med. Biol. Eng. Comput.}, 28(3):257--259, May 1990.
+
+\bibitem{Barlett2008}
+John~R. Bartlett, Robert~W. Doty, sr., Barry~B. Lee, Nubio Negrão, and
+  William~H. Overman, jr.
+\newblock Deleterious effects of prolonged electrical excitation of striate
+  cortex in macaques.
+\newblock {\em Brain Behavior and Evolution}, 14(1-2):46--66, 04 2008.
+
+\bibitem{Beauchamp2020}
+Michael~S Beauchamp, Denise Oswalt, Ping Sun, Brett~L Foster, John~F Magnotti,
+  Soroush Niketeghad, Nader Pouratian, William~H Bosking, and Daniel Yoshor.
+\newblock Dynamic stimulation of visual cortex produces form vision in sighted
+  and blind humans.
+\newblock {\em Cell}, 181(4):774--783.e5, May 2020.
+
 \bibitem{deRuytervanSteveninck2020}
 Jaap de~Ruyter~van Steveninck, Umut G{\"u}{\c c}l{\"u}, Richard van Wezel, and
   Marcel van Gerven.
 \newblock End-to-end optimization of prosthetic vision.
 \newblock {\em bioRxiv}, 2020.
+
+\bibitem{Dobelle1974}
+W~H Dobelle and M~G Mladejovsky.
+\newblock Phosphenes produced by electrical stimulation of human occipital
+  cortex, and their application to the development of a prosthesis for the
+  blind.
+\newblock {\em J. Physiol.}, 243(2):553--576, December 1974.
+
+\bibitem{Fernandez2021}
+Eduardo Fernández, Arantxa Alfaro, Cristina Soto-Sánchez, Pablo
+  Gonzalez-Lopez, Antonio~M. Lozano, Sebastian Peña, Maria~Dolores Grima,
+  Alfonso Rodil, Bernardeta Gómez, Xing Chen, Pieter~R. Roelfsema, John~D.
+  Rolston, Tyler~S. Davis, and Richard~A. Normann.
+\newblock Visual percepts evoked with an intracortical 96-channel
+  microelectrode array inserted in human occipital cortex.
+\newblock {\em The Journal of Clinical Investigation}, 131(23), 12 2021.
 
 \bibitem{Granley2023}
 Jacob Granley, Tristan Fauvel, Matthew Chalk, and Michael Beyeler.
@@ -15,6 +51,10 @@ Jacob Granley, Tristan Fauvel, Matthew Chalk, and Michael Beyeler.
 Jacob Granley, Lucas Relic, and Michael Beyeler.
 \newblock Hybrid neural autoencoders for stimulus encoding in visual and other
   sensory neuroprostheses, 2022.
+
+\bibitem{Han2021}
+Nicole Han, Sudhanshu Srivastava, Aiwen Xu, Devi Klein, and Michael Beyeler.
+\newblock Deep learning--based scene simplification for bionic vision, 2021.
 
 \bibitem{Hu2018}
 Jie Hu, Li~Shen, Samuel Albanie, Gang Sun, and Enhua Wu.
@@ -38,11 +78,23 @@ Wentai Liu, W.~Fink, M.~Tarbell, and M.~Sivaprakasam.
 \newblock In {\em 2005 IEEE International Symposium on Circuits and Systems
   (ISCAS)}, pages 2927--2930 Vol. 3, 2005.
 
+\bibitem{Maynard1997}
+Edwin~M. Maynard, Craig~T. Nordhausen, and Richard~A. Normann.
+\newblock The utah intracortical electrode array: A recording structure for
+  potential brain-computer interfaces.
+\newblock {\em Electroencephalography and Clinical Neurophysiology},
+  102(3):228--239, 1997.
+
 \bibitem{Musk2019}
 Elon Musk and Neuralink.
 \newblock An integrated brain-machine interface platform with thousands of
   channels.
 \newblock {\em Journal of Medical Internet Research}, 21(10):e16194, 2019.
+
+\bibitem{Normann1999}
+Richard~A Normann, Edwin~M Maynard, Patrick~J Rousche, and David~J Warren.
+\newblock A neural interface for a cortical vision prosthesis.
+\newblock {\em Vision Research}, 39(15):2577--2587, 1999.
 
 \bibitem{Nyquist1928}
 H.~Nyquist.
@@ -71,6 +123,23 @@ Lucas Relic, Bowen Zhang, Yi-Lin Tuan, and Michael Beyeler.
 Olaf Ronneberger, Philipp Fischer, and Thomas Brox.
 \newblock U-net: Convolutional networks for biomedical image segmentation,
   2015.
+
+\bibitem{Schmidt1996}
+E.~M. Schmidt, M.~J. Bak, F.~T. Hambrecht, C.~V. Kufta, D.~K. O'Rourke, and
+  P.~Vallabhanath.
+\newblock Feasibility of a visual prosthesis for the blind based on
+  intracortical micro stimulation of the visual cortex.
+\newblock {\em Brain}, 119(2):507--522, 04 1996.
+
+\bibitem{Stingl2015}
+Katarina Stingl, Karl~Ulrich Bartz-Schmidt, Dorothea Besch, Caroline~K Chee,
+  Charles~L Cottriall, Florian Gekeler, Markus Groppe, Timothy~L Jackson,
+  Robert~E MacLaren, Assen Koitschev, Akos Kusnyerik, James Neffendorf, Janos
+  Nemeth, Mohamed Adheem~Naser Naeem, Tobias Peters, James~D Ramsden, Helmut
+  Sachs, Andrew Simpson, Mandeep~S Singh, Barbara Wilhelm, David Wong, and
+  Eberhart Zrenner.
+\newblock Subretinal visual implant alpha {IMS--Clinical} trial interim report.
+\newblock {\em Vision Res.}, 111(Pt B):149--160, June 2015.
 
 \bibitem{vanderGrinten2024}
 Maureen van~der Grinten, Jaap de~Ruyter~van Steveninck, Antonio Lozano, Laura

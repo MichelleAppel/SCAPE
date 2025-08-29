@@ -15,12 +15,7 @@ Finally, the \textbf{random control} produces unstructured patterns with no rela
 
 These qualitative examples illustrate why adaptive scale selection is important: SCAPE strikes a balance between edge emphasis and clutter suppression that is not achieved by fixed or contour-based baselines. The following sections quantify these observations using representational dissimilarity analysis and reconstruction performance.
 
-\subsection{Representational Dissimilarity Analysis}
-We next assessed the representational fidelity of different phosphene encoding strategies using RSA as defined in Section~\ref{sec:experiments}. 
-Figure~\ref{fig:rsa_pixel} shows the dissimilarity of phosphene encodings relative to pixel-space RDMs across three datasets (COCO, LaPa, SUN) and four implant schemes. 
-Lower values correspond to better preservation of the relational structure of the original images.
-
-\begin{figure}[t!]
+\begin{figure}[h!]
     \centering
     \includegraphics[width=0.9\columnwidth]{figures/RSA.png}
     \caption{\textbf{Representational similarity analysis relative to pixel-space reference.} 
@@ -29,6 +24,12 @@ Lower values correspond to better preservation of the relational structure of th
     Lower values correspond to greater preservation of pixel-space structure.}
     \label{fig:rsa_pixel}
 \end{figure}
+
+
+\subsection{Representational Dissimilarity Analysis}
+We next assessed the representational fidelity of different phosphene encoding strategies using RSA as defined in Section~\ref{sec:experiments}. 
+Figure~\ref{fig:rsa_pixel} shows the dissimilarity of phosphene encodings relative to pixel-space RDMs across three datasets (COCO, LaPa, SUN) and four implant schemes. 
+Lower values correspond to better preservation of the relational structure of the original images.
 
 Across all conditions, \textbf{SCAPE (adaptive DoG)} achieved the lowest dissimilarity, indicating that its density-adaptive filtering preserves pixel-level similarity structure most effectively. 
 The \textbf{fixed-scale DoG} baseline performed moderately well but failed to adapt across sampling densities, leading to higher dissimilarity in sparse layouts. 

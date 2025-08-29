@@ -47,7 +47,7 @@ expressed in degrees of visual angle. These centers form the basis for SCAPE’s
 
 
 \subsubsection{Gaussian Blob Rendering}
-Empirical reports indicate that electrically evoked phosphenes are most often perceived as localized flashes of light with an approximately circular appearance \cite{vanderGrinten2024}. Although some studies describe elongated or irregular forms, for simplicity we model each phosphene as an isotropic Gaussian. Note that SCAPE’s core computations (density estimation and adaptive filtering) rely only on phosphene centers; the Gaussian shape is used downstream for visualization, evaluation, and amplitude normalization.
+Empirical reports indicate that electrically evoked phosphenes are most often perceived as localized flashes of light with an approximately circular appearance \cite{vanderGrinten2024,Dobelle1974,Schmidt1996,Fernandez2021}. Although some studies describe elongated or irregular forms, for simplicity we model each phosphene as an isotropic Gaussian. Note that SCAPE’s core computations (density estimation and adaptive filtering) rely only on phosphene centers; the Gaussian shape is used downstream for visualization, evaluation, and amplitude normalization.
 
 Formally, each phosphene center \((\mu_{x,i},\mu_{y,i})\) in visual‐field coordinates generates a two‐dimensional Gaussian blob
 \[
