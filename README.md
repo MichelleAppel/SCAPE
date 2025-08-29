@@ -1,5 +1,8 @@
 # SCAPE: Shift-variant Cortical-implant Adaptive Phosphene Encoding
 
+📄 **Paper:**  
+- [SCAPE draft for preprint](paper/main.pdf)  
+
 SCAPE (Shift-variant Cortical implant Adaptive Phosphene Encoding) is a bio-inspired framework that compensates for the uneven spatial sampling of cortical electrode arrays by adapting filter scale locally. We first estimate a continuous sampling density map ρ(x,y), convert it via Nyquist principles into a spatially varying Gaussian‐filter width σ(x,y), then apply a shift-variant Difference-of-Gaussians (DoG) filter before training a decoder to reconstruct natural scenes from sparse phosphenes.
 
 ## Concept and Mathematical Justification
