@@ -282,48 +282,60 @@ def make_loader(cfg):
 # ---------------- simulator and maps ----------------
 def load_simulator_and_weights(cfg):
     params = dutils.load_params(cfg["sim"]["params_path"])
-    params["run"]["view_angle"] = cfg["sim"]["view_angle"]
     with open(cfg["sim"]["electrodes_path"], "rb") as f:
         coords = pickle.load(f)  # noqa
+
+    view_angle_dict = {1024: 16,
+                       4224: 25,
+                       94: 0.4,
+                       320: 16} 
+    n_phosphenes = len(coords)
+    print('n_phosphenes sim:', n_phosphenes)
+    params["run"]["view_angle"] = view_angle_dict.get(n_phosphenes, 16)
+    cfg["sim"]["view_angle"] = params["run"]["view_angle"]
+
+    print('view angle:', params["run"]["view_angle"])
     simulator = PhospheneSimulator(params, coords)
     amplitude = params["sampling"]["stimulus_scale"]
 
     stim_init = amplitude * torch.ones(simulator.num_phosphenes, device="cuda")
     cache_tag = hashlib.md5((cfg["sim"]["electrodes_path"] + str(cfg["sim"]["view_angle"])).encode()).hexdigest()[:12]
     cache_path = os.path.join(cfg["out_dir"], f"stim_weights_{cache_tag}.pt")
-    if os.path.exists(cache_path):
-        weights = torch.load(cache_path, map_location="cuda")
-    else:
-        normalizer = DynamicAmplitudeNormalizer(
-            simulator=simulator,
-            base_size=3,
-            scale=0.1,
-            A_min=0,
-            A_max=amplitude,
-            learning_rate=0.005,
-            steps=1000,
-            target=None
-        )
-        _ = normalizer.run(stim_init, verbose=False)
-        weights = normalizer.weights.detach()
-        os.makedirs(cfg["out_dir"], exist_ok=True)
-        torch.save(weights, cache_path)
+    # if os.path.exists(cache_path):
+    #     weights = torch.load(cache_path, map_location="cuda")
+    # else:
+    #     normalizer = DynamicAmplitudeNormalizer(
+    #         simulator=simulator,
+    #         base_size=3,
+    #         scale=0.1,
+    #         A_min=0,
+    #         A_max=amplitude,
+    #         learning_rate=0.005,
+    #         steps=1000,
+    #         target=None
+    #     )
+    #     _ = normalizer.run(stim_init, verbose=False)
+    #     weights = normalizer.weights.detach()
+    weights = torch.ones_like(stim_init)
+        # os.makedirs(cfg["out_dir"], exist_ok=True)
+        # torch.save(weights, cache_path)
     return simulator, weights
 
 def build_sigma_maps(simulator, cfg):
     mapper = VisualFieldMapper(simulator=simulator)
     n = simulator.num_phosphenes
+    print('n phosphenes: ', n)
     density_kde = mapper.build_density_map_kde(k=6, alpha=1.0, total_phosphenes=n)
     sigma_kde_pix = mapper.build_sigma_map_from_density(density_kde, space="pixel")
     sigma_map_tensor = torch.tensor(sigma_kde_pix).float().cuda().detach()
     mean_sigma = sigma_map_tensor.mean()
-    sigma_mean_map = torch.ones_like(sigma_map_tensor) * mean_sigma
+    # sigma_mean_map = torch.ones_like(sigma_map_tensor) * mean_sigma
     sigma_fixed_small = torch.ones_like(sigma_map_tensor) * 3.0
     # centroid for shift
     x_center, y_center = mapper.centroid_of_density(density_kde)
     return {
         "adaptive": sigma_map_tensor,
-        "mean": sigma_mean_map,
+        # "mean": sigma_mean_map,
         "small": sigma_fixed_small
     }, (x_center, y_center)
 
@@ -373,7 +385,7 @@ def main():
 
     # modulated filters
     mod_adapt = SeparableModulatedConv2d(in_channels=1, sigma_map=sigma_maps["adaptive"]).cuda().eval()
-    mod_mean  = SeparableModulatedConv2d(in_channels=1, sigma_map=sigma_maps["mean"]).cuda().eval()
+    # mod_mean  = SeparableModulatedConv2d(in_channels=1, sigma_map=sigma_maps["mean"]).cuda().eval()
     mod_small = SeparableModulatedConv2d(in_channels=1, sigma_map=sigma_maps["small"]).cuda().eval()
 
     # data
@@ -391,7 +403,8 @@ def main():
         img = batch[0].cuda()  # [1,1,H,W] due to transform
         # shift to centroid
         np_img = img[0,0].cpu().numpy()
-        shifted = shift_stimulus_to_phosphene_centroid(np_img, centroid_deg, fov=fov_deg, mode="constant", cval=0.0)
+        # shifted = shift_stimulus_to_phosphene_centroid(np_img, centroid_deg, fov=fov_deg, mode="constant", cval=0.0)
+        shifted = np_img  # do not shift for now
         img = torch.tensor(shifted, dtype=torch.float32).unsqueeze(0).unsqueeze(0).cuda()
 
         # construct stimuli per method
@@ -403,9 +416,9 @@ def main():
             dog = mod_adapt(img).detach().clamp_min(0.0)
             stim_dict["DoG_adaptive"] = normalize01(dog)
 
-        if "DoG_fixed_mean" in methods:
-            dogm = mod_mean(img).detach().clamp_min(0.0)
-            stim_dict["DoG_fixed_mean"] = normalize01(dogm)
+        # if "DoG_fixed_mean" in methods:
+        #     dogm = mod_mean(img).detach().clamp_min(0.0)
+        #     stim_dict["DoG_fixed_mean"] = normalize01(dogm)
 
         if "DoG_fixed_small" in methods:
             dogs = mod_small(img).detach().clamp_min(0.0)
@@ -507,171 +520,6 @@ def main():
     plt.tight_layout()
     fig.savefig(os.path.join(cfg["out_dir"], "second_order_matrix.png"))
     plt.close(fig)
-
-# ===== VGG reference RSA and second order (multi-layer) =====
-    if cfg.get("vgg", {}).get("enable", False):
-        vcfg = cfg.get("vgg", {})
-        # Accept either a single "layer" string or a list "layers"
-        layers = vcfg.get("layers")
-        if layers is None:
-            layers = [vcfg.get("layer", "conv3_3")]
-        weights = vcfg.get("weights", None)
-        vgg_batch = int(vcfg.get("batch", 64))
-        methods_in_feat = bool(vcfg.get("methods_in_feature_space", False))
-        fusion_mode = vcfg.get("fusion", "mean")  # "mean" or "concat"
-
-        # Rebuild tensors for originals (and methods if needed), [N,H,W]
-        orig_list = []
-        meth_lists = {m: [] for m in methods}
-
-        loader2 = make_loader(cfg)
-        for idx, batch in enumerate(loader2):
-            img = batch[0].cuda()   # [1,1,H,W]
-            np_img = img[0,0].cpu().numpy()
-            shifted = shift_stimulus_to_phosphene_centroid(
-                np_img, centroid_deg, fov=fov_deg, mode="constant", cval=0.0
-            )
-            img = torch.tensor(shifted, dtype=torch.float32).unsqueeze(0).unsqueeze(0).cuda()
-            orig_list.append(img[0,0].detach().cpu())
-
-            if methods_in_feat:
-                stim_dict = {}
-                if "grayscale" in methods:
-                    stim_dict["grayscale"] = img
-                if "DoG_adaptive" in methods:
-                    dog = mod_adapt(img).detach().clamp_min(0.0)
-                    stim_dict["DoG_adaptive"] = normalize01(dog)
-                if "DoG_fixed_mean" in methods:
-                    dogm = mod_mean(img).detach().clamp_min(0.0)
-                    stim_dict["DoG_fixed_mean"] = normalize01(dogm)
-                if "DoG_fixed_small" in methods:
-                    dogs = mod_small(img).detach().clamp_min(0.0)
-                    stim_dict["DoG_fixed_small"] = normalize01(dogs)
-                if "canny_edge" in methods:
-                    ce_np = canny_edges_from_numpy(
-                        img[0,0].cpu().numpy(), low=100, high=200, dilate=True
-                    )
-                    stim_dict["canny_edge"] = torch.from_numpy(ce_np).unsqueeze(0).unsqueeze(0).cuda()
-                if "random" in methods:
-                    Ht, Wt = img.shape[-2:]
-                    rp = perlin_like(Ht, Wt, tiles_x=8, tiles_y=8, seed=idx)
-                    stim_dict["random"] = torch.from_numpy(rp).unsqueeze(0).unsqueeze(0).cuda()
-
-                phos_dict = {}
-                for m in methods:
-                    phos = make_stim_phos(
-                        simulator, stim_dict[m], amplitude, threshold, stim_weights, normalization=True
-                    )
-                    phos_dict[m] = phos
-                for m in methods:
-                    meth_lists[m].append(phos_dict[m][0,0].detach().cpu())
-
-        orig_hw_t = torch.stack(orig_list, dim=0)  # [N,H,W]
-
-        # Features for originals for each layer
-        if fusion_mode == "concat":
-            # extract per layer features, then concatenate features
-            F_dict = vgg_multi_features(orig_hw_t, layers, batch=vgg_batch, device=device)
-            F_concat = np.concatenate([F_dict[ln] for ln in layers], axis=1)  # [N, sum C]
-            rdm_vgg_ref_fused = corr_rdm_gpu_from_vectors(F_concat, device=device)
-        else:
-            # build per-layer RDMs, then weighted mean RDM
-            F_dict = vgg_multi_features(orig_hw_t, layers, batch=vgg_batch, device=device)
-            rdm_vgg_ref_dict = {ln: corr_rdm_gpu_from_vectors(F_dict[ln], device=device) for ln in layers}
-            rdm_vgg_ref_fused = combine_rdms(rdm_vgg_ref_dict, weights=weights, mode="mean")
-
-        # Method RDMs for VGG reference
-        if methods_in_feat:
-            if fusion_mode == "concat":
-                rdm_vgg_m_fused = {}
-                for m in methods:
-                    Xm = torch.stack(meth_lists[m], dim=0)  # [N,H,W]
-                    Fm_dict = vgg_multi_features(Xm, layers, batch=vgg_batch, device=device)
-                    Fm_concat = np.concatenate([Fm_dict[ln] for ln in layers], axis=1)
-                    rdm_vgg_m_fused[m] = corr_rdm_gpu_from_vectors(Fm_concat, device=device)
-            else:
-                rdm_vgg_m_dict = {m: {} for m in methods}
-                for m in methods:
-                    Xm = torch.stack(meth_lists[m], dim=0)
-                    Fm_dict = vgg_multi_features(Xm, layers, batch=vgg_batch, device=device)
-                    for ln in layers:
-                        rdm_vgg_m_dict[m][ln] = corr_rdm_gpu_from_vectors(Fm_dict[ln], device=device)
-                rdm_vgg_m_fused = {
-                    m: combine_rdms(rdm_vgg_m_dict[m], weights=weights, mode="mean") for m in methods
-                }
-        else:
-            # reuse pixel-space method RDMs against the VGG reference
-            rdm_vgg_m_fused = {m: rdm_meth[m] for m in methods}
-
-        # RSA to fused VGG reference
-        tri = np.triu_indices(rdm_vgg_ref_fused.shape[0], 1)
-        vrows = []
-        for m in methods:
-            rho = spearmanr(rdm_vgg_ref_fused[tri], rdm_vgg_m_fused[m][tri]).statistic
-            boot = bootstrap_rsa(rdm_vgg_ref_fused, rdm_vgg_m_fused[m],
-                                 B=cfg["rsa"]["bootstraps"], seed=cfg["seed"])
-            lo, hi = np.percentile(boot, [2.5, 97.5])
-            _, pval = permute_rsa_p(rdm_vgg_ref_fused, rdm_vgg_m_fused[m],
-                                    n_perm=cfg["rsa"]["permutations"], seed=cfg["seed"])
-            vrows.append({"method": m, "rho": float(rho), "lo": float(lo), "hi": float(hi), "p_perm": float(pval)})
-        df_vgg_fused = pd.DataFrame(vrows).sort_values("rho", ascending=False).reset_index(drop=True)
-        df_vgg_fused["p_holm"] = holm_correction(df_vgg_fused["p_perm"].values)
-
-        # file tags for clarity
-        tag_layers = "-".join(layers)
-        tag_mode = f"{fusion_mode}"
-        df_vgg_fused.to_csv(os.path.join(cfg["out_dir"], f"rsa_results_vgg_fused_{tag_mode}_{tag_layers}.csv"),
-                            index=False)
-
-        # optional per-layer CSV for transparency
-        if fusion_mode != "concat":
-            per_layer_rows = []
-            for ln in layers:
-                triL = np.triu_indices(rdm_vgg_ref_dict[ln].shape[0], 1)
-                if methods_in_feat:
-                    for m in methods:
-                        rhoL = spearmanr(rdm_vgg_ref_dict[ln][triL], rdm_vgg_m_dict[m][ln][triL]).statistic
-                        per_layer_rows.append({"layer": ln, "method": m, "rho": float(rhoL)})
-                else:
-                    # if methods are not in feature space, rdm_meth is the same across layers
-                    for m in methods:
-                        rhoL = spearmanr(rdm_vgg_ref_dict[ln][triL], rdm_meth[m][triL]).statistic
-                        per_layer_rows.append({"layer": ln, "method": m, "rho": float(rhoL)})
-            pd.DataFrame(per_layer_rows).to_csv(
-                os.path.join(cfg["out_dir"], f"rsa_results_vgg_per_layer_{tag_layers}.csv"),
-                index=False
-            )
-
-        # Second order for fused VGG reference
-        names_vgg = [f"original_VGG_fused_{tag_mode}_{tag_layers}"] + methods
-        vecs_vgg = {names_vgg[0]: rdm_vgg_ref_fused[tri]}
-        for m in methods:
-            vecs_vgg[m] = rdm_vgg_m_fused[m][tri]
-
-        S_vgg = np.zeros((len(names_vgg), len(names_vgg)), np.float32)
-        for i, ni in enumerate(names_vgg):
-            for j, nj in enumerate(names_vgg):
-                S_vgg[i, j] = spearmanr(vecs_vgg[ni], vecs_vgg[nj]).statistic
-
-        np.save(os.path.join(cfg["out_dir"], f"second_order_vgg_fused_{tag_mode}_{tag_layers}.npy"), S_vgg)
-        # cap names_vgg at 10 characters
-        names_vgg = [n[:10] for n in names_vgg]
-        S_vgg_df = pd.DataFrame(S_vgg, index=names_vgg, columns=names_vgg)
-        S_vgg_df.to_csv(os.path.join(cfg["out_dir"], f"second_order_vgg_fused_{tag_mode}_{tag_layers}.csv"),
-                        float_format="%.6f")
-
-        fig, ax = plt.subplots(
-            dpi=220
-        )
-        sns.heatmap(
-            S_vgg_df, vmin=0, vmax=1, cmap="viridis",
-            annot=True, fmt=".2f", cbar=True,
-            xticklabels=True, yticklabels=True, ax=ax
-        )
-        ax.set_title(f"Second order correlation to VGG fused ({tag_mode}) {tag_layers}")
-        plt.tight_layout()
-        fig.savefig(os.path.join(cfg["out_dir"], f"second_order_matrix_vgg_fused_{tag_mode}_{tag_layers}.png"))
-        plt.close(fig)
 
 
 if __name__ == "__main__":
