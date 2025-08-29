@@ -286,7 +286,7 @@ def load_simulator_and_weights(cfg):
         coords = pickle.load(f)  # noqa
 
     view_angle_dict = {1024: 16,
-                       4224: 25,
+                       4224: 23.25,
                        94: 0.4,
                        320: 16} 
     n_phosphenes = len(coords)
@@ -301,31 +301,31 @@ def load_simulator_and_weights(cfg):
     stim_init = amplitude * torch.ones(simulator.num_phosphenes, device="cuda")
     cache_tag = hashlib.md5((cfg["sim"]["electrodes_path"] + str(cfg["sim"]["view_angle"])).encode()).hexdigest()[:12]
     cache_path = os.path.join(cfg["out_dir"], f"stim_weights_{cache_tag}.pt")
-    # if os.path.exists(cache_path):
-    #     weights = torch.load(cache_path, map_location="cuda")
-    # else:
-    #     normalizer = DynamicAmplitudeNormalizer(
-    #         simulator=simulator,
-    #         base_size=3,
-    #         scale=0.1,
-    #         A_min=0,
-    #         A_max=amplitude,
-    #         learning_rate=0.005,
-    #         steps=1000,
-    #         target=None
-    #     )
-    #     _ = normalizer.run(stim_init, verbose=False)
-    #     weights = normalizer.weights.detach()
-    weights = torch.ones_like(stim_init)
-        # os.makedirs(cfg["out_dir"], exist_ok=True)
-        # torch.save(weights, cache_path)
+    if os.path.exists(cache_path):
+        weights = torch.load(cache_path, map_location="cuda")
+    else:
+        normalizer = DynamicAmplitudeNormalizer(
+            simulator=simulator,
+            base_size=3,
+            scale=0.1,
+            A_min=0,
+            A_max=amplitude,
+            learning_rate=0.005,
+            steps=1000,
+            target=None
+        )
+        _ = normalizer.run(stim_init, verbose=False)
+        weights = normalizer.weights.detach()
+    # weights = torch.ones_like(stim_init)
+        os.makedirs(cfg["out_dir"], exist_ok=True)
+        torch.save(weights, cache_path)
     return simulator, weights
 
 def build_sigma_maps(simulator, cfg):
     mapper = VisualFieldMapper(simulator=simulator)
     n = simulator.num_phosphenes
     print('n phosphenes: ', n)
-    density_kde = mapper.build_density_map_kde(k=6, alpha=1.0, total_phosphenes=n)
+    density_kde = mapper.build_density_map_kde(k=6, alpha=1.5, total_phosphenes=n)
     sigma_kde_pix = mapper.build_sigma_map_from_density(density_kde, space="pixel")
     sigma_map_tensor = torch.tensor(sigma_kde_pix).float().cuda().detach()
     mean_sigma = sigma_map_tensor.mean()
