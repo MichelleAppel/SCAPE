@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2025.7.8)  29 AUG 2025 14:52
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2025.7.8)  31 AUG 2025 10:53
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -349,6 +349,21 @@ Package caption Info: hyperref package is loaded.
 \c@subtable=\count290
 ) (/usr/share/texlive/texmf-dist/tex/latex/placeins/placeins.sty
 Package: placeins 2005/04/18  v 2.2
+) (/usr/share/texlive/texmf-dist/tex/latex/xcolor/xcolor.sty
+Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
+ (/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: pdftex.def on input line 225.
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1348.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1352.
+Package xcolor Info: Model `RGB' extended on input line 1364.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1366.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1367.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1368.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1369.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1370.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
 ) (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2021-03-18 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count291
@@ -356,24 +371,24 @@ File: l3backend-pdftex.def 2021-03-18 L3 backend support: PDF output (pdfTeX)
 ) (./main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
 
 -- Lines per column: 58 (exact).
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
@@ -395,7 +410,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
  (/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-Package hyperref Info: Link coloring OFF on input line 13.
+Package hyperref Info: Link coloring OFF on input line 15.
  (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
  (/usr/share/texlive/texmf-dist/tex/latex/refcount/refcount.sty
@@ -405,38 +420,38 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count298
 )
-LaTeX Info: Redefining \ref on input line 13.
-LaTeX Info: Redefining \pageref on input line 13.
-LaTeX Info: Redefining \nameref on input line 13.
+LaTeX Info: Redefining \ref on input line 15.
+LaTeX Info: Redefining \pageref on input line 15.
+LaTeX Info: Redefining \nameref on input line 15.
  (./main.out) (./main.out)
 \@outlinefile=\write3
 \openout3 = `main.out'.
 
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Calculating math sizes for size <11> on input line 31.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 31.
+LaTeX Font Info:    Calculating math sizes for size <11> on input line 33.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 33.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 31.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 33.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 31.
+LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 33.
  (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 ) (./chapters/00_abstract.tex) (./chapters/01_introduction.tex) (./chapters/02_related.tex [1{/usr/share/texlive/texmf-dist/fonts/map/pdftex/updmap/pdftex.map}
 
 
 ]) (./chapters/03_methods.tex
-<figures/cortextophosphenelocations4utaharrays.png, id=207, 714.7503pt x 359.9046pt>
+<figures/cortextophosphenelocations4utaharrays.png, id=214, 714.7503pt x 359.9046pt>
 File: figures/cortextophosphenelocations4utaharrays.png Graphic file (type png)
 <use figures/cortextophosphenelocations4utaharrays.png>
 Package pdftex.def Info: figures/cortextophosphenelocations4utaharrays.png  used on input line 18.
 (pdftex.def)             Requested size: 226.79846pt x 114.19978pt.
  [2 <./figures/cortextophosphenelocations4utaharrays.png>]
-<figures/phosphenerendering4utaharrays.png, id=238, 710.4141pt x 377.2494pt>
+<figures/phosphenerendering4utaharrays.png, id=244, 710.4141pt x 377.2494pt>
 File: figures/phosphenerendering4utaharrays.png Graphic file (type png)
 <use figures/phosphenerendering4utaharrays.png>
 Package pdftex.def Info: figures/phosphenerendering4utaharrays.png  used on input line 68.
@@ -444,8 +459,12 @@ Package pdftex.def Info: figures/phosphenerendering4utaharrays.png  used on inpu
 LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 69.
  (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
-) [3 <./figures/phosphenerendering4utaharrays.png>]
-<figures/dynamicamplitudenorm.png, id=248, 807.9786pt x 253.6677pt>
+)
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[3 <./figures/phosphenerendering4utaharrays.png>]
+<figures/dynamicamplitudenorm.png, id=255, 807.9786pt x 253.6677pt>
 File: figures/dynamicamplitudenorm.png Graphic file (type png)
 <use figures/dynamicamplitudenorm.png>
 Package pdftex.def Info: figures/dynamicamplitudenorm.png  used on input line 133.
@@ -453,11 +472,12 @@ Package pdftex.def Info: figures/dynamicamplitudenorm.png  used on input line 13
 
 
 pdfTeX warning: pdflatex (file ./figures/SCAPElandscapeblack.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<figures/SCAPElandscapeblack.pdf, id=249, 811.11026pt x 398.4486pt>
+<figures/SCAPElandscapeblack.pdf, id=256, 811.11026pt x 398.4486pt>
 File: figures/SCAPElandscapeblack.pdf Graphic file (type pdf)
 <use figures/SCAPElandscapeblack.pdf>
 Package pdftex.def Info: figures/SCAPElandscapeblack.pdf  used on input line 151.
 (pdftex.def)             Requested size: 516.0pt x 253.49234pt.
+[4 <./figures/dynamicamplitudenorm.png>]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 196.
@@ -466,7 +486,7 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `\sigma' on input line 196.
 
-[4 <./figures/dynamicamplitudenorm.png>] [5 <./figures/SCAPElandscapeblack.pdf>]
+[5 <./figures/SCAPElandscapeblack.pdf>]
 Underfull \hbox (badness 3428) in paragraph at lines 257--258
 []\OT1/ptm/b/n/10 Squeeze-and-Excitation (SE) blocks \OT1/ptm/m/n/10 to adap-tively
  []
@@ -477,37 +497,37 @@ Underfull \hbox (badness 1867) in paragraph at lines 262--263
  []
 
 [6]) (./chapters/04_experiments.tex [7]
-<figures/implant schemes/1024default.png, id=318, 259.4493pt x 1143.3114pt>
+<figures/implant schemes/1024default.png, id=322, 259.4493pt x 1143.3114pt>
 File: figures/implant schemes/1024default.png Graphic file (type png)
 <use figures/implant schemes/1024default.png>
 Package pdftex.def Info: figures/implant schemes/1024default.png  used on input line 68.
 (pdftex.def)             Requested size: 118.6778pt x 522.98134pt.
-<figures/implant schemes/neuralink.png, id=319, 250.0542pt x 1143.3114pt>
+<figures/implant schemes/neuralink.png, id=323, 250.0542pt x 1143.3114pt>
 File: figures/implant schemes/neuralink.png Graphic file (type png)
 <use figures/implant schemes/neuralink.png>
 Package pdftex.def Info: figures/implant schemes/neuralink.png  used on input line 69.
 (pdftex.def)             Requested size: 115.07172pt x 526.13898pt.
-<figures/implant schemes/1 utah array.png, id=320, 250.0542pt x 1143.3114pt>
+<figures/implant schemes/1 utah array.png, id=324, 250.0542pt x 1143.3114pt>
 File: figures/implant schemes/1 utah array.png Graphic file (type png)
 <use figures/implant schemes/1 utah array.png>
 Package pdftex.def Info: figures/implant schemes/1 utah array.png  used on input line 70.
 (pdftex.def)             Requested size: 115.07172pt x 526.13898pt.
-<figures/implant schemes/4 utah arrays.png, id=321, 250.0542pt x 1143.3114pt>
+<figures/implant schemes/4 utah arrays.png, id=325, 250.0542pt x 1143.3114pt>
 File: figures/implant schemes/4 utah arrays.png Graphic file (type png)
 <use figures/implant schemes/4 utah arrays.png>
 Package pdftex.def Info: figures/implant schemes/4 utah arrays.png  used on input line 71.
 (pdftex.def)             Requested size: 115.07172pt x 526.13898pt.
-<figures/processingmethods1.png, id=327, 1069.596pt x 429.2838pt>
+<figures/processingmethods1.png, id=331, 1069.596pt x 429.2838pt>
 File: figures/processingmethods1.png Graphic file (type png)
 <use figures/processingmethods1.png>
 Package pdftex.def Info: figures/processingmethods1.png  used on input line 96.
 (pdftex.def)             Requested size: 516.0pt x 207.10193pt.
-<figures/processingmethods2.png, id=328, 1069.596pt x 429.2838pt>
+<figures/processingmethods2.png, id=332, 1069.596pt x 429.2838pt>
 File: figures/processingmethods2.png Graphic file (type png)
 <use figures/processingmethods2.png>
 Package pdftex.def Info: figures/processingmethods2.png  used on input line 97.
 (pdftex.def)             Requested size: 516.0pt x 207.10193pt.
-<figures/processingmethods3.png, id=329, 1069.596pt x 429.2838pt>
+<figures/processingmethods3.png, id=333, 1069.596pt x 429.2838pt>
 File: figures/processingmethods3.png Graphic file (type png)
 <use figures/processingmethods3.png>
 Package pdftex.def Info: figures/processingmethods3.png  used on input line 98.
@@ -533,7 +553,7 @@ LaTeX Warning: Text page 10 contains only floats.
 Overfull \vbox (13.50586pt too high) has occurred while \output is active []
 
  [10 <./figures/processingmethods1.png> <./figures/processingmethods2.png> <./figures/processingmethods3.png>]) (./chapters/05_results.tex
-<figures/RSA.png, id=365, 421.87613pt x 1079.98482pt>
+<figures/RSA.png, id=371, 421.87613pt x 1079.98482pt>
 File: figures/RSA.png Graphic file (type png)
 <use figures/RSA.png>
 Package pdftex.def Info: figures/RSA.png  used on input line 20.
@@ -549,51 +569,54 @@ LaTeX Warning: Text page 12 contains only floats.
 
 Overfull \vbox (3.97955pt too high) has occurred while \output is active []
 
-</home/mappel/Dynaphos/spatial_frequency/results/DoG_coco/images/sample_0010.png, id=381, 1084.05pt x 361.35pt>
+</home/mappel/Dynaphos/spatial_frequency/results/DoG_coco/images/sample_0010.png, id=388, 1084.05pt x 361.35pt>
 File: /home/mappel/Dynaphos/spatial_frequency/results/DoG_coco/images/sample_0010.png Graphic file (type png)
 <use /home/mappel/Dynaphos/spatial_frequency/results/DoG_coco/images/sample_0010.png>
 Package pdftex.def Info: /home/mappel/Dynaphos/spatial_frequency/results/DoG_coco/images/sample_0010.png  used on input line 61.
 (pdftex.def)             Requested size: 239.39923pt x 79.79498pt.
-</home/mappel/Dynaphos/spatial_frequency/results/canny_coco/images/sample_0010.png, id=382, 1084.05pt x 361.35pt>
+</home/mappel/Dynaphos/spatial_frequency/results/canny_coco/images/sample_0010.png, id=389, 1084.05pt x 361.35pt>
 File: /home/mappel/Dynaphos/spatial_frequency/results/canny_coco/images/sample_0010.png Graphic file (type png)
 <use /home/mappel/Dynaphos/spatial_frequency/results/canny_coco/images/sample_0010.png>
 Package pdftex.def Info: /home/mappel/Dynaphos/spatial_frequency/results/canny_coco/images/sample_0010.png  used on input line 62.
 (pdftex.def)             Requested size: 239.39923pt x 79.79498pt.
-</home/mappel/Dynaphos/spatial_frequency/results/random_coco/images/sample_0010.png, id=383, 1084.05pt x 361.35pt>
+</home/mappel/Dynaphos/spatial_frequency/results/random_coco/images/sample_0010.png, id=390, 1084.05pt x 361.35pt>
 File: /home/mappel/Dynaphos/spatial_frequency/results/random_coco/images/sample_0010.png Graphic file (type png)
 <use /home/mappel/Dynaphos/spatial_frequency/results/random_coco/images/sample_0010.png>
 Package pdftex.def Info: /home/mappel/Dynaphos/spatial_frequency/results/random_coco/images/sample_0010.png  used on input line 63.
-(pdftex.def)             Requested size: 239.39923pt x 79.79498pt.
-</home/mappel/Dynaphos/spatial_frequency/results/DoG_lapa/images/sample_0008.png, id=384, 1084.05pt x 361.35pt>
-File: /home/mappel/Dynaphos/spatial_frequency/results/DoG_lapa/images/sample_0008.png Graphic file (type png)
-<use /home/mappel/Dynaphos/spatial_frequency/results/DoG_lapa/images/sample_0008.png>
-Package pdftex.def Info: /home/mappel/Dynaphos/spatial_frequency/results/DoG_lapa/images/sample_0008.png  used on input line 70.
-(pdftex.def)             Requested size: 239.39923pt x 79.79498pt.
-</home/mappel/Dynaphos/spatial_frequency/results/canny_lapa/images/sample_0008.png, id=385, 1084.05pt x 361.35pt>
-File: /home/mappel/Dynaphos/spatial_frequency/results/canny_lapa/images/sample_0008.png Graphic file (type png)
-<use /home/mappel/Dynaphos/spatial_frequency/results/canny_lapa/images/sample_0008.png>
-Package pdftex.def Info: /home/mappel/Dynaphos/spatial_frequency/results/canny_lapa/images/sample_0008.png  used on input line 71.
-(pdftex.def)             Requested size: 239.39923pt x 79.79498pt.
-</home/mappel/Dynaphos/spatial_frequency/results/random_lapa/images/sample_0008.png, id=386, 1084.05pt x 361.35pt>
-File: /home/mappel/Dynaphos/spatial_frequency/results/random_lapa/images/sample_0008.png Graphic file (type png)
-<use /home/mappel/Dynaphos/spatial_frequency/results/random_lapa/images/sample_0008.png>
-Package pdftex.def Info: /home/mappel/Dynaphos/spatial_frequency/results/random_lapa/images/sample_0008.png  used on input line 72.
 (pdftex.def)             Requested size: 239.39923pt x 79.79498pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-</home/mappel/Dynaphos/spatial_frequency/results/DoG_sun/images/sample_0008.png, id=387, 1084.05pt x 361.35pt>
+</home/mappel/Dynaphos/spatial_frequency/results/DoG_lapa/images/sample_0008.png, id=391, 1084.05pt x 361.35pt>
+File: /home/mappel/Dynaphos/spatial_frequency/results/DoG_lapa/images/sample_0008.png Graphic file (type png)
+<use /home/mappel/Dynaphos/spatial_frequency/results/DoG_lapa/images/sample_0008.png>
+Package pdftex.def Info: /home/mappel/Dynaphos/spatial_frequency/results/DoG_lapa/images/sample_0008.png  used on input line 70.
+(pdftex.def)             Requested size: 239.39923pt x 79.79498pt.
+</home/mappel/Dynaphos/spatial_frequency/results/canny_lapa/images/sample_0008.png, id=392, 1084.05pt x 361.35pt>
+File: /home/mappel/Dynaphos/spatial_frequency/results/canny_lapa/images/sample_0008.png Graphic file (type png)
+<use /home/mappel/Dynaphos/spatial_frequency/results/canny_lapa/images/sample_0008.png>
+Package pdftex.def Info: /home/mappel/Dynaphos/spatial_frequency/results/canny_lapa/images/sample_0008.png  used on input line 71.
+(pdftex.def)             Requested size: 239.39923pt x 79.79498pt.
+</home/mappel/Dynaphos/spatial_frequency/results/random_lapa/images/sample_0008.png, id=393, 1084.05pt x 361.35pt>
+File: /home/mappel/Dynaphos/spatial_frequency/results/random_lapa/images/sample_0008.png Graphic file (type png)
+<use /home/mappel/Dynaphos/spatial_frequency/results/random_lapa/images/sample_0008.png>
+Package pdftex.def Info: /home/mappel/Dynaphos/spatial_frequency/results/random_lapa/images/sample_0008.png  used on input line 72.
+(pdftex.def)             Requested size: 239.39923pt x 79.79498pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+</home/mappel/Dynaphos/spatial_frequency/results/DoG_sun/images/sample_0008.png, id=394, 1084.05pt x 361.35pt>
 File: /home/mappel/Dynaphos/spatial_frequency/results/DoG_sun/images/sample_0008.png Graphic file (type png)
 <use /home/mappel/Dynaphos/spatial_frequency/results/DoG_sun/images/sample_0008.png>
 Package pdftex.def Info: /home/mappel/Dynaphos/spatial_frequency/results/DoG_sun/images/sample_0008.png  used on input line 79.
 (pdftex.def)             Requested size: 239.39923pt x 79.79498pt.
-</home/mappel/Dynaphos/spatial_frequency/results/canny_sun/images/sample_0008.png, id=388, 1084.05pt x 361.35pt>
+</home/mappel/Dynaphos/spatial_frequency/results/canny_sun/images/sample_0008.png, id=395, 1084.05pt x 361.35pt>
 File: /home/mappel/Dynaphos/spatial_frequency/results/canny_sun/images/sample_0008.png Graphic file (type png)
 <use /home/mappel/Dynaphos/spatial_frequency/results/canny_sun/images/sample_0008.png>
 Package pdftex.def Info: /home/mappel/Dynaphos/spatial_frequency/results/canny_sun/images/sample_0008.png  used on input line 80.
 (pdftex.def)             Requested size: 239.39923pt x 79.79498pt.
-</home/mappel/Dynaphos/spatial_frequency/results/random_sun/images/sample_0008.png, id=389, 1084.05pt x 361.35pt>
+</home/mappel/Dynaphos/spatial_frequency/results/random_sun/images/sample_0008.png, id=396, 1084.05pt x 361.35pt>
 File: /home/mappel/Dynaphos/spatial_frequency/results/random_sun/images/sample_0008.png Graphic file (type png)
 <use /home/mappel/Dynaphos/spatial_frequency/results/random_sun/images/sample_0008.png>
 Package pdftex.def Info: /home/mappel/Dynaphos/spatial_frequency/results/random_sun/images/sample_0008.png  used on input line 81.
@@ -601,25 +624,55 @@ Package pdftex.def Info: /home/mappel/Dynaphos/spatial_frequency/results/random_
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-) (./chapters/06_conclusion.tex [12 <./figures/RSA.png> </home/mappel/Dynaphos/spatial_frequency/results/DoG_coco/images/sample_0010.png> </home/mappel/Dynaphos/spatial_frequency/results/canny_coco/images/sample_0010.png> </home/mappel/Dynaphos/spatial_frequency/results/random_coco/images/sample_0010.png>] [13 </home/mappel/Dynaphos/spatial_frequency/results/DoG_lapa/images/sample_0008.png> </home/mappel/Dynaphos/spatial_frequency/results/canny_lapa/images/sample_0008.png> </home/mappel/Dynaphos/spatial_frequency/results/random_lapa/images/sample_0008.png> </home/mappel/Dynaphos/spatial_frequency/results/DoG_sun/images/sample_0008.png> </home/mappel/Dynaphos/spatial_frequency/results/canny_sun/images/sample_0008.png> </home/mappel/Dynaphos/spatial_frequency/results/random_sun/images/sample_0008.png>]) (./main.bbl [14]) [15
+) (./chapters/06_conclusion.tex [12 <./figures/RSA.png>] [13 </home/mappel/Dynaphos/spatial_frequency/results/DoG_coco/images/sample_0010.png> </home/mappel/Dynaphos/spatial_frequency/results/canny_coco/images/sample_0010.png> </home/mappel/Dynaphos/spatial_frequency/results/random_coco/images/sample_0010.png> </home/mappel/Dynaphos/spatial_frequency/results/DoG_lapa/images/sample_0008.png> </home/mappel/Dynaphos/spatial_frequency/results/canny_lapa/images/sample_0008.png> </home/mappel/Dynaphos/spatial_frequency/results/random_lapa/images/sample_0008.png>]
+LaTeX Info: Symbol \textasciiacute not provided by
+            font family ptm in TS1 encoding.
+            Default family used instead on input line 16.
+) [14 </home/mappel/Dynaphos/spatial_frequency/results/DoG_sun/images/sample_0008.png> </home/mappel/Dynaphos/spatial_frequency/results/canny_sun/images/sample_0008.png> </home/mappel/Dynaphos/spatial_frequency/results/random_sun/images/sample_0008.png>] (./main.bbl
+** WARNING: IEEEtran.bst: No hyphenation pattern has been
+** loaded for the language `en'. Using the pattern for
+** the default language instead.
+** WARNING: IEEEtran.bst: No hyphenation pattern has been
+** loaded for the language `en'. Using the pattern for
+** the default language instead.
+** WARNING: IEEEtran.bst: No hyphenation pattern has been
+** loaded for the language `en'. Using the pattern for
+** the default language instead.
+** WARNING: IEEEtran.bst: No hyphenation pattern has been
+** loaded for the language `en'. Using the pattern for
+** the default language instead.
+[15]
+** WARNING: IEEEtran.bst: No hyphenation pattern has been
+** loaded for the language `en'. Using the pattern for
+** the default language instead.
+** WARNING: IEEEtran.bst: No hyphenation pattern has been
+** loaded for the language `en'. Using the pattern for
+** the default language instead.
+** WARNING: IEEEtran.bst: No hyphenation pattern has been
+** loaded for the language `en'. Using the pattern for
+** the default language instead.
+** WARNING: IEEEtran.bst: No hyphenation pattern has been
+** loaded for the language `en'. Using the pattern for
+** the default language instead.
+) [16
 
 ] (./main.aux)
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 10AB329A2C35432E8235CF7F9F0566F5;7379.
  ) 
 Here is how much of TeX's memory you used:
- 11634 strings out of 481008
- 183779 string characters out of 5909440
- 496221 words of memory out of 5000000
- 28492 multiletter control sequences out of 15000+600000
- 448690 words of font info for 124 fonts, out of 8000000 for 9000
+ 12122 strings out of 481008
+ 189521 string characters out of 5909440
+ 522010 words of memory out of 5000000
+ 28957 multiletter control sequences out of 15000+600000
+ 450610 words of font info for 127 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 71i,11n,77p,1395b,480s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (15 pages, 6138308 bytes).
+ 71i,12n,77p,1285b,493s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on main.pdf (16 pages, 6153071 bytes).
 PDF statistics:
- 521 PDF objects out of 1000 (max. 8388607)
- 429 compressed objects within 5 object streams
- 118 named destinations out of 1000 (max. 500000)
+ 605 PDF objects out of 1000 (max. 8388607)
+ 510 compressed objects within 6 object streams
+ 133 named destinations out of 1000 (max. 500000)
  434 words of extra memory for PDF output out of 10000 (max. 10000000)
 

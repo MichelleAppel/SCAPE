@@ -1,46 +1,59 @@
 This is BibTeX, Version 0.99d (TeX Live 2020)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: main.aux
-The style file: plain.bst
+The style file: IEEEtran.bst
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
 Database file #1: references.bib
-You've used 29 entries,
-            2118 wiz_defined-function locations,
-            707 strings with 10775 characters,
-and the built_in function-call counts, 11913 in all, are:
-= -- 1059
-> -- 864
-< -- 2
-+ -- 345
-- -- 312
-* -- 1015
-:= -- 2044
-add.period$ -- 80
-call.type$ -- 29
-change.case$ -- 243
-chr.to.int$ -- 0
-cite$ -- 29
-duplicate$ -- 317
-empty$ -- 753
-format.name$ -- 312
-if$ -- 2365
+Warning--I'm ignoring Fernandez2021's extra "url" field
+--line 556 of file references.bib
+-- IEEEtran.bst version 1.14 (2015/08/26) by Michael Shell.
+-- http://www.michaelshell.org/tex/ieeetran/bibtex/
+-- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
+
+Done.
+You've used 43 entries,
+            4087 wiz_defined-function locations,
+            1155 strings with 19104 characters,
+and the built_in function-call counts, 35517 in all, are:
+= -- 2946
+> -- 1093
+< -- 231
++ -- 564
+- -- 227
+* -- 1844
+:= -- 5456
+add.period$ -- 87
+call.type$ -- 43
+change.case$ -- 47
+chr.to.int$ -- 438
+cite$ -- 43
+duplicate$ -- 2557
+empty$ -- 2532
+format.name$ -- 266
+if$ -- 8194
 int.to.chr$ -- 0
-int.to.str$ -- 29
-missing$ -- 21
-newline$ -- 140
-num.names$ -- 58
-pop$ -- 251
+int.to.str$ -- 43
+missing$ -- 513
+newline$ -- 216
+num.names$ -- 43
+pop$ -- 1174
 preamble$ -- 1
-purify$ -- 214
-quote$ -- 0
-skip$ -- 252
+purify$ -- 0
+quote$ -- 2
+skip$ -- 2740
 stack$ -- 0
-substring$ -- 591
-swap$ -- 57
-text.length$ -- 2
+substring$ -- 1201
+swap$ -- 2178
+text.length$ -- 85
 text.prefix$ -- 0
-top$ -- 0
-type$ -- 116
+top$ -- 5
+type$ -- 43
 warning$ -- 0
-while$ -- 83
-width$ -- 31
-write$ -- 298
+while$ -- 116
+width$ -- 45
+write$ -- 544
+(There was 1 warning)

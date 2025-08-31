@@ -17,24 +17,28 @@
 \providecommand\HyField@AuxAddToFields[1]{}
 \providecommand\HyField@AuxAddToCoFields[2]{}
 \citation{Maynard1997,Normann1999,Schmidt1996}
-\citation{Musk2019,Zhao2023}
+\citation{Musk2019,Zhao2023,Orlemann2024}
+\citation{Fernandez2021}
+\citation{Chen2020}
+\citation{Lozano2020,vanderGrinten2024,Beyeler2022,vanSteveninck2022}
 \citation{Kasowski2022,Han2021,Relic2022}
-\citation{Liu2005,Oh2024}
 \@writefile{toc}{\contentsline {section}{\numberline {I}Introduction}{1}{section.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {II}Related Work}{1}{section.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-A}}Image Processing for Visual Prostheses}{1}{subsection.2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {II-A}1}Early Heuristic Methods}{1}{subsubsection.2.1.1}\protected@file@percent }
+\citation{Liu2005,Oh2024}
 \citation{Relic2022}
 \citation{Granley2022}
 \citation{deRuytervanSteveninck2020}
 \citation{Kasowski2022}
 \citation{vanderGrinten2024}
+\citation{Kasowski2022}
+\citation{vanderGrinten2024}
+\citation{Fine2024}
 \citation{Granley2023}
 \citation{Granley2022,deRuytervanSteveninck2020}
 \citation{vanderGrinten2024}
 \citation{Polimeni2006}
-\citation{vanderGrinten2024}
-\citation{vanderGrinten2024,Dobelle1974,Schmidt1996,Fernandez2021}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {II-A}1}Early Heuristic Methods}{2}{subsubsection.2.1.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {II-A}2}More Recent Learned Encodings}{2}{subsubsection.2.1.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-B}}Simulated Prosthetic Vision Pipelines}{2}{subsection.2.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-C}}Adaptive and Spatially-Varying Encoding Approaches}{2}{subsection.2.3}\protected@file@percent }
@@ -46,53 +50,55 @@
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
 \newlabel{fig:cortex-phosphene-locations}{{1}{2}{Cortical electrode locations of 4 Utah Arrays (left) plotted in cortical \(x,y\) coordinates with overlaid retinotopic grid, and corresponding phosphene centers (right) in visual‐field polar coordinates.\relax }{figure.caption.1}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-A}2}Retinotopic Projection and Phosphene Centers}{2}{subsubsection.3.1.2}\protected@file@percent }
+\citation{vanderGrinten2024}
+\citation{vanderGrinten2024,Dobelle1974,Schmidt1996,Fernandez2021}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-A}3}Gaussian Blob Rendering}{3}{subsubsection.3.1.3}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Simulation of phosphene responses for a 4-Utah-array cortical implant. \textbf  {Left:} Phosphene center locations in visual-field coordinates, shown on a polar grid spanning ±8° of eccentricity. \textbf  {Right:} Corresponding Gaussian-blob rendering of phosphenes for a nominal stimulus amplitude (80 µA). This rendering illustrates how spatially discrete electrode activations translate into blurred perceptual spots that vary with cortical sampling density.\relax }}{3}{figure.caption.2}\protected@file@percent }
 \newlabel{fig:phosphene-rendering}{{2}{3}{Simulation of phosphene responses for a 4-Utah-array cortical implant. \textbf {Left:} Phosphene center locations in visual-field coordinates, shown on a polar grid spanning ±8° of eccentricity. \textbf {Right:} Corresponding Gaussian-blob rendering of phosphenes for a nominal stimulus amplitude (80 µA). This rendering illustrates how spatially discrete electrode activations translate into blurred perceptual spots that vary with cortical sampling density.\relax }{figure.caption.2}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-A}4}Activation-to-Electrode Mapping}{3}{subsubsection.3.1.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-A}5}Amplitude Equalization}{3}{subsubsection.3.1.5}\protected@file@percent }
 \citation{vanderGrinten2024}
-\citation{Nyquist1928}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-A}5}Amplitude Equalization}{4}{subsubsection.3.1.5}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Dynamic amplitude normalization example. \emph  {Left:} raw percept obtained by driving every electrode at the same current \(S\). \emph  {Center:} normalized percept after learning per-electrode gains \(A_i\). \emph  {Right:} learned gains \(A_i\in [A_{\qopname  \relax m{min}},A_{\qopname  \relax m{max}}]\). Normalization yields a more even brightness profile and reduces total current draw, conserving implant power and minimizing excessive charge delivery.\relax }}{4}{figure.caption.3}\protected@file@percent }
 \newlabel{fig:amplitude_norm}{{3}{4}{Dynamic amplitude normalization example. \emph {Left:} raw percept obtained by driving every electrode at the same current \(S\). \emph {Center:} normalized percept after learning per-electrode gains \(A_i\). \emph {Right:} learned gains \(A_i\in [A_{\min },A_{\max }]\). Normalization yields a more even brightness profile and reduces total current draw, conserving implant power and minimizing excessive charge delivery.\relax }{figure.caption.3}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-B}}SCAPE Adaptive Encoding}{4}{subsection.3.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-B}1}Density Estimation}{4}{subsubsection.3.2.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {III-B}1a}Analytic Cortical Magnification}{4}{paragraph.3.2.1.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {III-B}1b}Adaptive Kernel Density Estimation}{4}{paragraph.3.2.1.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-B}2}\(\sigma \)-Mapping via Nyquist Principles}{4}{subsubsection.3.2.2}\protected@file@percent }
+\citation{Nyquist1928}
 \citation{Young1987}
 \@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Overview of the SCAPE pipeline. Starting from a cortical implant layout (top left) we obtain phosphene centers via the simulator, estimate a local density map, convert it into a spatial scale ($\sigma $) map, and then apply shift-variant filtering to produce an activation map for phosphene rendering.\relax }}{5}{figure.caption.4}\protected@file@percent }
 \newlabel{fig:scape_pipeline}{{4}{5}{Overview of the SCAPE pipeline. Starting from a cortical implant layout (top left) we obtain phosphene centers via the simulator, estimate a local density map, convert it into a spatial scale ($\sigma $) map, and then apply shift-variant filtering to produce an activation map for phosphene rendering.\relax }{figure.caption.4}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-B}2}\(\sigma \)-Mapping via Nyquist Principles}{5}{subsubsection.3.2.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-B}3}Shift-variant Filtering}{5}{subsubsection.3.2.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {III-B}3a}Difference-of-Gaussians Example}{5}{paragraph.3.2.3.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {III-B}3b}Extending to Other Kernels}{5}{paragraph.3.2.3.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-C}}Reconstruction Decoder Integration}{5}{subsection.3.3}\protected@file@percent }
 \citation{deRuytervanSteveninck2020}
 \citation{Ronneberger2015}
 \citation{Hu2018}
 \citation{Yu2016}
 \citation{Oktay2018}
 \citation{Kriegeskorte2008}
+\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {III-B}3b}Extending to Other Kernels}{6}{paragraph.3.2.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-C}}Reconstruction Decoder Integration}{6}{subsection.3.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-C}1}Attention-UNet Architecture}{6}{subsubsection.3.3.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-D}}Evaluation Metrics}{6}{subsection.3.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-D}1}Representational Similarity Analysis}{6}{subsubsection.3.4.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-D}2}Reconstruction Performance}{6}{subsubsection.3.4.2}\protected@file@percent }
 \citation{Wang2015}
 \citation{deRuytervanSteveninck2020}
-\citation{Musk2019}
-\citation{Zhao2023}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-D}2}Reconstruction Performance}{7}{subsubsection.3.4.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {IV}Experiments}{7}{section.4}\protected@file@percent }
 \newlabel{sec:experiments}{{IV}{7}{Experiments}{section.4}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-A}}Datasets}{7}{subsection.4.1}\protected@file@percent }
 \@writefile{lot}{\contentsline {table}{\numberline {I}{\ignorespaces Implant layouts and basic properties. Counts reflect the effective number of electrodes inside the simulator field of view. Eccentricity is reported in degrees of visual angle.\relax }}{7}{table.caption.5}\protected@file@percent }
 \newlabel{tab:implant_schemes}{{I}{7}{Implant layouts and basic properties. Counts reflect the effective number of electrodes inside the simulator field of view. Eccentricity is reported in degrees of visual angle.\relax }{table.caption.5}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-B}}Implant Schemes}{7}{subsection.4.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {IV-B}0a}Uniform 1024}{7}{paragraph.4.2.0.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {IV-B}0b}Neuralink shank}{7}{paragraph.4.2.0.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {IV-B}0c}One Utah array}{7}{paragraph.4.2.0.3}\protected@file@percent }
+\citation{Musk2019}
+\citation{Zhao2023}
 \citation{Musk2019,Zhao2023}
 \citation{Musk2019,Zhao2023}
 \citation{deRuytervanSteveninck2020}
+\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {IV-B}0a}Uniform 1024}{8}{paragraph.4.2.0.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {IV-B}0b}Neuralink shank}{8}{paragraph.4.2.0.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {IV-B}0c}One Utah array}{8}{paragraph.4.2.0.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {IV-B}0d}Four Utah arrays}{8}{paragraph.4.2.0.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-C}}Baselines}{8}{subsection.4.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {IV-C}0a}Canny edge detection}{8}{paragraph.4.3.0.1}\protected@file@percent }
@@ -101,15 +107,15 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-D}}SCAPE Configuration}{8}{subsection.4.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {IV-D}0a}Density estimation}{8}{paragraph.4.4.0.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {IV-D}0b}Mapping density to scale}{8}{paragraph.4.4.0.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {IV-D}0c}Stimulus alignment}{8}{paragraph.4.4.0.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {IV-D}0d}Filter family and execution}{8}{paragraph.4.4.0.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {IV-D}0e}Retinotopic model}{8}{paragraph.4.4.0.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {IV-D}0f}Sampling to electrodes}{8}{paragraph.4.4.0.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-E}}Amplitude Normalization}{8}{subsection.4.5}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces \textbf  {Implant schemes used for evaluation.} Each column illustrates one of the four electrode layouts tested in this study: Uniform 1024, Neuralink shank \cite  {Musk2019,Zhao2023}, single Utah array, and four Utah arrays. For each scheme we show (top to bottom): electrode locations in visual field coordinates, the corresponding kernel density estimate (KDE) map of local sampling density, an example input image, the SCAPE-processed representation, and the resulting phosphene percept. The field of view differs between layouts and is scaled here for visualization. Together these schemes span large variations in electrode count, spatial distribution, and coverage, providing a diverse testbed for evaluating adaptive encoding.\relax }}{9}{figure.caption.6}\protected@file@percent }
-\newlabel{fig:implant_schemes}{{5}{9}{\textbf {Implant schemes used for evaluation.} Each column illustrates one of the four electrode layouts tested in this study: Uniform 1024, Neuralink shank \cite {Musk2019,Zhao2023}, single Utah array, and four Utah arrays. For each scheme we show (top to bottom): electrode locations in visual field coordinates, the corresponding kernel density estimate (KDE) map of local sampling density, an example input image, the SCAPE-processed representation, and the resulting phosphene percept. The field of view differs between layouts and is scaled here for visualization. Together these schemes span large variations in electrode count, spatial distribution, and coverage, providing a diverse testbed for evaluating adaptive encoding.\relax }{figure.caption.6}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces \textbf  {Implant schemes used for evaluation.} Each column illustrates one of the four electrode layouts tested in this study: Uniform 1024, Neuralink-type shank \cite  {Musk2019,Zhao2023}, single Utah array, and four Utah arrays. For each scheme we show (top to bottom): electrode locations in visual field coordinates, the corresponding kernel density estimate (KDE) map of local sampling density, an example input image, the SCAPE-processed representation, and the resulting phosphene percept. The field of view differs between layouts and is scaled here for visualization. Together these schemes span large variations in electrode count, spatial distribution, and coverage, providing a diverse testbed for evaluating adaptive encoding.\relax }}{9}{figure.caption.6}\protected@file@percent }
+\newlabel{fig:implant_schemes}{{5}{9}{\textbf {Implant schemes used for evaluation.} Each column illustrates one of the four electrode layouts tested in this study: Uniform 1024, Neuralink-type shank \cite {Musk2019,Zhao2023}, single Utah array, and four Utah arrays. For each scheme we show (top to bottom): electrode locations in visual field coordinates, the corresponding kernel density estimate (KDE) map of local sampling density, an example input image, the SCAPE-processed representation, and the resulting phosphene percept. The field of view differs between layouts and is scaled here for visualization. Together these schemes span large variations in electrode count, spatial distribution, and coverage, providing a diverse testbed for evaluating adaptive encoding.\relax }{figure.caption.6}{}}
+\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {IV-D}0c}Stimulus alignment}{9}{paragraph.4.4.0.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {IV-D}0d}Filter family and execution}{9}{paragraph.4.4.0.4}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces \textbf  {Qualitative comparison of baseline and SCAPE encoders.} Representative examples from the LaPa dataset. Top: stimulus representations after encoding. Bottom: corresponding phosphene renderings for the default implant scheme with 1024 electrodes. SCAPE balances edge emphasis with adaptive clutter suppression, while fixed DoG and Canny either oversmooth or fragment the structure. Random activation patterns are added as a control.\relax }}{10}{figure.caption.7}\protected@file@percent }
 \newlabel{fig:qualitative}{{6}{10}{\textbf {Qualitative comparison of baseline and SCAPE encoders.} Representative examples from the LaPa dataset. Top: stimulus representations after encoding. Bottom: corresponding phosphene renderings for the default implant scheme with 1024 electrodes. SCAPE balances edge emphasis with adaptive clutter suppression, while fixed DoG and Canny either oversmooth or fragment the structure. Random activation patterns are added as a control.\relax }{figure.caption.7}{}}
+\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {IV-D}0e}Retinotopic model}{11}{paragraph.4.4.0.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {IV-D}0f}Sampling to electrodes}{11}{paragraph.4.4.0.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-E}}Amplitude Normalization}{11}{subsection.4.5}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {IV-E}0a}Representational similarity analysis}{11}{paragraph.4.5.0.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {IV-E}0b}Reconstruction performance}{11}{paragraph.4.5.0.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {V}Results}{11}{section.5}\protected@file@percent }
@@ -117,18 +123,19 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-A}}Qualitative Comparison of Encoders}{11}{subsection.5.1}\protected@file@percent }
 \newlabel{sec:qualitative}{{\mbox  {V-A}}{11}{Qualitative Comparison of Encoders}{subsection.5.1}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-B}}Representational Dissimilarity Analysis}{11}{subsection.5.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-C}}Reconstruction Performance}{11}{subsection.5.3}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces \textbf  {Representational similarity analysis.} Dissimilarity ($1-\rho $) between phosphene encodings and original image RDMs across COCO, LaPa, and SUN datasets. Bars show mean dissimilarity, error bars denote bootstrap confidence intervals, and $p$-values (permutation test) are reported below each bar. Lower values correspond to greater preservation of structure.\relax }}{12}{figure.caption.8}\protected@file@percent }
 \newlabel{fig:rsa_pixel}{{7}{12}{\textbf {Representational similarity analysis.} Dissimilarity ($1-\rho $) between phosphene encodings and original image RDMs across COCO, LaPa, and SUN datasets. Bars show mean dissimilarity, error bars denote bootstrap confidence intervals, and $p$-values (permutation test) are reported below each bar. Lower values correspond to greater preservation of structure.\relax }{figure.caption.8}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Reconstruction examples on COCO under the Uniform 1024 scheme. Each row shows one encoding method: SCAPE (top), Canny edges (middle), and random control (bottom). Columns depict the pipeline from input image to activation map, phosphene rendering, and final reconstruction.\relax }}{12}{figure.caption.9}\protected@file@percent }
-\newlabel{fig:recon_examples_coco}{{8}{12}{Reconstruction examples on COCO under the Uniform 1024 scheme. Each row shows one encoding method: SCAPE (top), Canny edges (middle), and random control (bottom). Columns depict the pipeline from input image to activation map, phosphene rendering, and final reconstruction.\relax }{figure.caption.9}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-C}}Reconstruction Performance}{12}{subsection.5.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {VI}Discussion and Conclusion}{12}{section.6}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-A}}Summary of Contributions}{12}{subsection.6.1}\protected@file@percent }
+\citation{Lozano2020}
+\citation{vanderGrinten2024,Fine2024,Beyeler2017}
 \citation{Han2021,Kasowski2022}
 \citation{vanderGrinten2024}
 \citation{Stingl2015,Fernandez2021}
-\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Reconstruction examples on LaPa faces under the Uniform 1024 scheme. Each row shows one encoding method: SCAPE (top), Canny edges (middle), and random control (bottom). Columns depict the pipeline from input image to activation map, phosphene rendering, and final reconstruction.\relax }}{13}{figure.caption.10}\protected@file@percent }
-\newlabel{fig:recon_examples_lapa}{{9}{13}{Reconstruction examples on LaPa faces under the Uniform 1024 scheme. Each row shows one encoding method: SCAPE (top), Canny edges (middle), and random control (bottom). Columns depict the pipeline from input image to activation map, phosphene rendering, and final reconstruction.\relax }{figure.caption.10}{}}
+\citation{Normann2009,Beyeler2024}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Reconstruction examples on COCO under the Uniform 1024 scheme. Each row shows one encoding method: SCAPE (top), Canny edges (middle), and random control (bottom). Columns depict the pipeline from input image to activation map, phosphene rendering, and final reconstruction.\relax }}{13}{figure.caption.9}\protected@file@percent }
+\newlabel{fig:recon_examples_coco}{{8}{13}{Reconstruction examples on COCO under the Uniform 1024 scheme. Each row shows one encoding method: SCAPE (top), Canny edges (middle), and random control (bottom). Columns depict the pipeline from input image to activation map, phosphene rendering, and final reconstruction.\relax }{figure.caption.9}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {II}{\ignorespaces Reconstruction metrics on the Uniform 1024 scheme across datasets (results restricted to Uniform 1024; see Section\nobreakspace  {}\ref  {sec:experiments} for rationale).\relax }}{13}{table.caption.12}\protected@file@percent }
 \newlabel{tab:recon_all}{{II}{13}{Reconstruction metrics on the Uniform 1024 scheme across datasets (results restricted to Uniform 1024; see Section~\ref {sec:experiments} for rationale).\relax }{table.caption.12}{}}
 \newlabel{tab:recon_coco}{{IIa}{13}{COCO\relax }{table.caption.12}{}}
@@ -137,45 +144,67 @@
 \newlabel{sub@tab:recon_lapa}{{b}{13}{LaPa\relax }{table.caption.12}{}}
 \newlabel{tab:recon_sun}{{IIc}{13}{SUN\relax }{table.caption.12}{}}
 \newlabel{sub@tab:recon_sun}{{c}{13}{SUN\relax }{table.caption.12}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces Reconstruction examples on SUN scenes under the Uniform 1024 scheme. Each row shows one encoding method: SCAPE (top), Canny edges (middle), and random control (bottom). Columns depict the pipeline from input image to activation map, phosphene rendering, and final reconstruction.\relax }}{13}{figure.caption.11}\protected@file@percent }
-\newlabel{fig:recon_examples_sun}{{10}{13}{Reconstruction examples on SUN scenes under the Uniform 1024 scheme. Each row shows one encoding method: SCAPE (top), Canny edges (middle), and random control (bottom). Columns depict the pipeline from input image to activation map, phosphene rendering, and final reconstruction.\relax }{figure.caption.11}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Reconstruction examples on LaPa faces under the Uniform 1024 scheme. Each row shows one encoding method: SCAPE (top), Canny edges (middle), and random control (bottom). Columns depict the pipeline from input image to activation map, phosphene rendering, and final reconstruction.\relax }}{13}{figure.caption.10}\protected@file@percent }
+\newlabel{fig:recon_examples_lapa}{{9}{13}{Reconstruction examples on LaPa faces under the Uniform 1024 scheme. Each row shows one encoding method: SCAPE (top), Canny edges (middle), and random control (bottom). Columns depict the pipeline from input image to activation map, phosphene rendering, and final reconstruction.\relax }{figure.caption.10}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-B}}Relation to Prior Work}{13}{subsection.6.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-C}}Clinical and Practical Implications}{13}{subsection.6.3}\protected@file@percent }
+\citation{Chen2020}
+\citation{Lozano2024}
+\citation{Benson2012,Ribeiro2021}
+\citation{Rosenke2021}
+\citation{vanHoof2025}
 \citation{Schmidt1996,Bak1990,Dobelle1974,Barlett2008,Fernandez2021,Beauchamp2020}
-\citation{vanderGrinten2024}
-\bibstyle{plain}
-\bibdata{references}
-\bibcite{Bak1990}{1}
-\bibcite{Barlett2008}{2}
-\bibcite{Beauchamp2020}{3}
-\bibcite{deRuytervanSteveninck2020}{4}
-\bibcite{Dobelle1974}{5}
-\bibcite{Fernandez2021}{6}
-\bibcite{Granley2023}{7}
-\bibcite{Granley2022}{8}
-\bibcite{Han2021}{9}
-\bibcite{Hu2018}{10}
-\bibcite{Kasowski2022}{11}
-\bibcite{Kriegeskorte2008}{12}
-\bibcite{Liu2005}{13}
-\bibcite{Maynard1997}{14}
-\bibcite{Musk2019}{15}
-\bibcite{Normann1999}{16}
-\bibcite{Nyquist1928}{17}
-\bibcite{Oktay2018}{18}
-\bibcite{Polimeni2006}{19}
-\bibcite{Relic2022}{20}
-\bibcite{Ronneberger2015}{21}
+\citation{vanderGrinten2024,Fine2024}
+\citation{Granley2023}
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces Reconstruction examples on SUN scenes under the Uniform 1024 scheme. Each row shows one encoding method: SCAPE (top), Canny edges (middle), and random control (bottom). Columns depict the pipeline from input image to activation map, phosphene rendering, and final reconstruction.\relax }}{14}{figure.caption.11}\protected@file@percent }
+\newlabel{fig:recon_examples_sun}{{10}{14}{Reconstruction examples on SUN scenes under the Uniform 1024 scheme. Each row shows one encoding method: SCAPE (top), Canny edges (middle), and random control (bottom). Columns depict the pipeline from input image to activation map, phosphene rendering, and final reconstruction.\relax }{figure.caption.11}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-C}}Clinical and Practical Implications}{14}{subsection.6.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-D}}Limitations}{14}{subsection.6.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-E}}Future Directions}{14}{subsection.6.5}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-F}}Conclusion}{14}{subsection.6.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{References}{14}{section*.13}\protected@file@percent }
-\bibcite{Schmidt1996}{22}
-\bibcite{Stingl2015}{23}
-\bibcite{vanderGrinten2024}{24}
-\bibcite{Wang2015}{25}
-\bibcite{Oh2024}{26}
-\bibcite{Young1987}{27}
+\bibstyle{IEEEtran}
+\bibdata{references}
+\bibcite{Maynard1997}{1}
+\bibcite{Normann1999}{2}
+\bibcite{Schmidt1996}{3}
+\bibcite{Musk2019}{4}
+\bibcite{Zhao2023}{5}
+\bibcite{Orlemann2024}{6}
+\bibcite{Fernandez2021}{7}
+\bibcite{Chen2020}{8}
+\bibcite{Lozano2020}{9}
+\bibcite{vanderGrinten2024}{10}
+\bibcite{Beyeler2022}{11}
+\bibcite{vanSteveninck2022}{12}
+\bibcite{Kasowski2022}{13}
+\bibcite{Han2021}{14}
+\bibcite{Relic2022}{15}
+\bibcite{Liu2005}{16}
+\bibcite{Oh2024}{17}
+\bibcite{Granley2022}{18}
+\bibcite{deRuytervanSteveninck2020}{19}
+\bibcite{Fine2024}{20}
+\bibcite{Granley2023}{21}
+\bibcite{Polimeni2006}{22}
+\bibcite{Dobelle1974}{23}
+\bibcite{Nyquist1928}{24}
+\bibcite{Young1987}{25}
+\bibcite{Ronneberger2015}{26}
+\bibcite{Hu2018}{27}
 \bibcite{Yu2016}{28}
-\bibcite{Zhao2023}{29}
-\gdef \@abspage@last{15}
+\bibcite{Oktay2018}{29}
+\bibcite{Kriegeskorte2008}{30}
+\bibcite{Wang2015}{31}
+\bibcite{Beyeler2017}{32}
+\bibcite{Stingl2015}{33}
+\bibcite{Normann2009}{34}
+\bibcite{Beyeler2024}{35}
+\bibcite{Lozano2024}{36}
+\@writefile{toc}{\contentsline {section}{References}{15}{section*.13}\protected@file@percent }
+\bibcite{Benson2012}{37}
+\bibcite{Ribeiro2021}{38}
+\bibcite{Rosenke2021}{39}
+\bibcite{vanHoof2025}{40}
+\bibcite{Bak1990}{41}
+\bibcite{Barlett2008}{42}
+\bibcite{Beauchamp2020}{43}
+\gdef \@abspage@last{16}
