@@ -84,7 +84,7 @@ If you use SCAPE in your research, please cite our paper:
 
 ```bibtex
 @article{Appel2025scape,
-  author    = {Michelle Appel, Antonio Lozano, Eleftherios Papadopoulos, Umut Güçlü, Yağmur Güçlütürk},
+  author    = {Michelle Appel and Antonio Lozano and Eleftherios Papadopoulos and Umut Güçlü and Yağmur Güçlütürk},
   title     = {SCAPE: Shift-variant Cortical-implant Adaptive Phosphene Encoding},
   journal   = {Preprint},
   year      = {2025},
